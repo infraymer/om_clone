@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tinder/resources/colors.dart';
 import 'package:tinder/resources/strings.dart';
+import 'package:tinder/routes.dart';
 import 'package:tinder/screens/base_screen.dart';
 import 'package:tinder/widgets/app_back_button.dart';
 import 'package:tinder/widgets/app_button.dart';
@@ -22,7 +23,7 @@ class PhoneScreen extends StatelessWidget {
       appBar: CustomAppBar1(
         textTitle: Strings.phoneTitle,
         leading: AppBackButton(
-          onPressed: () {},
+          onPressed: () => Navigator.pop(context),
         ),
       ),
       body: Container(
@@ -43,7 +44,7 @@ class PhoneScreen extends StatelessWidget {
             SizedBox(height: 24),
             _buildDescription(),
             SizedBox(height: 32),
-            _buildButton(),
+            _buildButton(context),
           ],
         ),
       ),
@@ -104,12 +105,12 @@ class PhoneScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildButton() {
+  Widget _buildButton(BuildContext context) {
     return Container(
       width: double.infinity,
       child: AppButton(
         text: Strings.next,
-        onPressed: () {},
+        onPressed: () => Navigator.push(context, CodeRoute()),
       ),
     );
   }
