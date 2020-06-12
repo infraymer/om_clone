@@ -50,7 +50,7 @@ class LoginScreen extends StatelessWidget {
             AppRoundButtonDark(
               margin: EdgeInsets.symmetric(horizontal: 50),
               text: Strings.loginFacebook,
-              onPressed: () => Navigator.push(context, MatchRoute()),
+              onPressed: () {},
             ),
             SizedBox(height: 20),
             Text(Strings.loginTrouble, style: TextStyles.loginDescription),

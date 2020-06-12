@@ -3,6 +3,7 @@ class Strings {
   static const next = 'Next';
   static const skip = 'Skip';
   static const continueText = 'Continue';
+  static const done = 'Done';
 
   // login screen
   static const loginDescription = 'By creating an account or logging in, you agree to our Terms and Privacy Policy';
@@ -18,7 +19,7 @@ class Strings {
   static const phoneDescription = 'As so seeing latter he should thirty whence. To things so denied admire. To things so denied admire. Fat new smallness few supposing suspicion two. Secure shy favour length all twenty denote. Up hung mr we give rest half. Steepest speaking up attended it as. We leaf to snug on no need. ';
 
   // first name screen
-  static const nameTitle = 'My first\nname is';
+  static const nameTitle = 'My\nfirst name is';
   static const nameFieldPlaceholder = 'First Name';
   static const nameDescription = 'This is how it will appear in OneMatch';
 
@@ -27,19 +28,19 @@ class Strings {
   static const birthdayDescription = 'Your age will be public';
 
   // sex screen
-  static const genderTitle = 'I am a';
+  static const genderTitle = 'I\nam a';
   static const genderMan = 'Man';
   static const genderWoman = 'Woman';
   static const genderGotIt = 'Got it';
   static const genderShowMyGender = 'Show my gender on my prodile';
 
   // about your screen
-  static const aboutTitle = 'Tell about your self (max. 180 characters)';
+  static const aboutTitle = 'Tell\nabout your self';
   static const aboutFieldPlaceholder = 'School name';
   static const aboutDescription = 'This is how it will appear in OneMatch';
 
   // photos screen
-  static const photosTitle = 'Add photos';
+  static const photosTitle = 'Add\nyour photos';
   static const photosDescription = 'Hold, drag and drop to reorder your photos';
 
   // welcome screen

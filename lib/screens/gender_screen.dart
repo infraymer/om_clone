@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tinder/resources/dimens.dart';
 import 'package:tinder/resources/strings.dart';
 import 'package:tinder/routes.dart';
 import 'package:tinder/screens/about_screen.dart';
@@ -31,14 +32,13 @@ class GenderScreen extends StatelessWidget {
           SizedBox(height: 20),
           Container(
             width: double.infinity,
-            margin: EdgeInsets.symmetric(horizontal: 60),
+            margin: EdgeInsets.symmetric(horizontal: Dimens.horizontalMarginButtonRegScreen),
             child: AppRoundFilledButton(
               onPressed: onActionClicked,
-              text: Strings.genderGotIt,
+              text: Strings.next,
             ),
           ),
-          SizedBox(height: 30),
-          // Text(Strings.birthdayDescription, style: TextStyles.fieldDescription),
+          SizedBox(height: Dimens.bottomMarginButtonRegScreen),
         ],
       ),
     );

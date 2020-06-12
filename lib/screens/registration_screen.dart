@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:tinder/resources/colors.dart';
+import 'package:tinder/routes.dart';
 import 'package:tinder/screens/about_screen.dart';
 import 'package:tinder/screens/add_photos_screen.dart';
 import 'package:tinder/screens/birthday_screen.dart';
 import 'package:tinder/screens/gender_screen.dart';
 import 'package:tinder/screens/name_screen.dart';
+import 'package:tinder/screens/welcome_screen.dart';
 import 'package:tinder/widgets/screen_container.dart';
 
 class RegistrationScreen extends StatelessWidget {
@@ -46,6 +48,7 @@ class RegistrationScreen extends StatelessWidget {
                 ),
                 AddPhotosScreen(
                   onBackClicked: _prevPage,
+                  onActionClicked: () => Navigator.push(context, WelcomeRoute()),
                 ),
               ],
             ),

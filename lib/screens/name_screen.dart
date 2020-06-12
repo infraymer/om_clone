@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tinder/resources/dimens.dart';
 import 'package:tinder/resources/strings.dart';
 import 'package:tinder/resources/text_styles.dart';
-import 'package:tinder/widgets/app_round_button.dart';
+import 'package:tinder/widgets/app_round_filled_button.dart';
 import 'package:tinder/widgets/registration_app_bar.dart';
 import 'package:tinder/widgets/registration_text_field.dart';
 import 'package:tinder/widgets/screen_container.dart';
@@ -10,7 +11,8 @@ class NameScreen extends StatelessWidget {
   final VoidCallback onActionClicked;
   final VoidCallback onBackClicked;
 
-  const NameScreen({Key key, this.onActionClicked, this.onBackClicked}) : super(key: key);
+  const NameScreen({Key key, this.onActionClicked, this.onBackClicked})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,15 +33,16 @@ class NameScreen extends StatelessWidget {
           ),
           SizedBox(height: 16),
           Text(Strings.nameDescription, style: TextStyles.fieldDescription),
-          SizedBox(height: 40),
+          Expanded(child: SizedBox()),
           Container(
             width: double.infinity,
-            margin: EdgeInsets.symmetric(horizontal: 60),
-            child: AppRoundButton(
+            margin: EdgeInsets.symmetric(horizontal: Dimens.horizontalMarginButtonRegScreen),
+            child: AppRoundFilledButton(
               onPressed: onActionClicked,
               text: Strings.next,
             ),
           ),
+          SizedBox(height: Dimens.bottomMarginButtonRegScreen),
         ],
       ),
     );

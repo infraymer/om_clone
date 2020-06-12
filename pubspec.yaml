@@ -29,6 +29,7 @@ dependencies:
   pin_code_fields: ^3.0.1
   flutter_svg: ^0.17.4
   google_fonts: ^1.1.0
+  reorderables: ^0.3.2
 
 
   # The following adds the Cupertino Icons font to your application.

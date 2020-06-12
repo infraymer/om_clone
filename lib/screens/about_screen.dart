@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tinder/resources/dimens.dart';
 import 'package:tinder/resources/strings.dart';
 import 'package:tinder/resources/text_styles.dart';
 import 'package:tinder/routes.dart';
@@ -22,7 +23,6 @@ class AboutScreen extends StatelessWidget {
             onIconPressed: onBackClicked,
             icon: Icons.keyboard_arrow_left,
             title: Strings.aboutTitle,
-            titlePadding: const EdgeInsets.symmetric(horizontal: 40),
           ),
           SizedBox(height: 40),
           Padding(
@@ -36,13 +36,13 @@ class AboutScreen extends StatelessWidget {
           Expanded(child: SizedBox()),
           Container(
             width: double.infinity,
-            margin: EdgeInsets.symmetric(horizontal: 60),
+            margin: EdgeInsets.symmetric(horizontal: Dimens.horizontalMarginButtonRegScreen),
             child: AppRoundButton(
               onPressed: onActionClicked,
               text: Strings.skip,
             ),
           ),
-          SizedBox(height: 40),
+          SizedBox(height: Dimens.bottomMarginButtonRegScreen),
         ],
       ),
     );

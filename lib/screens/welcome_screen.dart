@@ -23,20 +23,16 @@ class WelcomeScreen extends StatelessWidget {
             child: Text(Strings.welcomeTitle, style: TextStyles.welcomeTitle),
           ),
           SizedBox(height: 30),
-          _DescriptionItem(
-              title: Strings.welcomeTitle1, subtitle: Strings.welcomeSubtitle1),
-          _DescriptionItem(
-              title: Strings.welcomeTitle2, subtitle: Strings.welcomeSubtitle2),
-          _DescriptionItem(
-              title: Strings.welcomeTitle3, subtitle: Strings.welcomeSubtitle3),
-          _DescriptionItem(
-              title: Strings.welcomeTitle4, subtitle: Strings.welcomeSubtitle4),
+          _DescriptionItem(title: Strings.welcomeTitle1, subtitle: Strings.welcomeSubtitle1),
+          _DescriptionItem(title: Strings.welcomeTitle2, subtitle: Strings.welcomeSubtitle2),
+          _DescriptionItem(title: Strings.welcomeTitle3, subtitle: Strings.welcomeSubtitle3),
+          _DescriptionItem(title: Strings.welcomeTitle4, subtitle: Strings.welcomeSubtitle4),
           Expanded(child: SizedBox()),
           Container(
             width: double.infinity,
             margin: EdgeInsets.symmetric(horizontal: 60),
             child: AppRoundFilledButton(
-              onPressed: () => Navigator.push(context, LoginRoute()),
+              onPressed: () => Navigator.push(context, MatchRoute()),
               text: Strings.genderGotIt,
             ),
           ),
