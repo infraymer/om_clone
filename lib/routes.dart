@@ -5,6 +5,7 @@ import 'package:tinder/screens/match_screen.dart';
 import 'package:tinder/screens/phone_screen.dart';
 import 'package:tinder/screens/registration_screen.dart';
 import 'package:tinder/screens/welcome_screen.dart';
+import 'package:tinder/utils/auth_firebase.dart';
 
 class LoginRoute extends CupertinoPageRoute {
   LoginRoute() : super(builder: (ctx) => LoginScreen());
@@ -15,7 +16,8 @@ class PhoneRoute extends CupertinoPageRoute {
 }
 
 class CodeRoute extends CupertinoPageRoute {
-  CodeRoute() : super(builder: (ctx) => CodeScreen());
+  CodeRoute(AuthPhoneFirebase authPhone)
+      : super(builder: (ctx) => CodeScreen(authPhone: authPhone));
 }
 
 class WelcomeRoute extends CupertinoPageRoute {

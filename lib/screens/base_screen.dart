@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 class BaseScreen extends StatelessWidget {
   final Widget appBar;
   final Widget body;
+  final GlobalKey<ScaffoldState> keyScaffold;
 
-  const BaseScreen({Key key, this.appBar, this.body}) : super(key: key);
+  const BaseScreen({Key key, this.appBar, this.body, this.keyScaffold}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: SafeArea(
+    return Scaffold(
+      key: keyScaffold,
+      body: SafeArea(
         child: Column(
           children: <Widget>[
             appBar,

@@ -4,6 +4,8 @@ import 'package:tinder/resources/colors.dart';
 import 'package:tinder/screens/login_screen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(MyApp());
 }
 

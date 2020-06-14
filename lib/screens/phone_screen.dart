@@ -1,25 +1,47 @@
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_sim_country_code/flutter_sim_country_code.dart';
 import 'package:tinder/resources/colors.dart';
 import 'package:tinder/resources/strings.dart';
 import 'package:tinder/routes.dart';
 import 'package:tinder/screens/base_screen.dart';
+import 'package:tinder/utils/auth_firebase.dart';
 import 'package:tinder/widgets/app_back_button.dart';
 import 'package:tinder/widgets/app_button.dart';
 import 'package:tinder/widgets/custom_app_bar_1.dart';
 
-class PhoneScreen extends StatelessWidget {
-  final style = const TextStyle(fontSize: 14, fontWeight: FontWeight.w500);
+class PhoneScreen extends StatefulWidget {
+  @override
+  _PhoneScreenState createState() => _PhoneScreenState();
+}
 
+class _PhoneScreenState extends State<PhoneScreen> {
+  final style = const TextStyle(fontSize: 14, fontWeight: FontWeight.w500);
   final fieldDecoration = BoxDecoration(
     color: AppColors.textField,
     borderRadius: BorderRadius.circular(4),
   );
 
+  final _keyScaffold = GlobalKey<ScaffoldState>();
+
+  CountryCode _countryCode;
+  TextEditingController _phoneController = TextEditingController();
+  String _platformVersion;
+
+  AuthPhoneFirebase _authPhone;
+
+  @override
+  void initState() {
+    super.initState();
+    initPlatformState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
+      keyScaffold: _keyScaffold,
       appBar: CustomAppBar1(
         textTitle: Strings.phoneTitle,
         leading: AppBackButton(
@@ -29,10 +51,11 @@ class PhoneScreen extends StatelessWidget {
       body: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: ListView(
+//          crossAxisAlignment: CrossAxisAlignment.center,
+          physics: BouncingScrollPhysics(),
           children: <Widget>[
-            _buildTitle(),
+            Center(child: _buildTitle()),
             SizedBox(height: 16),
             Row(
               children: <Widget>[
@@ -67,9 +90,10 @@ class PhoneScreen extends StatelessWidget {
       child: Row(
         children: <Widget>[
           CountryCodePicker(
-            onChanged: print,
+            onChanged: (value) => _countryCode = value,
+            onInit: (value) => _countryCode = value,
             textStyle: style,
-            initialSelection: 'US',
+            initialSelection: _platformVersion ?? 'US',
             flagWidth: 28,
           ),
         ],
@@ -83,6 +107,7 @@ class PhoneScreen extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 16),
         decoration: fieldDecoration,
         child: TextField(
+          controller: _phoneController,
           style: style,
           keyboardType: TextInputType.phone,
           inputFormatters: [
@@ -106,12 +131,54 @@ class PhoneScreen extends StatelessWidget {
   }
 
   Widget _buildButton(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      child: AppButton(
-        text: Strings.next,
-        onPressed: () => Navigator.push(context, CodeRoute()),
-      ),
+    return ValueListenableBuilder<bool>(
+      valueListenable: _authPhone?.isLoadingNotifier ?? ValueNotifier(false),
+      builder: (context, loading, child) {
+        if (loading)
+          return Center(child: CircularProgressIndicator());
+
+        return Container(
+          width: double.infinity,
+          child: AppButton(
+            text: Strings.next,
+            onPressed: _onNext,
+          ),
+        );
+      },
     );
+  }
+
+  Future<void> initPlatformState() async {
+    String platformVersion;
+    try {
+      platformVersion = await FlutterSimCountryCode.simCountryCode;
+    } on PlatformException {
+      platformVersion = null;
+    }
+    if (!mounted) return;
+    setState(() {
+      _platformVersion = platformVersion;
+    });
+  }
+
+  void _onNext() {
+    _authPhone = AuthPhoneFirebase(
+      onSendCode: () {
+        Navigator.push(context, CodeRoute(_authPhone));
+      },
+      onAuthenticationSuccessful: (FirebaseAuth firebaseInstance, user) {
+        firebaseInstance.currentUser().then((currentUser) {
+          String uid = currentUser.uid;
+          currentUser.getIdToken().then((token) async {
+            //save token and switch to another screen
+            Navigator.pushReplacement(context, RegistrationRoute());
+          });
+        });
+      },
+      context: context,
+      keyScaffold: _keyScaffold,
+      phoneNumber: _countryCode.dialCode + _phoneController.text,
+    );
+    setState(() {});
   }
 }
