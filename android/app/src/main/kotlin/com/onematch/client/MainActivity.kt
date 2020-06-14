@@ -1,4 +1,4 @@
-package com.example.tinder
+package com.onematch.client
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "479639101174",
+    "firebase_url": "https://sparkle-261a7.firebaseio.com",
+    "project_id": "sparkle-261a7",
+    "storage_bucket": "sparkle-261a7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:479639101174:android:36405d8e1ba5f20b6256d7",
+        "android_client_info": {
+          "package_name": "com.onematch.client"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "479639101174-cl58qt6dm9rovsd0q6s86s8c18n2ofgg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCE45FDjKdyARRWxTJFXJTd1-PyaRJih1s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "479639101174-cl58qt6dm9rovsd0q6s86s8c18n2ofgg.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "479639101174-0if3mqa7h52p62v0eqruh735mhpq3gpg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "oron.domain.OneMatch"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
