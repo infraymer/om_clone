@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:tinder/resources/colors.dart';
 import 'package:tinder/resources/dimens.dart';
 import 'package:tinder/resources/strings.dart';
 import 'package:tinder/resources/text_styles.dart';
+import 'package:tinder/view_model/registration_view_model.dart';
 import 'package:tinder/widgets/app_round_filled_button.dart';
 import 'package:tinder/widgets/pincode/models/pin_theme.dart';
 import 'package:tinder/widgets/pincode/pin_code_fields_custom.dart';
@@ -30,7 +32,7 @@ class BirthdayScreen extends StatelessWidget {
           SizedBox(height: 40),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 50),
-            child: _buildCode(),
+            child: _buildCode(context),
           ),
           Text(Strings.birthdayDescription, style: TextStyles.fieldDescription),
           Expanded(child: SizedBox()),
@@ -48,11 +50,13 @@ class BirthdayScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildCode() {
+  Widget _buildCode(BuildContext context) {
+    final model = Provider.of<RegistrationViewModel>(context);
     return PinCodeTextField(
       length: 8,
       obsecureText: false,
       animationType: AnimationType.fade,
+      controller: model.birthdayController,
       pinTheme: PinTheme(
         shape: PinCodeFieldShape.underline,
         selectedColor: AppColors.main,

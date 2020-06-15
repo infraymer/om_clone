@@ -7,7 +7,6 @@ import 'package:tinder/screens/add_photos_screen.dart';
 import 'package:tinder/screens/birthday_screen.dart';
 import 'package:tinder/screens/gender_screen.dart';
 import 'package:tinder/screens/name_screen.dart';
-import 'package:tinder/screens/welcome_screen.dart';
 import 'package:tinder/widgets/screen_container.dart';
 
 class RegistrationScreen extends StatelessWidget {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tinder/resources/dimens.dart';
 import 'package:tinder/resources/strings.dart';
-import 'package:tinder/routes.dart';
-import 'package:tinder/screens/about_screen.dart';
+import 'package:tinder/view_model/registration_view_model.dart';
 import 'package:tinder/widgets/app_round_button.dart';
 import 'package:tinder/widgets/app_round_filled_button.dart';
 import 'package:tinder/widgets/checkbox_text.dart';
@@ -13,7 +13,8 @@ class GenderScreen extends StatelessWidget {
   final VoidCallback onActionClicked;
   final VoidCallback onBackClicked;
 
-  const GenderScreen({Key key, this.onActionClicked, this.onBackClicked}) : super(key: key);
+  const GenderScreen({Key key, this.onActionClicked, this.onBackClicked})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class GenderScreen extends StatelessWidget {
           SizedBox(height: 80),
           _ToggleButtons(),
           Expanded(child: SizedBox()),
-          Center(child: CheckBoxText(text: Strings.genderShowMyGender)),
+          Center(child: _ShowGenderCheckBox()),
           SizedBox(height: 20),
           Container(
             width: double.infinity,
@@ -45,16 +46,10 @@ class GenderScreen extends StatelessWidget {
   }
 }
 
-class _ToggleButtons extends StatefulWidget {
-  @override
-  _ToggleButtonsState createState() => _ToggleButtonsState();
-}
-
-class _ToggleButtonsState extends State<_ToggleButtons> {
-  var selected = 0;
-
+class _ToggleButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final model = context.watch<RegistrationViewModel>();
     return Column(
       children: <Widget>[
         Container(
@@ -62,10 +57,9 @@ class _ToggleButtonsState extends State<_ToggleButtons> {
           margin: EdgeInsets.symmetric(horizontal: 60),
           child: AppRoundButton(
             onPressed: () {
-              selected = 0;
-              setState(() {});
+              model.setGender(false);
             },
-            isSelected: selected == 0,
+            isSelected: !model.genderMale,
             text: Strings.genderWoman,
           ),
         ),
@@ -75,10 +69,9 @@ class _ToggleButtonsState extends State<_ToggleButtons> {
           margin: EdgeInsets.symmetric(horizontal: 60),
           child: AppRoundButton(
             onPressed: () {
-              selected = 1;
-              setState(() {});
+              model.setGender(true);
             },
-            isSelected: selected == 1,
+            isSelected: model.genderMale,
             text: Strings.genderMan,
           ),
         ),
@@ -86,3 +79,18 @@ class _ToggleButtonsState extends State<_ToggleButtons> {
     );
   }
 }
+
+class _ShowGenderCheckBox extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final model = context.watch<RegistrationViewModel>();
+    return CheckBoxText(
+        text: Strings.genderShowMyGender,
+        isChecked: model.showMyGender,
+        onClicked: () {
+          model.setShowMyGender();
+        },
+    );
+  }
+}
+

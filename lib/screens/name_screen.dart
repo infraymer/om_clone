@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tinder/resources/dimens.dart';
 import 'package:tinder/resources/strings.dart';
 import 'package:tinder/resources/text_styles.dart';
+import 'package:tinder/view_model/registration_view_model.dart';
 import 'package:tinder/widgets/app_round_filled_button.dart';
 import 'package:tinder/widgets/registration_app_bar.dart';
 import 'package:tinder/widgets/registration_text_field.dart';
@@ -16,6 +18,7 @@ class NameScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final model = Provider.of<RegistrationViewModel>(context);
     return ScreenContainer(
       child: Column(
         children: <Widget>[
@@ -28,7 +31,9 @@ class NameScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 70),
             child: RegistrationTextField(
+              controller: model.nameController,
               hint: Strings.nameFieldPlaceholder,
+
             ),
           ),
           SizedBox(height: 16),

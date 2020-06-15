@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 
-class CheckBoxText extends StatefulWidget {
-  final Function(bool) onChecked;
+class CheckBoxText extends StatelessWidget {
+  final Function onClicked;
   final String text;
+  final bool isChecked;
 
-  const CheckBoxText({Key key, this.onChecked, this.text}) : super(key: key);
+  const CheckBoxText({Key key, this.onClicked, this.text, this.isChecked = false}) : super(key: key);
 
-  @override
-  _CheckBoxTextState createState() => _CheckBoxTextState();
-}
-
-class _CheckBoxTextState extends State<CheckBoxText> {
-  var isChecked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -21,20 +16,14 @@ class _CheckBoxTextState extends State<CheckBoxText> {
         children: <Widget>[
           Checkbox(
             value: isChecked,
-            onChanged: (value) => _onChanged(),
+            onChanged: (value) => onClicked?.call(),
           ),
           GestureDetector(
-            child: Text(widget.text ?? ''),
-            onTap: () => _onChanged(),
+            child: Text(text ?? ''),
+            onTap: () => onClicked?.call(),
           ),
         ],
       ),
     );
-  }
-
-  void _onChanged() {
-    isChecked = !isChecked;
-    setState(() {});
-    widget.onChecked?.call(isChecked);
   }
 }
