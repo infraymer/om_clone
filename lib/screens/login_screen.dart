@@ -47,12 +47,6 @@ class LoginScreen extends StatelessWidget {
               onPressed: () => Navigator.push(context, PhoneRoute()),
             ),
             SizedBox(height: 20),
-            AppRoundButtonDark(
-              margin: EdgeInsets.symmetric(horizontal: 50),
-              text: Strings.loginFacebook,
-              onPressed: () {},
-            ),
-            SizedBox(height: 20),
             Text(Strings.loginTrouble, style: TextStyles.loginDescription),
             SizedBox(height: 40),
           ],
