@@ -20,4 +20,16 @@ class RegistrationViewModel extends ChangeNotifier {
     showMyGender = !showMyGender;
     notifyListeners();
   }
+
+  void setImage(int index, File file) {
+    photos[index] = file;
+    notifyListeners();
+  }
+
+  void swapImage(int oldIndex, int newIndex) {
+    final e = photos[oldIndex];
+    photos.removeAt(oldIndex);
+    photos.insert(newIndex, e);
+    notifyListeners();
+  }
 }

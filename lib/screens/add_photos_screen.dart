@@ -1,9 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
 import 'package:tinder/resources/colors.dart';
 import 'package:tinder/resources/dimens.dart';
 import 'package:tinder/resources/strings.dart';
+import 'package:tinder/view_model/registration_view_model.dart';
 import 'package:tinder/widgets/app_round_filled_button.dart';
 import 'package:tinder/widgets/registration_app_bar.dart';
 import 'package:tinder/widgets/screen_container.dart';
@@ -26,7 +31,7 @@ class AddPhotosScreen extends StatelessWidget {
             title: Strings.photosTitle,
           ),
           SizedBox(height: 10),
-          Expanded(child: _buildList()),
+          Expanded(child: PhotoBlock()),
           SizedBox(height: 30),
           Container(
             width: double.infinity,
@@ -43,12 +48,13 @@ class AddPhotosScreen extends StatelessWidget {
       ),
     );
   }
+}
 
-  List<Widget> _buildSelectPhotoList() {
-    return List.generate(9, (index) => SelectPhoto());
-  }
-
-  Widget _buildList() {
+class PhotoBlock extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final model = Provider.of<RegistrationViewModel>(context);
+//    final model = context.watch<RegistrationViewModel>();
     return Container(
       alignment: Alignment.center,
       width: double.infinity,
@@ -58,16 +64,43 @@ class AddPhotosScreen extends StatelessWidget {
         runSpacing: 20,
         maxMainAxisCount: 3,
         minMainAxisCount: 3,
-        children: _buildSelectPhotoList(),
-        onReorder: _onReorder,
+        children: _buildSelectPhotoList(context),
+        onReorder: (int oldIndex, int newIndex) {
+          model.swapImage(oldIndex, newIndex);
+        },
       ),
     );
   }
 
-  void _onReorder(int oldIndex, int newIndex) {}
+  List<Widget> _buildSelectPhotoList(BuildContext context) {
+    // final model = context.watch<RegistrationViewModel>();
+    final model = Provider.of<RegistrationViewModel>(context, listen: false);
+    final list = <Widget>[];
+    model.photos.asMap().forEach(
+          (i, e) => list.add(
+            GestureDetector(
+              onTap: () async {
+                final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
+                final file = File(pickedFile.path);
+                model.setImage(i, file);
+              },
+              child: SelectPhoto(
+                file: e,
+                index: i,
+              ),
+            ),
+          ),
+        );
+    return list;
+  }
 }
 
 class SelectPhoto extends StatelessWidget {
+  final File file;
+  final int index;
+
+  const SelectPhoto({Key key, this.file, this.index}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
@@ -81,18 +114,26 @@ class SelectPhoto extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
-                color: AppColors.selectPhotoBg,
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Container(
-                transform: Matrix4.translationValues(12.0, 12.0, 0.0),
-                child: Icon(Icons.add_circle, size: 24),
-              ),
-            )
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4),
+                  color: file == null ? AppColors.selectPhotoBg : null,
+                ),
+                child: Center(
+                  child: file != null
+                      ? Image.file(
+                          file,
+                          fit: BoxFit.fill,
+                        )
+                      : null,
+                )),
+            if (file == null)
+              Align(
+                alignment: Alignment.bottomRight,
+                child: Container(
+                  transform: Matrix4.translationValues(12.0, 12.0, 0.0),
+                  child: Icon(Icons.add_circle, size: 24),
+                ),
+              )
           ],
         ),
       );
