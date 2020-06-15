@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:tinder/constants.dart';
 import 'package:tinder/resources/colors.dart';
 import 'package:tinder/resources/dimens.dart';
 import 'package:tinder/resources/strings.dart';
 import 'package:tinder/resources/text_styles.dart';
+import 'package:tinder/utils/view_utils.dart';
 import 'package:tinder/view_model/registration_view_model.dart';
 import 'package:tinder/widgets/app_round_filled_button.dart';
 import 'package:tinder/widgets/pincode/models/pin_theme.dart';
@@ -12,7 +15,7 @@ import 'package:tinder/widgets/pincode/pin_code_fields_custom.dart';
 import 'package:tinder/widgets/registration_app_bar.dart';
 import 'package:tinder/widgets/screen_container.dart';
 
-class BirthdayScreen extends StatelessWidget {
+class BirthdayScreen extends StatefulWidget {
   final VoidCallback onActionClicked;
   final VoidCallback onBackClicked;
 
@@ -20,12 +23,22 @@ class BirthdayScreen extends StatelessWidget {
       : super(key: key);
 
   @override
+  _BirthdayScreenState createState() => _BirthdayScreenState();
+}
+
+class _BirthdayScreenState extends State<BirthdayScreen> {
+  final _birthdayController = TextEditingController();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
   Widget build(BuildContext context) {
+    final model = Provider.of<RegistrationViewModel>(context, listen: false);
     return ScreenContainer(
+      keyScaffold: _scaffoldKey,
       child: Column(
         children: <Widget>[
           RegistrationAppBar(
-            onIconPressed: onBackClicked,
+            onIconPressed: widget.onBackClicked,
             icon: Icons.keyboard_arrow_left,
             title: Strings.birthdayTitle,
           ),
@@ -38,9 +51,27 @@ class BirthdayScreen extends StatelessWidget {
           Expanded(child: SizedBox()),
           Container(
             width: double.infinity,
-            margin: EdgeInsets.symmetric(horizontal: Dimens.horizontalMarginButtonRegScreen),
+            margin: EdgeInsets.symmetric(
+                horizontal: Dimens.horizontalMarginButtonRegScreen),
             child: AppRoundFilledButton(
-              onPressed: onActionClicked,
+              onPressed: () {
+                final text = _birthdayController.text;
+
+//                final rp = RegExp(Constants.dateRexExp);
+//
+//                if (!rp.hasMatch(text)) {
+//                  showMessage(_scaffoldKey, 'Incorrect date');
+//                  return;
+//                }
+
+
+                final date = _codeToDate(text);
+                model.birthday = DateFormat('dd-MM-yyyy').parse(date);
+
+                // showMessage(_scaffoldKey, 'Good');
+
+                widget.onActionClicked();
+              },
               text: Strings.next,
             ),
           ),
@@ -50,13 +81,19 @@ class BirthdayScreen extends StatelessWidget {
     );
   }
 
+  String _codeToDate(String text) {
+    final dd = text.substring(0, 2);
+    final mm = text.substring(2, 4);
+    final yyyy = text.substring(4, 8);
+    return '$dd-$mm-$yyyy';
+  }
+
   Widget _buildCode(BuildContext context) {
-    final model = Provider.of<RegistrationViewModel>(context);
     return PinCodeTextField(
       length: 8,
       obsecureText: false,
       animationType: AnimationType.fade,
-      controller: model.birthdayController,
+      controller: _birthdayController,
       pinTheme: PinTheme(
         shape: PinCodeFieldShape.underline,
         selectedColor: AppColors.main,
@@ -66,6 +103,7 @@ class BirthdayScreen extends StatelessWidget {
         fieldWidth: 24,
         borderWidth: 4,
       ),
+      textInputType: TextInputType.number,
       inputFormatters: [
         WhitelistingTextInputFormatter.digitsOnly,
       ],

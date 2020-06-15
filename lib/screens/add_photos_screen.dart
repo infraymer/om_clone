@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -8,12 +9,13 @@ import 'package:reorderables/reorderables.dart';
 import 'package:tinder/resources/colors.dart';
 import 'package:tinder/resources/dimens.dart';
 import 'package:tinder/resources/strings.dart';
+import 'package:tinder/utils/view_utils.dart';
 import 'package:tinder/view_model/registration_view_model.dart';
 import 'package:tinder/widgets/app_round_filled_button.dart';
 import 'package:tinder/widgets/registration_app_bar.dart';
 import 'package:tinder/widgets/screen_container.dart';
 
-class AddPhotosScreen extends StatelessWidget {
+class AddPhotosScreen extends StatefulWidget {
   final VoidCallback onActionClicked;
   final VoidCallback onBackClicked;
 
@@ -21,12 +23,22 @@ class AddPhotosScreen extends StatelessWidget {
       : super(key: key);
 
   @override
+  _AddPhotosScreenState createState() => _AddPhotosScreenState();
+}
+
+class _AddPhotosScreenState extends State<AddPhotosScreen> {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _isLoading = ValueNotifier<bool>(false);
+
+  @override
   Widget build(BuildContext context) {
+    final model = Provider.of<RegistrationViewModel>(context);
     return ScreenContainer(
+      keyScaffold: _scaffoldKey,
       child: Column(
         children: <Widget>[
           RegistrationAppBar(
-            onIconPressed: onBackClicked,
+            onIconPressed: widget.onBackClicked,
             icon: Icons.keyboard_arrow_left,
             title: Strings.photosTitle,
           ),
@@ -34,15 +46,30 @@ class AddPhotosScreen extends StatelessWidget {
           Expanded(child: PhotoBlock()),
           SizedBox(height: 30),
           Container(
-            width: double.infinity,
-            margin: EdgeInsets.symmetric(
-              horizontal: Dimens.horizontalMarginButtonRegScreen,
-            ),
-            child: AppRoundFilledButton(
-              onPressed: onActionClicked,
-              text: Strings.done,
-            ),
-          ),
+              width: double.infinity,
+              margin: EdgeInsets.symmetric(
+                horizontal: Dimens.horizontalMarginButtonRegScreen,
+              ),
+              child: ValueListenableBuilder<bool>(
+                valueListenable: _isLoading,
+                builder: (context, value, child) {
+                  if (value) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+
+                  return AppRoundFilledButton(
+                    onPressed: () {
+                      _isLoading.value = true;
+                      model
+                          .onDoneClicked()
+                          .then((value) => widget.onActionClicked())
+                          .catchError((e) => showMessage(_scaffoldKey, 'Upload error'))
+                          .whenComplete(() => _isLoading.value = false);
+                    },
+                    text: Strings.done,
+                  );
+                },
+              )),
           SizedBox(height: Dimens.bottomMarginButtonRegScreen),
         ],
       ),
@@ -80,7 +107,8 @@ class PhotoBlock extends StatelessWidget {
           (i, e) => list.add(
             GestureDetector(
               onTap: () async {
-                final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
+                final pickedFile =
+                    await ImagePicker().getImage(source: ImageSource.gallery);
                 final file = File(pickedFile.path);
                 model.setImage(i, file);
               },

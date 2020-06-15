@@ -47,7 +47,7 @@ class RegistrationScreen extends StatelessWidget {
                 ),
                 AddPhotosScreen(
                   onBackClicked: _prevPage,
-                  onActionClicked: () => Navigator.push(context, WelcomeRoute()),
+                  onActionClicked: () => Navigator.pushReplacement(context, WelcomeRoute()),
                 ),
               ],
             ),

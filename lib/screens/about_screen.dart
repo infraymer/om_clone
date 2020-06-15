@@ -9,12 +9,19 @@ import 'package:tinder/widgets/registration_app_bar.dart';
 import 'package:tinder/widgets/registration_text_field.dart';
 import 'package:tinder/widgets/screen_container.dart';
 
-class AboutScreen extends StatelessWidget {
+class AboutScreen extends StatefulWidget {
   final VoidCallback onActionClicked;
   final VoidCallback onBackClicked;
 
   const AboutScreen({Key key, this.onActionClicked, this.onBackClicked})
       : super(key: key);
+
+  @override
+  _AboutScreenState createState() => _AboutScreenState();
+}
+
+class _AboutScreenState extends State<AboutScreen> {
+  final _aboutController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +30,7 @@ class AboutScreen extends StatelessWidget {
       child: Column(
         children: <Widget>[
           RegistrationAppBar(
-            onIconPressed: onBackClicked,
+            onIconPressed: widget.onBackClicked,
             icon: Icons.keyboard_arrow_left,
             title: Strings.aboutTitle,
           ),
@@ -31,7 +38,7 @@ class AboutScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 70),
             child: RegistrationTextField(
-              controller: model.schoolNameController,
+              controller: _aboutController,
               hint: Strings.aboutFieldPlaceholder,
             ),
           ),
@@ -42,7 +49,10 @@ class AboutScreen extends StatelessWidget {
             width: double.infinity,
             margin: EdgeInsets.symmetric(horizontal: Dimens.horizontalMarginButtonRegScreen),
             child: AppRoundButton(
-              onPressed: onActionClicked,
+              onPressed: () {
+                model.schoolName = _aboutController.text;
+                widget.onActionClicked();
+              },
               text: Strings.skip,
             ),
           ),
