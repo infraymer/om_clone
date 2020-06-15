@@ -5,6 +5,7 @@ import 'package:tinder/resources/strings.dart';
 import 'package:tinder/resources/text_styles.dart';
 import 'package:tinder/view_model/registration_view_model.dart';
 import 'package:tinder/widgets/app_round_button.dart';
+import 'package:tinder/widgets/app_round_filled_button.dart';
 import 'package:tinder/widgets/registration_app_bar.dart';
 import 'package:tinder/widgets/registration_text_field.dart';
 import 'package:tinder/widgets/screen_container.dart';
@@ -25,7 +26,6 @@ class _AboutScreenState extends State<AboutScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<RegistrationViewModel>(context);
     return ScreenContainer(
       child: Column(
         children: <Widget>[
@@ -48,17 +48,30 @@ class _AboutScreenState extends State<AboutScreen> {
           Container(
             width: double.infinity,
             margin: EdgeInsets.symmetric(horizontal: Dimens.horizontalMarginButtonRegScreen),
-            child: AppRoundButton(
-              onPressed: () {
-                model.schoolName = _aboutController.text;
-                widget.onActionClicked();
+            child: ValueListenableBuilder<TextEditingValue>(
+              valueListenable: _aboutController,
+              builder: (context, value, child) {
+                if (value.text.isEmpty)
+                  return AppRoundButton(
+                    onPressed: () => _onNext(context),
+                    text: Strings.skip,
+                  );
+                return AppRoundFilledButton(
+                  onPressed: () => _onNext(context),
+                  text: Strings.next,
+                );
               },
-              text: Strings.skip,
-            ),
+            )
           ),
           SizedBox(height: Dimens.bottomMarginButtonRegScreen),
         ],
       ),
     );
+  }
+
+  void _onNext(BuildContext context) {
+    final model = Provider.of<RegistrationViewModel>(context, listen: false);
+    model.schoolName = _aboutController.text;
+    widget.onActionClicked();
   }
 }

@@ -56,20 +56,13 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
             child: AppRoundFilledButton(
               onPressed: () {
                 final text = _birthdayController.text;
-
-//                final rp = RegExp(Constants.dateRexExp);
-//
-//                if (!rp.hasMatch(text)) {
-//                  showMessage(_scaffoldKey, 'Incorrect date');
-//                  return;
-//                }
-
-
+                final rp = RegExp(Constants.dateRexExp);
+                if (!rp.hasMatch(text)) {
+                  showMessage(_scaffoldKey, 'Incorrect date');
+                  return;
+                }
                 final date = _codeToDate(text);
                 model.birthday = DateFormat('dd-MM-yyyy').parse(date);
-
-                // showMessage(_scaffoldKey, 'Good');
-
                 widget.onActionClicked();
               },
               text: Strings.next,
