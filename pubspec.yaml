@@ -44,6 +44,9 @@ dependencies:
   firebase_storage: ^3.1.6
   intl: ^0.16.1
 
+#  flutter_tindercard: ^0.1.8
+#  swipeable_tinder_card: ^1.0.0
+
   firebase_core: ^0.4.0+9
   firebase_auth: ^0.16.1
 

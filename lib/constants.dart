@@ -1,6 +1,6 @@
 class Constants {
-  static const manImage = 'https://www.regissalons.co.uk/wp-content/uploads/American-Crew-Blog.jpg';
-  static const womanImage = 'https://avatars.mds.yandex.net/get-pdb/1857214/5b320704-dea6-4cc4-8c07-2eff8a570c28/s1200?webp=false';
+  static const manImage = 'https://i.pinimg.com/736x/be/b4/a8/beb4a87b5b14c09d768abd2df8c2b2a8--clark-kent-peter-otoole.jpg';
+  static const womanImage = 'https://i.pinimg.com/736x/2c/79/f1/2c79f13ab17e2c42caecb85aa8d2cde5.jpg';
 
   // regex ddMMyyyy
   static const dateRexExp = r'^(((0[1-9]|[12]\d|3[01])(0[13578]|1[02])((19|[2-9]\d)\d{2}))|((0[1-9]|[12]\d|30)(0[13456789]|1[012])((19|[2-9]\d)\d{2}))|((0[1-9]|1\d|2[0-8])02((19|[2-9]\d)\d{2}))|(2902((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))$';
