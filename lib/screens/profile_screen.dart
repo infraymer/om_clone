@@ -6,6 +6,10 @@ import 'package:tinder/widgets/screen_container.dart';
 import 'package:tinder/widgets/yes_button.dart';
 
 class ProfileScreen extends StatelessWidget {
+  final String tag;
+
+  const ProfileScreen({Key key, this.tag}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ScreenContainer(
@@ -16,9 +20,12 @@ class ProfileScreen extends StatelessWidget {
             Expanded(
               child: Container(
                 width: double.infinity,
-                child: Image.network(
-                  Constants.womanImage,
-                  fit: BoxFit.cover,
+                child: Hero(
+                  tag: tag ?? '',
+                  child: Image.network(
+                    tag,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),

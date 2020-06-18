@@ -12,11 +12,14 @@ class TinderCardContent extends StatelessWidget {
     return Stack(
       children: <Widget>[
         ClipRRect(
-          child: Image.network(
-            image,
-            fit: BoxFit.cover,
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
+          child: Hero(
+            tag: image,
+            child: Image.network(
+              image,
+              fit: BoxFit.cover,
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+            ),
           ),
           borderRadius: BorderRadius.circular(15),
         ),

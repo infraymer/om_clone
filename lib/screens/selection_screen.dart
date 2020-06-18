@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tinder/resources/colors.dart';
-import 'package:tinder/resources/images.dart';
 import 'package:tinder/routes.dart';
 import 'package:tinder/screens/profile_screen.dart';
 import 'package:tinder/widgets/no_button.dart';
@@ -55,7 +53,10 @@ class _SelectionScreenState extends State<SelectionScreen>
             children: <Widget>[
               NoButton(),
               SizedBox(width: 20),
-              YesButton(count: 70, onTap: () => Navigator.push(context, MatchRoute()),),
+              YesButton(
+                count: 70,
+                onTap: () => Navigator.push(context, MatchRoute()),
+              ),
             ],
           ),
           SizedBox(height: 40),
@@ -70,7 +71,12 @@ class _SelectionScreenState extends State<SelectionScreen>
 
   SwipeableCard _buildCard(String image) {
     return SwipeableCard(
-      child: TinderCardContent(image: image),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(context, FadePageRoue(ProfileScreen(tag: image,)));
+        },
+        child: TinderCardContent(image: image),
+      ),
       callback: (result, card) {
         size--;
         if (size < 1) {
