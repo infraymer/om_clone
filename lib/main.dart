@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tinder/resources/colors.dart';
 import 'package:tinder/screens/chat_screen.dart';
+import 'package:tinder/screens/profile_screen.dart';
 import 'package:tinder/screens/selection_screen.dart';
 
 void main() {
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
           Theme.of(context).textTheme,
         ),
       ),
-      home: SelectionScreen(),
+      home: ProfileScreen(),
     );
   }
 }

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tinder/resources/colors.dart';
 import 'package:tinder/resources/images.dart';
+import 'package:tinder/widgets/no_button.dart';
 import 'package:tinder/widgets/swipeable_tinder_card.dart';
 import 'package:tinder/widgets/tinder_card_content.dart';
+import 'package:tinder/widgets/yes_button.dart';
 
 class SelectionScreen extends StatefulWidget {
   @override
@@ -49,9 +51,9 @@ class _SelectionScreenState extends State<SelectionScreen>
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              _NoButton(),
+              NoButton(),
               SizedBox(width: 20),
-              _YesButton(),
+              YesButton(count: 70),
             ],
           ),
           SizedBox(height: 40),
@@ -83,72 +85,4 @@ class _SelectionScreenState extends State<SelectionScreen>
     'https://avatars.mds.yandex.net/get-pdb/1938028/9db2f4c2-8865-4ea3-8df3-b60568631789/s1200?webp=false',
     'https://avatars.mds.yandex.net/get-pdb/881477/e830eaaa-ea2e-4ead-9b50-fa14afb87f73/s1200?webp=false'
   ];
-}
-
-class _NoButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final radius = BorderRadius.circular(100);
-    final double size = 50;
-    return ClipRRect(
-      borderRadius: radius,
-      child: Material(
-        color: Colors.white,
-        child: InkWell(
-          onTap: () {},
-          highlightColor: Colors.black38,
-          child: Container(
-            height: size,
-            width: size,
-            child: Center(
-              child: SvgPicture.asset(
-                AppImages.close,
-                width: 20,
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _YesButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final radius = BorderRadius.circular(100);
-    final double size = 50;
-    return ClipRRect(
-      borderRadius: radius,
-      child: Material(
-        color: Colors.white,
-        child: InkWell(
-          onTap: () {},
-          highlightColor: Colors.black38,
-          child: Container(
-            height: size,
-            width: size,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SvgPicture.asset(
-                  AppImages.heart,
-                  width: 16,
-                  color: Colors.red[400],
-                ),
-                Text(
-                  '70',
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.bold,
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
 }

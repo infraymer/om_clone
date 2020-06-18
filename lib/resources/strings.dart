@@ -1,4 +1,4 @@
-class Strings {
+class   Strings {
   static const back = 'Back';
   static const next = 'Next';
   static const skip = 'Skip';
