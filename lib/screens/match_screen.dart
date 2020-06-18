@@ -3,6 +3,8 @@ import 'package:tinder/constants.dart';
 import 'package:tinder/resources/colors.dart';
 import 'package:tinder/resources/strings.dart';
 import 'package:tinder/resources/text_styles.dart';
+import 'package:tinder/routes.dart';
+import 'package:tinder/screens/profile_screen.dart';
 import 'package:tinder/widgets/app_icon_round_button_dark.dart';
 import 'package:tinder/widgets/app_round_button_dark.dart';
 import 'package:tinder/widgets/match_photo.dart';
@@ -37,14 +39,14 @@ class MatchScreen extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: 50),
             text: Strings.matchSendMessage,
             icon: Icons.chat_bubble,
-            onPressed: () {},
+            onPressed: () => Navigator.push(context, ChatRoute()),
           ),
           SizedBox(height: 30),
           AppIconRoundButtonDark(
             margin: EdgeInsets.symmetric(horizontal: 50),
             text: Strings.matchKeepPlaying,
             icon: Icons.perm_contact_calendar,
-            onPressed: () {},
+            onPressed: () => Navigator.push(context, ProfileRoute()),
           ),
           SizedBox(height: 30),
           AppIconRoundButtonDark(

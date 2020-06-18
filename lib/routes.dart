@@ -1,10 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
+import 'package:tinder/screens/chat_screen.dart';
 import 'package:tinder/screens/code_screen.dart';
 import 'package:tinder/screens/login_screen.dart';
 import 'package:tinder/screens/match_screen.dart';
 import 'package:tinder/screens/phone_screen.dart';
+import 'package:tinder/screens/profile_screen.dart';
 import 'package:tinder/screens/registration_screen.dart';
+import 'package:tinder/screens/selection_screen.dart';
+import 'package:tinder/screens/settings_screen.dart';
 import 'package:tinder/screens/welcome_screen.dart';
 import 'package:tinder/utils/auth_firebase.dart';
 import 'package:tinder/view_model/registration_view_model.dart';
@@ -39,3 +43,21 @@ class RegistrationRoute extends CupertinoPageRoute {
 class MatchRoute extends CupertinoPageRoute {
   MatchRoute() : super(builder: (ctx) => MatchScreen());
 }
+
+class SelectionRoute extends CupertinoPageRoute {
+  SelectionRoute() : super(builder: (ctx) => SelectionScreen());
+}
+
+class ChatRoute extends CupertinoPageRoute {
+  ChatRoute() : super(builder: (ctx) => ChatScreen());
+}
+
+class SettingsRoute extends CupertinoPageRoute {
+  SettingsRoute() : super(builder: (ctx) => SettingsScreen());
+}
+
+class ProfileRoute extends CupertinoPageRoute {
+  ProfileRoute() : super(builder: (ctx) => ProfileScreen());
+}
+
+

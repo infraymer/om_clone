@@ -10,5 +10,6 @@ class AppColors {
   static final textField = Colors.grey[200];
   static final selectPhotoBg = Colors.grey[200];
   static final divider = Color(0xFFe2e2ee);
+  static final bgSelectorButton = Color(0xFFe2e2ee).withOpacity(0.5);
 
 }

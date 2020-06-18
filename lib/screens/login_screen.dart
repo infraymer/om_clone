@@ -5,6 +5,7 @@ import 'package:tinder/resources/images.dart';
 import 'package:tinder/resources/strings.dart';
 import 'package:tinder/resources/text_styles.dart';
 import 'package:tinder/routes.dart';
+import 'package:tinder/screens/selection_screen.dart';
 import 'package:tinder/widgets/app_round_button_dark.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -38,7 +39,7 @@ class LoginScreen extends StatelessWidget {
                     color: Colors.white,
                     fontWeight: FontWeight.w400,
                   )),
-              onPressed: () => Navigator.push(context, RegistrationRoute()),
+              onPressed: () => Navigator.push(context, SelectionRoute() /*RegistrationRoute()*/), // todo
             ),
             SizedBox(height: 20),
             AppRoundButtonDark(

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tinder/resources/colors.dart';
 import 'package:tinder/resources/images.dart';
+import 'package:tinder/routes.dart';
+import 'package:tinder/screens/profile_screen.dart';
 import 'package:tinder/widgets/no_button.dart';
 import 'package:tinder/widgets/swipeable_tinder_card.dart';
 import 'package:tinder/widgets/tinder_card_content.dart';
@@ -27,12 +29,12 @@ class _SelectionScreenState extends State<SelectionScreen>
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.person),
-          onPressed: () {},
+          onPressed: () => Navigator.push(context, ProfileRoute()),
         ),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.settings),
-            onPressed: () {},
+            onPressed: () => Navigator.push(context, SettingsRoute()),
           ),
         ],
       ),
@@ -53,7 +55,7 @@ class _SelectionScreenState extends State<SelectionScreen>
             children: <Widget>[
               NoButton(),
               SizedBox(width: 20),
-              YesButton(count: 70),
+              YesButton(count: 70, onTap: () => Navigator.push(context, MatchRoute()),),
             ],
           ),
           SizedBox(height: 40),

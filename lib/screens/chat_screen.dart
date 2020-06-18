@@ -43,7 +43,7 @@ class _AppBar extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: IconButton(
             icon: Icon(Icons.arrow_back_ios, color: Colors.black12),
-            onPressed: () {},
+            onPressed: () => Navigator.pop(context),
           ),
         ),
         Container(

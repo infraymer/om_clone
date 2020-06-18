@@ -16,7 +16,6 @@ class ProfileScreen extends StatelessWidget {
             Expanded(
               child: Container(
                 width: double.infinity,
-                color: Colors.orange,
                 child: Image.network(
                   Constants.womanImage,
                   fit: BoxFit.cover,
