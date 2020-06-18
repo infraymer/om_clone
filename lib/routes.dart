@@ -57,7 +57,7 @@ class SettingsRoute extends CupertinoPageRoute {
 }
 
 class ProfileRoute extends CupertinoPageRoute {
-  ProfileRoute() : super(builder: (ctx) => ProfileScreen());
+  ProfileRoute(tag) : super(builder: (ctx) => ProfileScreen(tag: tag));
 }
 
 class FadePageRoue extends PageRouteBuilder {

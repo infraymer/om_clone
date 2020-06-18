@@ -135,3 +135,7 @@ class _SwipeableState extends State<SwipeableCard>{
 enum SwipeDirection{
   LEFT,RIGHT
 }
+
+class TinderModel extends ChangeNotifier {
+
+}

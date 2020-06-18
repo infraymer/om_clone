@@ -32,7 +32,7 @@ class WelcomeScreen extends StatelessWidget {
             width: double.infinity,
             margin: EdgeInsets.symmetric(horizontal: 60),
             child: AppRoundFilledButton(
-              onPressed: () => Navigator.push(context, SelectionRoute()),
+              onPressed: () => Navigator.pushAndRemoveUntil(context, SelectionRoute(), (_) => false),
               text: Strings.genderGotIt,
             ),
           ),

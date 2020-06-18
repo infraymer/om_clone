@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 import 'package:tinder/constants.dart';
 import 'package:tinder/widgets/circle_status.dart';
 import 'package:tinder/widgets/no_button.dart';
@@ -47,7 +48,7 @@ class _Content extends StatelessWidget {
           alignment: Alignment.topRight,
           transform: Matrix4.translationValues(0.0, -30.0, 0.0),
           child: FloatingActionButton(
-            onPressed: () {},
+            onPressed: () => Navigator.pop(context),
             child: Icon(Icons.arrow_downward),
           ),
         ),
@@ -147,19 +148,24 @@ class _IconTextItem extends StatelessWidget {
 class _ShareProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          'Share Noam\'s profile'.toUpperCase(),
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-        ),
-        SizedBox(height: 8),
-        Text(
-          'See what a friend thinks'.toUpperCase(),
-          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
-        ),
-      ],
+    return GestureDetector(
+      onTap: () {
+        Share.share('Share profile OneMatch');
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            'Share Noam\'s profile'.toUpperCase(),
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+          ),
+          SizedBox(height: 8),
+          Text(
+            'See what a friend thinks'.toUpperCase(),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
+          ),
+        ],
+      ),
     );
   }
 }

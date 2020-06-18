@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:tinder/resources/colors.dart';
 import 'package:tinder/routes.dart';
@@ -15,6 +17,7 @@ class SelectionScreen extends StatefulWidget {
 class _SelectionScreenState extends State<SelectionScreen>
     with TickerProviderStateMixin {
   var size = 0;
+  var sizeTwo = 4;
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +28,6 @@ class _SelectionScreenState extends State<SelectionScreen>
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.person),
-          onPressed: () => Navigator.push(context, ProfileRoute()),
-        ),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.settings),
@@ -42,7 +41,7 @@ class _SelectionScreenState extends State<SelectionScreen>
             child: LayoutBuilder(builder: (context, constrains) {
               return CardStack(
                 key: UniqueKey(),
-                cards: cards,
+                cards: cards.sublist(0, sizeTwo),
                 height: constrains.maxHeight,
                 width: constrains.maxWidth,
               );
@@ -51,7 +50,15 @@ class _SelectionScreenState extends State<SelectionScreen>
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              NoButton(),
+              NoButton(
+                onTap: () {
+                  sizeTwo--;
+                  if (sizeTwo < 1) {
+                    sizeTwo = 4;
+                  }
+                  setState(() {});
+                },
+              ),
               SizedBox(width: 20),
               YesButton(
                 count: 70,
@@ -69,23 +76,28 @@ class _SelectionScreenState extends State<SelectionScreen>
     return images.map((index) => _buildCard(index)).toList();
   }
 
+  final swipeController = StreamController<bool>.broadcast();
+
   SwipeableCard _buildCard(String image) {
     return SwipeableCard(
       child: GestureDetector(
         onTap: () {
-          Navigator.push(context, FadePageRoue(ProfileScreen(tag: image,)));
+          Navigator.push(context, FadePageRoue(ProfileScreen(tag: image)));
         },
         child: TinderCardContent(image: image),
       ),
       callback: (result, card) {
-        size--;
-        if (size < 1) {
+        sizeTwo--;
+        if (sizeTwo < 1) {
+          sizeTwo = 4;
           setState(() {});
         }
         print("User swiped " + result.toString() + " on " + card.toString());
       },
     );
   }
+
+  var allImage = [];
 
   final images = [
     'https://avatars.mds.yandex.net/get-pdb/1893235/721e847f-a920-477e-ae18-3b531f31aca8/s1200?webp=false',

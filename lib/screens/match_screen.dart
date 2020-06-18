@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 import 'package:tinder/constants.dart';
 import 'package:tinder/resources/colors.dart';
 import 'package:tinder/resources/strings.dart';
@@ -6,7 +7,6 @@ import 'package:tinder/resources/text_styles.dart';
 import 'package:tinder/routes.dart';
 import 'package:tinder/screens/profile_screen.dart';
 import 'package:tinder/widgets/app_icon_round_button_dark.dart';
-import 'package:tinder/widgets/app_round_button_dark.dart';
 import 'package:tinder/widgets/match_photo.dart';
 import 'package:tinder/widgets/screen_container.dart';
 
@@ -27,7 +27,10 @@ class MatchScreen extends StatelessWidget {
             child: FittedBox(
               child: Row(
                 children: <Widget>[
-                  MatchPhoto(Constants.womanImage),
+                  Hero(
+                    tag: Constants.womanImage,
+                    child: MatchPhoto(Constants.womanImage),
+                  ),
                   SizedBox(width: 100),
                   MatchPhoto(Constants.manImage),
                 ],
@@ -46,7 +49,8 @@ class MatchScreen extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: 50),
             text: Strings.matchKeepPlaying,
             icon: Icons.perm_contact_calendar,
-            onPressed: () => Navigator.push(context, ProfileRoute()),
+            // onPressed: () => Navigator.push(context, ProfileRoute(Constants.womanImage)),
+            onPressed: () => Navigator.push(context, FadePageRoue(ProfileScreen(tag: Constants.womanImage))),
           ),
           SizedBox(height: 30),
           AppIconRoundButtonDark(
@@ -54,7 +58,9 @@ class MatchScreen extends StatelessWidget {
             text: Strings.matchTellYourFriends,
             icon: Icons.share,
             withBorder: false,
-            onPressed: () {},
+            onPressed: () {
+              Share.share('Share OneMatch');
+            },
           ),
           SizedBox(height: 30),
         ],

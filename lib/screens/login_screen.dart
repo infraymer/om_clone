@@ -39,7 +39,7 @@ class LoginScreen extends StatelessWidget {
                     color: Colors.white,
                     fontWeight: FontWeight.w400,
                   )),
-              onPressed: () => Navigator.push(context, SelectionRoute() /*RegistrationRoute()*/), // todo
+              onPressed: () => Navigator.push(context, RegistrationRoute()),
             ),
             SizedBox(height: 20),
             AppRoundButtonDark(
