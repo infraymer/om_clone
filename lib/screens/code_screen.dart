@@ -97,7 +97,7 @@ class _CodeScreenState extends State<CodeScreen> {
               ],
             ),
             SizedBox(height: 20),
-            _buildDescription(),
+            // _buildDescription(),
           ],
         ),
       ),
@@ -142,6 +142,7 @@ class _CodeScreenState extends State<CodeScreen> {
 
   Widget _buildCode() {
     return PinCodeTextField(
+      autoFocus: true,
       controller: _codeController,
       length: 6,
       obsecureText: false,

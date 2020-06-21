@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
-import 'package:tinder/constants.dart';
+import 'package:tinder/routes.dart';
 import 'package:tinder/widgets/circle_status.dart';
 import 'package:tinder/widgets/no_button.dart';
 import 'package:tinder/widgets/screen_container.dart';
@@ -130,7 +130,10 @@ class _IconTextItem extends StatelessWidget {
     return Container(
       child: Row(
         children: [
-          Icon(icon, size: 16,),
+          Icon(
+            icon,
+            size: 16,
+          ),
           SizedBox(width: 8),
           Text(
             text ?? '',
@@ -192,9 +195,13 @@ class _Buttons extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        NoButton(),
+        NoButton(
+          onTap: () => Navigator.pop(context),
+        ),
         SizedBox(width: 20),
-        YesButton(),
+        YesButton(
+          onTap: () => Navigator.pushReplacement(context, MatchRoute()),
+        ),
       ],
     );
   }

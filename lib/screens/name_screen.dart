@@ -38,9 +38,13 @@ class _NameScreenState extends State<NameScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 70),
             child: RegistrationTextField(
+              textInputAction: TextInputAction.next,
               controller: _nameController,
               hint: Strings.nameFieldPlaceholder,
-
+              onSubmitted: (_) {
+                model.name = _nameController.text;
+                widget.onActionClicked();
+              },
             ),
           ),
           SizedBox(height: 16),

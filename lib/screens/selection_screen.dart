@@ -66,7 +66,7 @@ class _SelectionScreenState extends State<SelectionScreen>
               ),
             ],
           ),
-          SizedBox(height: 40),
+          SizedBox(height: 20),
         ],
       ),
     );

@@ -9,7 +9,7 @@ class NoButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final radius = BorderRadius.circular(100);
-    final double size = 50;
+    final double size = 70;
     return Container(
       height: size,
       width: size,

@@ -1,4 +1,3 @@
-import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,6 +9,7 @@ import 'package:tinder/screens/base_screen.dart';
 import 'package:tinder/utils/auth_firebase.dart';
 import 'package:tinder/widgets/app_back_button.dart';
 import 'package:tinder/widgets/app_button.dart';
+import 'package:tinder/widgets/country_code_widget/country_code_picker.dart';
 import 'package:tinder/widgets/custom_app_bar_1.dart';
 
 class PhoneScreen extends StatefulWidget {
@@ -93,6 +93,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
             onChanged: (value) => _countryCode = value,
             onInit: (value) => _countryCode = value,
             textStyle: style,
+
             initialSelection: _platformVersion ?? 'US',
             flagWidth: 28,
           ),
@@ -107,13 +108,18 @@ class _PhoneScreenState extends State<PhoneScreen> {
         padding: EdgeInsets.symmetric(horizontal: 16),
         decoration: fieldDecoration,
         child: TextField(
+          autofocus: true,
           controller: _phoneController,
           style: style,
           keyboardType: TextInputType.phone,
+          textInputAction: TextInputAction.next,
           inputFormatters: [
             LengthLimitingTextInputFormatter(12),
           ],
           decoration: InputDecoration(border: InputBorder.none),
+          onSubmitted: (value) {
+            _onNext();
+          },
         ),
       ),
     );
@@ -122,7 +128,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
   Widget _buildDescription() {
     return Text(
       Strings.phoneDescription,
-      textAlign: TextAlign.center,
+      textAlign: TextAlign.start,
       style: TextStyle(
         fontSize: 14,
         color: Colors.black54,

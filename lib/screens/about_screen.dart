@@ -38,8 +38,10 @@ class _AboutScreenState extends State<AboutScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 70),
             child: RegistrationTextField(
+              textInputAction: TextInputAction.next,
               controller: _aboutController,
               hint: Strings.aboutFieldPlaceholder,
+              onSubmitted: (_) => _onNext(context),
             ),
           ),
           SizedBox(height: 16),

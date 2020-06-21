@@ -11,7 +11,7 @@ class YesButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final radius = BorderRadius.circular(100);
-    final double size = 50;
+    final double size = 70;
     return Container(
       height: size,
       width: size,
@@ -31,14 +31,14 @@ class YesButton extends StatelessWidget {
             children: <Widget>[
               SvgPicture.asset(
                 AppImages.heart,
-                width: count == null ? 24 : 16,
+                width: count == null ? 24 : 24,
                 color: Colors.red[400],
               ),
               if (count != null)
                 Text(
                   count.toString(),
                   style: TextStyle(
-                    fontSize: 10,
+                    fontSize: 12,
                     fontWeight: FontWeight.bold,
                   ),
                 )
