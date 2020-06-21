@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:tinder/resources/colors.dart';
 import 'package:tinder/routes.dart';
@@ -25,17 +23,17 @@ class _SelectionScreenState extends State<SelectionScreen>
     size = cards.length;
     return Scaffold(
       backgroundColor: AppColors.main,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.settings),
-            onPressed: () => Navigator.push(context, SettingsRoute()),
-          ),
-        ],
-      ),
-      body: Column(
+//      appBar: AppBar(
+//        backgroundColor: Colors.transparent,
+//        elevation: 0,
+//        actions: <Widget>[
+//          IconButton(
+//            icon: Icon(Icons.settings),
+//            onPressed: () => Navigator.push(context, SettingsRoute()),
+//          ),
+//        ],
+//      ),
+      body: Stack(
         children: <Widget>[
           Expanded(
             child: LayoutBuilder(builder: (context, constrains) {
@@ -47,24 +45,48 @@ class _SelectionScreenState extends State<SelectionScreen>
               );
             }),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              NoButton(
-                onTap: () {
-                  sizeTwo--;
-                  if (sizeTwo < 1) {
-                    sizeTwo = 4;
-                  }
-                  setState(() {});
-                },
-              ),
-              SizedBox(width: 20),
-              YesButton(
-                count: 70,
-                onTap: () => Navigator.push(context, MatchRoute()),
-              ),
-            ],
+          Positioned(
+            bottom: 20,
+            left: 10,
+            right: 10,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Opacity(
+                  opacity: 0,
+                  child: IconButton(
+                    icon: Icon(Icons.settings, color: Colors.transparent),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    NoButton(
+                      onTap: () {
+                        sizeTwo--;
+                        if (sizeTwo < 1) {
+                          sizeTwo = 4;
+                        }
+                        setState(() {});
+                      },
+                    ),
+                    SizedBox(width: 20),
+                    YesButton(
+                      count: 70,
+                      onTap: () => Navigator.push(context, MatchRoute()),
+                    ),
+                  ],
+                ),
+                IconButton(
+                  icon: Icon(
+                    Icons.settings,
+                    color: Colors.white,
+                    size: 32,
+                  ),
+                  onPressed: () => Navigator.push(context, SettingsRoute()),
+                ),
+              ],
+            ),
           ),
           SizedBox(height: 20),
         ],
@@ -75,8 +97,6 @@ class _SelectionScreenState extends State<SelectionScreen>
   List<SwipeableCard> loadCards() {
     return images.map((index) => _buildCard(index)).toList();
   }
-
-  final swipeController = StreamController<bool>.broadcast();
 
   SwipeableCard _buildCard(String image) {
     return SwipeableCard(
