@@ -35,16 +35,14 @@ class _SelectionScreenState extends State<SelectionScreen>
 //      ),
       body: Stack(
         children: <Widget>[
-          Expanded(
-            child: LayoutBuilder(builder: (context, constrains) {
-              return CardStack(
-                key: UniqueKey(),
-                cards: cards.sublist(0, sizeTwo),
-                height: constrains.maxHeight,
-                width: constrains.maxWidth,
-              );
-            }),
-          ),
+          LayoutBuilder(builder: (context, constrains) {
+            return CardStack(
+              key: UniqueKey(),
+              cards: cards.sublist(0, sizeTwo),
+              height: constrains.maxHeight,
+              width: constrains.maxWidth,
+            );
+          }),
           Positioned(
             bottom: 20,
             left: 10,
