@@ -48,7 +48,8 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
             child: _buildCode(context),
           ),
           Text(Strings.birthdayDescription, style: TextStyles.fieldDescription),
-          Expanded(child: SizedBox()),
+          // Expanded(child: SizedBox()),
+          SizedBox(height: 16),
           Container(
             width: double.infinity,
             margin: EdgeInsets.symmetric(
@@ -84,6 +85,8 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
   Widget _buildCode(BuildContext context) {
     return PinCodeTextField(
       length: 8,
+      autoFocus: true,
+      focusNode: FocusNode()..requestFocus(),
       obsecureText: false,
       animationType: AnimationType.fade,
       controller: _birthdayController,

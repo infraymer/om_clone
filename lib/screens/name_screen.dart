@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:tinder/resources/dimens.dart';
 import 'package:tinder/resources/strings.dart';
 import 'package:tinder/resources/text_styles.dart';
+import 'package:tinder/utils/view_utils.dart';
 import 'package:tinder/view_model/registration_view_model.dart';
 import 'package:tinder/widgets/app_round_filled_button.dart';
 import 'package:tinder/widgets/registration_app_bar.dart';
@@ -49,8 +50,8 @@ class _NameScreenState extends State<NameScreen> {
           ),
           SizedBox(height: 16),
           Text(Strings.nameDescription, style: TextStyles.fieldDescription),
-
-          Expanded(child: SizedBox()),
+          // Expanded(child: SizedBox()),
+          SizedBox(height: 16),
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:tinder/resources/dimens.dart';
 import 'package:tinder/resources/strings.dart';
 import 'package:tinder/resources/text_styles.dart';
+import 'package:tinder/utils/view_utils.dart';
 import 'package:tinder/view_model/registration_view_model.dart';
 import 'package:tinder/widgets/app_round_button.dart';
 import 'package:tinder/widgets/app_round_filled_button.dart';
@@ -46,7 +47,8 @@ class _AboutScreenState extends State<AboutScreen> {
           ),
           SizedBox(height: 16),
           Text(Strings.aboutDescription, style: TextStyles.fieldDescription),
-          Expanded(child: SizedBox()),
+          SizedBox(height: 16),
+          // Expanded(child: SizedBox()),
           Container(
             width: double.infinity,
             margin: EdgeInsets.symmetric(horizontal: Dimens.horizontalMarginButtonRegScreen),
@@ -72,6 +74,7 @@ class _AboutScreenState extends State<AboutScreen> {
   }
 
   void _onNext(BuildContext context) {
+    closeKeyboard(context);
     final model = Provider.of<RegistrationViewModel>(context, listen: false);
     model.schoolName = _aboutController.text;
     widget.onActionClicked();

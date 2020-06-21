@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
+import 'package:provider/provider.dart';
 import 'package:tinder/constants.dart';
 import 'package:tinder/resources/colors.dart';
 import 'package:tinder/resources/images.dart';
+import 'package:tinder/view_model/auth_view_model.dart';
 import 'package:tinder/widgets/circle_container.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -387,7 +389,10 @@ class _LogOutButton extends StatelessWidget {
       child: Material(
         color: AppColors.bgSelectorButton,
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            Provider.of<AuthViewModel>(context, listen: false)?.logOut();
+            Navigator.pop(context);
+          },
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             child: Center(child: Text('Logout', style: style)),

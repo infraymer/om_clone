@@ -7,3 +7,7 @@ showMessage(GlobalKey<ScaffoldState> keyScaffold, String text) {
     customSnack(text)
   );
 }
+
+closeKeyboard(BuildContext context) {
+  FocusScope.of(context).requestFocus(new FocusNode());
+}

@@ -14,6 +14,7 @@ class RegistrationTextField extends StatelessWidget {
     return Column(
       children: <Widget>[
         TextField(
+          autofocus: true,
           textInputAction: textInputAction,
           onSubmitted: onSubmitted,
           controller: controller,

@@ -30,6 +30,7 @@ class _AddPhotosScreenState extends State<AddPhotosScreen> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _isLoading = ValueNotifier<bool>(false);
 
+
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<RegistrationViewModel>(context);
