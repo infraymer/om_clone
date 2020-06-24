@@ -19,6 +19,11 @@ class AuthViewModel extends ChangeNotifier {
     return user != null;
   }
 
+  Future<void> logIn() async {
+    isLoggedIn = true;
+    notifyListeners();
+  }
+
   Future<void> logOut() async {
     await FirebaseAuth.instance.signOut();
     isLoggedIn = false;

@@ -50,7 +50,8 @@ class MatchScreen extends StatelessWidget {
             text: Strings.matchKeepPlaying,
             icon: Icons.perm_contact_calendar,
             // onPressed: () => Navigator.push(context, ProfileRoute(Constants.womanImage)),
-            onPressed: () => Navigator.push(context, FadePageRoue(ProfileScreen(tag: Constants.womanImage))),
+            // todo
+            onPressed: () => Navigator.push(context, FadePageRoue(ProfileScreen())),
           ),
           SizedBox(height: 30),
           AppIconRoundButtonDark(

@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
+import 'package:tinder/model/user.dart';
 import 'package:tinder/routes.dart';
 import 'package:tinder/widgets/circle_status.dart';
 import 'package:tinder/widgets/no_button.dart';
 import 'package:tinder/widgets/screen_container.dart';
 import 'package:tinder/widgets/yes_button.dart';
+import 'package:dartx/dartx.dart';
 
 class ProfileScreen extends StatelessWidget {
-  final String tag;
+  final User user;
 
-  const ProfileScreen({Key key, this.tag}) : super(key: key);
+  const ProfileScreen({Key key, this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,15 +24,15 @@ class ProfileScreen extends StatelessWidget {
               child: Container(
                 width: double.infinity,
                 child: Hero(
-                  tag: tag ?? '',
+                  tag: user.uid ?? '',
                   child: Image.network(
-                    tag,
+                    user.imgs.firstOrNull ?? '',
                     fit: BoxFit.cover,
                   ),
                 ),
               ),
             ),
-            _Content(),
+            _Content(data: user),
           ],
         ),
       ),
@@ -39,6 +41,9 @@ class ProfileScreen extends StatelessWidget {
 }
 
 class _Content extends StatelessWidget {
+  final User data;
+
+  const _Content({Key key, this.data}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -57,7 +62,7 @@ class _Content extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(height: 10),
-              _Name(),
+              _Name(text: '${data.name} ${data.age}'),
               SizedBox(height: 8),
               _IconTextItem(
                 icon: Icons.home,
@@ -69,7 +74,7 @@ class _Content extends StatelessWidget {
                 text: '1 kilometer away',
               ),
               SizedBox(height: 20),
-              _Description(),
+              _Description(data.aboutMe),
               SizedBox(height: 30),
               _ShareProfile(),
               SizedBox(height: 20),
@@ -86,20 +91,24 @@ class _Content extends StatelessWidget {
 }
 
 class _Name extends StatelessWidget {
+  final String text;
+  final bool isActive;
+
+  const _Name({Key key, this.text, this.isActive = false}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Row(
         children: <Widget>[
           Text(
-            'Noam 24',
+            text,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
           ),
           SizedBox(width: 8),
-          CircleStatus(isActive: true),
+          CircleStatus(isActive: isActive),
         ],
       ),
     );
@@ -107,12 +116,15 @@ class _Name extends StatelessWidget {
 }
 
 class _Description extends StatelessWidget {
+  final String text;
+
+  const _Description(this.text, {Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 30),
       child: Text(
-        'Description description description description description description ',
+        text ?? '',
         style: TextStyle(fontSize: 12),
       ),
     );

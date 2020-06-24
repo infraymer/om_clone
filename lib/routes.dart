@@ -12,6 +12,7 @@ import 'package:tinder/screens/settings_screen.dart';
 import 'package:tinder/screens/welcome_screen.dart';
 import 'package:tinder/utils/auth_firebase.dart';
 import 'package:tinder/view_model/registration_view_model.dart';
+import 'package:tinder/view_model/selection_view_model.dart';
 
 class LoginRoute extends CupertinoPageRoute {
   LoginRoute() : super(builder: (ctx) => LoginScreen());
@@ -57,32 +58,31 @@ class SettingsRoute extends CupertinoPageRoute {
 }
 
 class ProfileRoute extends CupertinoPageRoute {
-  ProfileRoute(tag) : super(builder: (ctx) => ProfileScreen(tag: tag));
+  ProfileRoute(user) : super(builder: (ctx) => ProfileScreen(user: user));
 }
 
 class FadePageRoue extends PageRouteBuilder {
   final Widget widget;
 
-  FadePageRoue(this.widget) : super(
-    pageBuilder: (
-        BuildContext context,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-    ) {
-      return widget;
-    },
-    transitionsBuilder:(
-        BuildContext context,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-        Widget child,
-        ) {
-      return FadeTransition(
-        opacity: Tween(begin: 0.0, end: 1.0).animate(animation),
-        child: child,
-      );
-    },
-  );
-
+  FadePageRoue(this.widget)
+      : super(
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) {
+            return widget;
+          },
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) {
+            return FadeTransition(
+              opacity: Tween(begin: 0.0, end: 1.0).animate(animation),
+              child: child,
+            );
+          },
+        );
 }
-

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import 'package:tinder/resources/images.dart';
 import 'package:tinder/resources/strings.dart';
 import 'package:tinder/resources/text_styles.dart';
 import 'package:tinder/routes.dart';
+import 'package:tinder/view_model/auth_view_model.dart';
 import 'package:tinder/widgets/app_round_filled_button.dart';
 import 'package:tinder/widgets/screen_container.dart';
 
@@ -32,7 +34,11 @@ class WelcomeScreen extends StatelessWidget {
             width: double.infinity,
             margin: EdgeInsets.symmetric(horizontal: 60),
             child: AppRoundFilledButton(
-              onPressed: () => Navigator.pushAndRemoveUntil(context, SelectionRoute(), (_) => false),
+              onPressed: () {
+                final model = Provider.of<AuthViewModel>(context, listen: false);
+                model.logIn();
+                // Navigator.pushAndRemoveUntil(context, SelectionRoute(), (_) => false)
+              },
               text: Strings.genderGotIt,
             ),
           ),

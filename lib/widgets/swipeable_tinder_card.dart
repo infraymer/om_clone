@@ -8,43 +8,11 @@ import 'package:flutter/material.dart';
 double cardPaddingX = 0.1;
 double cardPaddingY = 0.2;
 
-class CardStack extends StatefulWidget {
-  List<SwipeableCard> cards;
-  double width = 0;
-  double height = 0;
-
-  CardStack({Key key, this.cards, this.width, this.height}) : super(key: key);
-
-  State createState() => _CardStackState();
-}
-
-class _CardStackState extends State<CardStack> {
-  Widget build(BuildContext context) {
-    double width = widget.width;
-    double height = widget.height;
-    for (SwipeableCard card in widget.cards) {
-      if (card.width == -1) card.width = width;
-      if (card.height == -1) card.height = height * 0.92;
-    }
-    return Container(
-      width: width,
-      height: height,
-      child: widget.cards.length == 0
-          ? Container()
-          : Stack(
-              children: widget.cards.sublist(0),
-            ),
-    );
-  }
-}
-
 class SwipeableCard extends StatefulWidget {
   final Function callback;
   final Widget child;
-  double width;
-  double height;
 
-  SwipeableCard({this.callback, this.width = -1, this.height = -1, this.child});
+  SwipeableCard({Key key, this.callback, this.child}) : super(key: key);
 
   State createState() => _SwipeableState();
 }
@@ -60,8 +28,8 @@ class _SwipeableState extends State<SwipeableCard> {
   int dir = 0;
 
   Widget build(BuildContext context) {
-    double width = widget.width;
-    double height = widget.height;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height * 0.92;
     double widgetWidth = width * (1 - cardPaddingX);
     double widgetHeight = height * (1 - cardPaddingY);
 

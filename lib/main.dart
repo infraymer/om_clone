@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tinder/resources/colors.dart';
 import 'package:tinder/screens/auth_screen.dart';
-import 'package:tinder/screens/login_screen.dart';
 import 'package:tinder/view_model/auth_view_model.dart';
 
 void main() {
