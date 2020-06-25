@@ -11,7 +11,7 @@ SettingFilter _$SettingFilterFromJson(Map<String, dynamic> json) {
     json['ageMin'] as int,
     json['ageMax'] as int,
     json['gender'] as String,
-    (json['maxDistance'] as num)?.toDouble(),
+    json['maxDistance'] as int,
   );
 }
 

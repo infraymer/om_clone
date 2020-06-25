@@ -8,28 +8,28 @@ part of 'user.dart';
 
 User _$UserFromJson(Map<String, dynamic> json) {
   return User(
-    json['uid'] as String,
-    (json['imgs'] as List)?.map((e) => e as String)?.toList(),
-    json['lastName'] as String,
-    json['displayName'] as String,
-    json['lastSeen'] == null
+    uid: json['uid'] as String,
+    imgs: (json['imgs'] as List)?.map((e) => e as String)?.toList(),
+    lastName: json['lastName'] as String,
+    displayName: json['displayName'] as String,
+    lastSeen: json['lastSeen'] == null
         ? null
         : DateTime.parse(json['lastSeen'] as String),
-    (json['lat'] as num)?.toDouble(),
-    (json['lan'] as num)?.toDouble(),
-    json['birthDate'] == null
+    lat: (json['lat'] as num)?.toDouble(),
+    lan: (json['lan'] as num)?.toDouble(),
+    birthDate: json['birthDate'] == null
         ? null
         : DateTime.parse(json['birthDate'] as String),
-    json['imgsLength'] as int,
-    json['match'] as String,
-    json['showMyGender'] as bool,
-    json['settingFilter'] == null
+    imgsLength: json['imgsLength'] as int,
+    match: json['match'] as String,
+    showMyGender: json['showMyGender'] as bool,
+    settingFilter: json['settingFilter'] == null
         ? null
         : SettingFilter.fromJson(json['settingFilter'] as Map<String, dynamic>),
-    json['name'] as String,
-    json['gender'] as String,
-    json['aboutMe'] as String,
-    (json['feed'] as List)?.map((e) => e as String)?.toList(),
+    name: json['name'] as String,
+    gender: json['gender'] as String,
+    aboutMe: json['aboutMe'] as String,
+    feed: (json['feed'] as List)?.map((e) => e as String)?.toList(),
   );
 }
 

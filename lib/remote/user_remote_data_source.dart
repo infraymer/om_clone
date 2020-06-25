@@ -29,6 +29,5 @@ class UserRemoteDataSource {
 
   Future<void> updateUser(User user) async {
     final result = await dio.post('updateUser', data: user.toJson());
-    result;
   }
 }

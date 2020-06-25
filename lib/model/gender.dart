@@ -20,11 +20,13 @@ extension GenderExt on Gender {
     else
       return 'All';
   }
+}
 
-  Gender fromKey(String value) {
-    if (value == 'man')
+extension StringExt on String {
+  Gender toGender() {
+    if (this == 'man')
       return Gender.man;
-    else if (value == 'woman')
+    else if (this == 'woman')
       return Gender.woman;
     else
       return Gender.all;

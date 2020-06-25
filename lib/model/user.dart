@@ -25,7 +25,7 @@ class User {
   int get age => DateTime.now().year - birthDate.year;
 
   User(
-      this.uid,
+      {this.uid,
       this.imgs,
       this.lastName,
       this.displayName,
@@ -40,8 +40,47 @@ class User {
       this.name,
       this.gender,
       this.aboutMe,
-      this.feed);
+      this.feed});
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
   Map<String, dynamic> toJson() => _$UserToJson(this);
+
+  User copyWith({
+    String uid,
+    List<String> imgs,
+    String name,
+    String lastName,
+    String displayName,
+    DateTime lastSeen,
+    double lat,
+    double lan,
+    DateTime birthDate,
+    int imgsLength,
+    String match,
+    bool showMyGender,
+    SettingFilter settingFilter,
+    String gender,
+    String aboutMe,
+    List<String> feed,
+  }) {
+    return new User(
+      uid: uid ?? this.uid,
+      imgs: imgs ?? this.imgs,
+      name: name ?? this.name,
+      lastName: lastName ?? this.lastName,
+      displayName: displayName ?? this.displayName,
+      lastSeen: lastSeen ?? this.lastSeen,
+      lat: lat ?? this.lat,
+      lan: lan ?? this.lan,
+      birthDate: birthDate ?? this.birthDate,
+      imgsLength: imgsLength ?? this.imgsLength,
+      match: match ?? this.match,
+      showMyGender: showMyGender ?? this.showMyGender,
+      settingFilter: settingFilter ?? this.settingFilter,
+      gender: gender ?? this.gender,
+      aboutMe: aboutMe ?? this.aboutMe,
+      feed: feed ?? this.feed,
+    );
+  }
+
 }

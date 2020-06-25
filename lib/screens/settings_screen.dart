@@ -21,6 +21,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final model = context.watch<SettingsViewModel>();
+    if (model.saved) Navigator.pop(context);
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -28,7 +29,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
             _AppBar(),
             if (model.isLoading) _Loading(),
             if (model.error != null) _Error(),
-            if (model.user != null) _Content(),
+            if (model.user != null && model.error == null && !model.isLoading)
+              _Content(),
           ],
         ),
       ),
@@ -43,6 +45,7 @@ class _Error extends StatelessWidget {
     return Expanded(
       child: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(model.error ?? ''),
             SizedBox(height: 16),
@@ -73,16 +76,19 @@ class _Content extends StatelessWidget {
         physics: BouncingScrollPhysics(),
         children: [
           SizedBox(height: 20),
-          Container(
-            alignment: Alignment.centerRight,
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Text('Done'),
+          GestureDetector(
+            onTap: () => model.onDoneClicked(),
+            child: Container(
+              alignment: Alignment.centerRight,
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Text('Done'),
+            ),
           ),
           _Avatar(),
           // _Switch(),
           SizedBox(height: 30),
-          _Bio(),
-          SizedBox(height: 20),
+//          _Bio(),
+//          SizedBox(height: 20),
           _Description(),
           SizedBox(height: 20),
           _Divider(),
@@ -245,16 +251,54 @@ class _Bio extends StatelessWidget {
 }
 
 class _Description extends StatelessWidget {
+  final focusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
-    final data = Provider.of<SettingsViewModel>(context, listen: false).user;
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 60),
-      child: Text(
-        data.aboutMe ?? '',
-        textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 12),
-      ),
+    final model = Provider.of<SettingsViewModel>(context, listen: false);
+    return Column(
+      children: <Widget>[
+        GestureDetector(
+          onTap: () {
+            focusNode.requestFocus();
+          },
+          child: Container(
+            width: double.infinity,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Text('BIO'),
+                CircleContainer(
+                  size: 20,
+                  margin: EdgeInsets.only(left: 80),
+                  color: AppColors.main,
+                  padding: EdgeInsets.all(4),
+                  child: Icon(
+                    Icons.edit,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        SizedBox(height: 20),
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 60),
+          child: TextField(
+            controller: TextEditingController(text: model.about),
+            focusNode: focusNode,
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 12),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+            ),
+            onChanged: (value) {
+              model.about = value;
+            },
+          ),
+        ),
+      ],
     );
   }
 }

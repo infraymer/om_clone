@@ -7,9 +7,10 @@ class SettingFilter {
   final int ageMin;
   final int ageMax;
   final String gender;
-  final double maxDistance;
+  final int maxDistance;
 
   SettingFilter(this.ageMin, this.ageMax, this.gender, this.maxDistance);
 
   factory SettingFilter.fromJson(Map<String, dynamic> json) => _$SettingFilterFromJson(json);
+  Map<String, dynamic> toJson() => _$SettingFilterToJson(this);
 }

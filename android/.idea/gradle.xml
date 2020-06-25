@@ -18,10 +18,10 @@
             <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-1.0.8/android" />
             <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_sim_country_code-0.0.3/android" />
             <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker-0.6.7+1/android" />
-            <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/keyboard_visibility-0.5.6/android" />
             <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider-1.6.10/android" />
             <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_linux-0.0.1+1/android" />
             <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_macos-0.0.4+3/android" />
+            <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/share-0.6.4+3/android" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
