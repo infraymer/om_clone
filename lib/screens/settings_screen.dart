@@ -1,54 +1,110 @@
+import 'package:dartx/dartx.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
 import 'package:provider/provider.dart';
-import 'package:tinder/constants.dart';
+import 'package:tinder/model/gender.dart';
 import 'package:tinder/resources/colors.dart';
 import 'package:tinder/resources/images.dart';
 import 'package:tinder/view_model/auth_view_model.dart';
+import 'package:tinder/view_model/settings_view_model.dart';
 import 'package:tinder/widgets/circle_container.dart';
+import 'package:tinder/widgets/dialog/dialogs.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
+  @override
+  _SettingsScreenState createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
+    final model = context.watch<SettingsViewModel>();
     return Scaffold(
       body: SafeArea(
         child: Column(
           children: [
             _AppBar(),
-            Expanded(
-              child: ListView(
-                physics: BouncingScrollPhysics(),
-                children: [
-                  SizedBox(height: 20),
-                  Container(
-                    alignment: Alignment.centerRight,
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Text('Done'),
-                  ),
-                  _Avatar(),
-                  _Switch(),
-                  _Bio(),
-                  SizedBox(height: 20),
-                  _Description(),
-                  SizedBox(height: 20),
-                  _Divider(),
-                  SizedBox(height: 20),
-                  _MaximumDistance(),
-                  _AgeRange(),
-                  SizedBox(height: 10),
-                  _SelectorButton(title: 'Show Me', value: 'Woman'),
-                  _SelectorButton(title: 'Privacy Policy'),
-                  _SelectorButton(title: 'Terms of Service'),
-                  SizedBox(height: 20),
-                  _LogOutButton(),
-                  SizedBox(height: 20),
-                ],
-              ),
+            if (model.isLoading) _Loading(),
+            if (model.error != null) _Error(),
+            if (model.user != null) _Content(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _Error extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final model = Provider.of<SettingsViewModel>(context, listen: false);
+    return Expanded(
+      child: Center(
+        child: Column(
+          children: <Widget>[
+            Text(model.error ?? ''),
+            SizedBox(height: 16),
+            RaisedButton(
+              child: Text('Refresh'),
+              onPressed: () => model.fetchData(),
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _Loading extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(child: Center(child: CircularProgressIndicator()));
+  }
+}
+
+class _Content extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final model = context.watch<SettingsViewModel>();
+    return Expanded(
+      child: ListView(
+        physics: BouncingScrollPhysics(),
+        children: [
+          SizedBox(height: 20),
+          Container(
+            alignment: Alignment.centerRight,
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Text('Done'),
+          ),
+          _Avatar(),
+          // _Switch(),
+          SizedBox(height: 30),
+          _Bio(),
+          SizedBox(height: 20),
+          _Description(),
+          SizedBox(height: 20),
+          _Divider(),
+          SizedBox(height: 20),
+          _MaximumDistance(),
+          _AgeRange(),
+          SizedBox(height: 10),
+          _SelectorButton(
+            title: 'Show Me',
+            value: model.gender.name,
+            onTap: () async {
+              final gender = await Dialogs.showGenderDialog(context);
+              if (gender == null) return;
+              model.setGender(gender);
+            },
+          ),
+          _SelectorButton(title: 'Privacy Policy'),
+          _SelectorButton(title: 'Terms of Service'),
+          SizedBox(height: 20),
+          _LogOutButton(),
+          SizedBox(height: 20),
+        ],
       ),
     );
   }
@@ -103,6 +159,8 @@ class _AppBar extends StatelessWidget {
 class _Avatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final model = Provider.of<SettingsViewModel>(context, listen: false);
+    final user = model.user;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -113,7 +171,7 @@ class _Avatar extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(500),
                   child: Image.network(
-                    Constants.womanImage,
+                    user.imgs.firstOrNull ?? '',
                     fit: BoxFit.cover,
                     width: 100,
                     height: 100,
@@ -158,23 +216,29 @@ class _Switch extends StatelessWidget {
 class _Bio extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Text('BIO'),
-          CircleContainer(
-            size: 20,
-            margin: EdgeInsets.only(left: 80),
-            color: AppColors.main,
-            padding: EdgeInsets.all(4),
-            child: Icon(
-              Icons.edit,
-              color: Colors.white,
+    final data = Provider.of<SettingsViewModel>(context, listen: false).user;
+    return GestureDetector(
+      onTap: () {
+        Dialogs.showBioDialog(context);
+      },
+      child: Container(
+        width: double.infinity,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Text('BIO'),
+            CircleContainer(
+              size: 20,
+              margin: EdgeInsets.only(left: 80),
+              color: AppColors.main,
+              padding: EdgeInsets.all(4),
+              child: Icon(
+                Icons.edit,
+                color: Colors.white,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -183,10 +247,11 @@ class _Bio extends StatelessWidget {
 class _Description extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final data = Provider.of<SettingsViewModel>(context, listen: false).user;
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 60),
       child: Text(
-        'Description description description description description description ',
+        data.aboutMe ?? '',
         textAlign: TextAlign.center,
         style: TextStyle(fontSize: 12),
       ),
@@ -223,6 +288,7 @@ class _SliderTitle extends StatelessWidget {
 class _MaximumDistance extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final model = context.watch<SettingsViewModel>();
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20),
       child: Column(
@@ -233,7 +299,7 @@ class _MaximumDistance extends StatelessWidget {
             children: [
               Expanded(child: _Slider()),
               SizedBox(width: 8),
-              Text('6 КМ')
+              Text('${model.distance} КМ')
             ],
           )
         ],
@@ -245,6 +311,7 @@ class _MaximumDistance extends StatelessWidget {
 class _AgeRange extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final model = context.watch<SettingsViewModel>();
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20),
       child: Column(
@@ -255,7 +322,7 @@ class _AgeRange extends StatelessWidget {
             children: [
               Expanded(child: _SliderDouble()),
               SizedBox(width: 8),
-              Text('18-41')
+              Text('${model.minAge}-${model.maxAge}')
             ],
           )
         ],
@@ -270,19 +337,31 @@ class _Slider extends StatefulWidget {
 }
 
 class _SliderState extends State<_Slider> {
-  double _value = 0;
+  double _value = 3;
+  SettingsViewModel model;
+
+  @override
+  void initState() {
+    super.initState();
+    model = context.read<SettingsViewModel>();
+    _value = model.distance.toDouble();
+  }
 
   @override
   Widget build(BuildContext context) {
     return FlutterSlider(
       values: [_value],
       max: 100,
-      min: 0,
+      min: 2,
       handler: _handlerSlider,
       trackBar: _trackBar,
       onDragging: (handlerIndex, lowerValue, upperValue) {
         _value = lowerValue;
+        model?.distance = lowerValue.toInt();
         setState(() {});
+      },
+      onDragCompleted: (handlerIndex, lowerValue, upperValue) {
+        model.update();
       },
     );
   }
@@ -294,15 +373,24 @@ class _SliderDouble extends StatefulWidget {
 }
 
 class _SliderDoubleState extends State<_SliderDouble> {
-  double _value = 0;
+  double _value = 18;
   double _valueUpper = 50;
+  SettingsViewModel model;
+
+  @override
+  void initState() {
+    super.initState();
+    model = context.read<SettingsViewModel>();
+    _value = model.minAge.toDouble();
+    _valueUpper = model.maxAge.toDouble();
+  }
 
   @override
   Widget build(BuildContext context) {
     return FlutterSlider(
       values: [_value, _valueUpper],
-      max: 100,
-      min: 0,
+      max: 99,
+      min: 18,
       rangeSlider: true,
       handler: _handlerSlider,
       rightHandler: _handlerSlider,
@@ -310,7 +398,12 @@ class _SliderDoubleState extends State<_SliderDouble> {
       onDragging: (handlerIndex, lowerValue, upperValue) {
         _value = lowerValue;
         _valueUpper = upperValue;
+        model?.minAge = lowerValue.toInt();
+        model?.maxAge = upperValue.toInt();
         setState(() {});
+      },
+      onDragCompleted: (handlerIndex, lowerValue, upperValue) {
+        model.update();
       },
     );
   }
@@ -346,8 +439,10 @@ final _handlerSlider = FlutterSliderHandler(
 class _SelectorButton extends StatelessWidget {
   final String title;
   final String value;
+  final VoidCallback onTap;
 
-  const _SelectorButton({Key key, this.value, this.title}) : super(key: key);
+  const _SelectorButton({Key key, this.value, this.title, this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -357,7 +452,7 @@ class _SelectorButton extends StatelessWidget {
       child: Material(
         color: AppColors.bgSelectorButton,
         child: InkWell(
-          onTap: () {},
+          onTap: onTap ?? () {},
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             child: Row(

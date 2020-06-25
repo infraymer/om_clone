@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:tinder/resources/colors.dart';
 import 'package:tinder/screens/auth_screen.dart';
 import 'package:tinder/view_model/auth_view_model.dart';
+import 'package:tinder/view_model/selection_view_model.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,9 +17,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (_) => AuthViewModel(),
-        )
+        ChangeNotifierProvider(create: (_) => AuthViewModel()),
+        ChangeNotifierProvider(create: (_) => SelectionViewModel()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

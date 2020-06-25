@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:tinder/constants.dart';
 import 'package:tinder/resources/colors.dart';
@@ -6,13 +7,20 @@ import 'package:tinder/resources/strings.dart';
 import 'package:tinder/resources/text_styles.dart';
 import 'package:tinder/routes.dart';
 import 'package:tinder/screens/profile_screen.dart';
+import 'package:tinder/view_model/match_view_model.dart';
 import 'package:tinder/widgets/app_icon_round_button_dark.dart';
 import 'package:tinder/widgets/match_photo.dart';
 import 'package:tinder/widgets/screen_container.dart';
+import 'package:dartx/dartx.dart';
 
 class MatchScreen extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
+    final model = Provider.of<MatchViewModel>(context);
+
+    // todo Сделать логику экрана MATCH
+
     return ScreenContainer(
       backgroundColor: AppColors.main,
       child: Column(
@@ -20,19 +28,19 @@ class MatchScreen extends StatelessWidget {
           SizedBox(height: 20),
           Text(Strings.matchTitle, style: TextStyles.matchTitle),
           SizedBox(height: 20),
-          Text(Strings.matchDescription, style: TextStyles.matchSubtitle),
+          Text('You and ${model.matchUser.name} have liked each other', style: TextStyles.matchSubtitle),
           SizedBox(height: 50),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 60),
             child: FittedBox(
               child: Row(
                 children: <Widget>[
-                  Hero(
-                    tag: Constants.womanImage,
-                    child: MatchPhoto(Constants.womanImage),
-                  ),
+                  MatchPhoto(model.me.imgs.firstOrNull),
                   SizedBox(width: 100),
-                  MatchPhoto(Constants.manImage),
+                  Hero(
+                    tag: model.matchUser.uid,
+                    child: MatchPhoto(model.matchUser.imgs.firstOrNull),
+                  ),
                 ],
               ),
             ),
@@ -49,9 +57,7 @@ class MatchScreen extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: 50),
             text: Strings.matchKeepPlaying,
             icon: Icons.perm_contact_calendar,
-            // onPressed: () => Navigator.push(context, ProfileRoute(Constants.womanImage)),
-            // todo
-            onPressed: () => Navigator.push(context, FadePageRoue(ProfileScreen())),
+            onPressed: () => Navigator.pop(context),
           ),
           SizedBox(height: 30),
           AppIconRoundButtonDark(

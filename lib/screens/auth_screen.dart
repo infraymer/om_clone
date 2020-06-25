@@ -10,10 +10,7 @@ class AuthScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final model = context.watch<AuthViewModel>();
     if (model.isLoggedIn)
-      return ChangeNotifierProvider(
-        create: (_) => SelectionViewModel(),
-        child: SelectionScreen(),
-      );
+      return SelectionScreen();
     return LoginScreen();
   }
 }

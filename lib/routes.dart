@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
+import 'package:tinder/model/user.dart';
 import 'package:tinder/screens/chat_screen.dart';
 import 'package:tinder/screens/code_screen.dart';
 import 'package:tinder/screens/login_screen.dart';
@@ -11,8 +12,10 @@ import 'package:tinder/screens/selection_screen.dart';
 import 'package:tinder/screens/settings_screen.dart';
 import 'package:tinder/screens/welcome_screen.dart';
 import 'package:tinder/utils/auth_firebase.dart';
+import 'package:tinder/view_model/auth_view_model.dart';
+import 'package:tinder/view_model/match_view_model.dart';
 import 'package:tinder/view_model/registration_view_model.dart';
-import 'package:tinder/view_model/selection_view_model.dart';
+import 'package:tinder/view_model/settings_view_model.dart';
 
 class LoginRoute extends CupertinoPageRoute {
   LoginRoute() : super(builder: (ctx) => LoginScreen());
@@ -34,15 +37,22 @@ class WelcomeRoute extends CupertinoPageRoute {
 class RegistrationRoute extends CupertinoPageRoute {
   RegistrationRoute()
       : super(
-          builder: (ctx) => ChangeNotifierProvider<RegistrationViewModel>(
-            create: (_) => RegistrationViewModel(),
-            child: RegistrationScreen(),
-          ),
-        );
+            builder: (ctx) => ChangeNotifierProvider<RegistrationViewModel>(
+                  create: (_) => RegistrationViewModel(),
+                  child: RegistrationScreen(),
+                ));
 }
 
 class MatchRoute extends CupertinoPageRoute {
-  MatchRoute() : super(builder: (ctx) => MatchScreen());
+  MatchRoute(User matchUser)
+      : super(
+            builder: (ctx) => ChangeNotifierProvider(
+                  create: (_) => MatchViewModel(
+                    matchUser,
+                    Provider.of<AuthViewModel>(ctx, listen: false).profile,
+                  ),
+                  child: MatchScreen(),
+                ));
 }
 
 class SelectionRoute extends CupertinoPageRoute {
@@ -54,7 +64,12 @@ class ChatRoute extends CupertinoPageRoute {
 }
 
 class SettingsRoute extends CupertinoPageRoute {
-  SettingsRoute() : super(builder: (ctx) => SettingsScreen());
+  SettingsRoute()
+      : super(
+            builder: (ctx) => ChangeNotifierProvider(
+                  create: (_) => SettingsViewModel(),
+                  child: SettingsScreen(),
+                ));
 }
 
 class ProfileRoute extends CupertinoPageRoute {

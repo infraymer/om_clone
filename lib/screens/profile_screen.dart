@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:tinder/model/user.dart';
 import 'package:tinder/routes.dart';
+import 'package:tinder/view_model/selection_view_model.dart';
 import 'package:tinder/widgets/circle_status.dart';
 import 'package:tinder/widgets/no_button.dart';
 import 'package:tinder/widgets/screen_container.dart';
@@ -15,25 +17,28 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenContainer(
-      child: Container(
-        width: double.infinity,
-        child: Column(
-          children: [
-            Expanded(
-              child: Container(
-                width: double.infinity,
-                child: Hero(
-                  tag: user.uid ?? '',
-                  child: Image.network(
-                    user.imgs.firstOrNull ?? '',
-                    fit: BoxFit.cover,
+    return Provider(
+      create: (_) => user,
+      child: ScreenContainer(
+        child: Container(
+          width: double.infinity,
+          child: Column(
+            children: [
+              Expanded(
+                child: Container(
+                  width: double.infinity,
+                  child: Hero(
+                    tag: user.uid ?? '',
+                    child: Image.network(
+                      user.imgs.firstOrNull ?? '',
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),
-            ),
-            _Content(data: user),
-          ],
+              _Content(data: user),
+            ],
+          ),
         ),
       ),
     );
@@ -204,15 +209,26 @@ class _Report extends StatelessWidget {
 class _Buttons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final selectionModel = Provider.of<SelectionViewModel>(context, listen: false);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         NoButton(
-          onTap: () => Navigator.pop(context),
+          onTap: () {
+            selectionModel.dislike().then((_) {
+              Navigator.pop(context);
+            });
+          },
         ),
         SizedBox(width: 20),
         YesButton(
-          onTap: () => Navigator.pushReplacement(context, MatchRoute()),
+          onTap: () {
+            selectionModel.like().then((matchUser) {
+              final matchUser = Provider.of<User>(context, listen: false);
+              if (matchUser == null) return;
+              Navigator.pushReplacement(context, MatchRoute(matchUser));
+            });
+          },
         ),
       ],
     );
