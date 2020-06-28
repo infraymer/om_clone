@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:tinder/resources/colors.dart';
 import 'package:tinder/routes.dart';
 import 'package:tinder/screens/about_screen.dart';
@@ -7,6 +8,7 @@ import 'package:tinder/screens/add_photos_screen.dart';
 import 'package:tinder/screens/birthday_screen.dart';
 import 'package:tinder/screens/gender_screen.dart';
 import 'package:tinder/screens/name_screen.dart';
+import 'package:tinder/view_model/registration_view_model.dart';
 import 'package:tinder/widgets/screen_container.dart';
 
 class RegistrationScreen extends StatelessWidget {
@@ -17,42 +19,45 @@ class RegistrationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenContainer(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(bottom: 16, top: 50),
-            child: ProgressBar(controller: controller, max: 6,),
-          ),
-          Expanded(
-            child: PageView(
-              physics: NeverScrollableScrollPhysics(),
-              controller: controller,
-              children: <Widget>[
-                NameScreen(
-                  onBackClicked: () => Navigator.pop(context),
-                  onActionClicked: _nextPage,
-                ),
-                BirthdayScreen(
-                  onBackClicked: _prevPage,
-                  onActionClicked: _nextPage,
-                ),
-                GenderScreen(
-                  onBackClicked: _prevPage,
-                  onActionClicked: _nextPage,
-                ),
-                AboutScreen(
-                  onBackClicked: _prevPage,
-                  onActionClicked: _nextPage,
-                ),
-                AddPhotosScreen(
-                  onBackClicked: _prevPage,
-                  onActionClicked: () => Navigator.pushReplacement(context, WelcomeRoute()),
-                ),
-              ],
+    return ChangeNotifierProvider<RegistrationViewModel>(
+      create: (_) => RegistrationViewModel(),
+      child: ScreenContainer(
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16, top: 50),
+              child: ProgressBar(controller: controller, max: 6,),
             ),
-          )
-        ],
+            Expanded(
+              child: PageView(
+                physics: NeverScrollableScrollPhysics(),
+                controller: controller,
+                children: <Widget>[
+                  NameScreen(
+                    onBackClicked: () => Navigator.pop(context),
+                    onActionClicked: _nextPage,
+                  ),
+                  BirthdayScreen(
+                    onBackClicked: _prevPage,
+                    onActionClicked: _nextPage,
+                  ),
+                  GenderScreen(
+                    onBackClicked: _prevPage,
+                    onActionClicked: _nextPage,
+                  ),
+                  AboutScreen(
+                    onBackClicked: _prevPage,
+                    onActionClicked: _nextPage,
+                  ),
+                  AddPhotosScreen(
+                    onBackClicked: _prevPage,
+                    onActionClicked: () => Navigator.pushReplacement(context, WelcomeRoute()),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

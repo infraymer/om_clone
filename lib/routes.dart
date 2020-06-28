@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:tinder/model/user.dart';
+import 'package:tinder/screens/auth_screen.dart';
 import 'package:tinder/screens/chat_screen.dart';
 import 'package:tinder/screens/code_screen.dart';
 import 'package:tinder/screens/login_screen.dart';
@@ -16,6 +17,10 @@ import 'package:tinder/view_model/auth_view_model.dart';
 import 'package:tinder/view_model/match_view_model.dart';
 import 'package:tinder/view_model/registration_view_model.dart';
 import 'package:tinder/view_model/settings_view_model.dart';
+
+class AuthRoute extends CupertinoPageRoute {
+  AuthRoute() : super(builder: (ctx) => AuthScreen());
+}
 
 class LoginRoute extends CupertinoPageRoute {
   LoginRoute() : super(builder: (ctx) => LoginScreen());
@@ -35,12 +40,7 @@ class WelcomeRoute extends CupertinoPageRoute {
 }
 
 class RegistrationRoute extends CupertinoPageRoute {
-  RegistrationRoute()
-      : super(
-            builder: (ctx) => ChangeNotifierProvider<RegistrationViewModel>(
-                  create: (_) => RegistrationViewModel(),
-                  child: RegistrationScreen(),
-                ));
+  RegistrationRoute() : super(builder: (ctx) => RegistrationScreen());
 }
 
 class MatchRoute extends CupertinoPageRoute {

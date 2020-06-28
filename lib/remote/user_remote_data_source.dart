@@ -1,3 +1,4 @@
+import 'package:tinder/mapper/me_mapper.dart';
 import 'package:tinder/model/user.dart';
 import 'package:tinder/model/user_create.dart';
 import 'package:tinder/remote/api.dart';

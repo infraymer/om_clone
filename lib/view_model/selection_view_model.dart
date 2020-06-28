@@ -20,17 +20,17 @@ class SelectionViewModel extends ChangeNotifier {
   Future<void> dislike() async {
     if (users.isEmpty) return;
     final user = users.first;
-    await _userRemoteDataSource.like(user.uid, false);
     users.removeAt(0);
     notifyListeners();
+    await _userRemoteDataSource.like(user.uid, false);
   }
 
   Future<User> like() async {
     if (users.isEmpty) return null;
     final user = users.first;
-    await _userRemoteDataSource.like(user.uid, true);
     users.removeAt(0);
     notifyListeners();
+    await _userRemoteDataSource.like(user.uid, true);
     return user;
   }
 }

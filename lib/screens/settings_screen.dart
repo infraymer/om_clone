@@ -343,7 +343,7 @@ class _MaximumDistance extends StatelessWidget {
             children: [
               Expanded(child: _Slider()),
               SizedBox(width: 8),
-              Text('${model.distance} КМ')
+              Text('${model.distance} km')
             ],
           )
         ],

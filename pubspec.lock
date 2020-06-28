@@ -105,7 +105,7 @@ packages:
       name: characters
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.1"
+    version: "1.0.0"
   charcode:
     dependency: transitive
     description:
@@ -175,7 +175,7 @@ packages:
       name: dartx
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.0"
+    version: "0.4.2"
   dio:
     dependency: "direct main"
     description:
@@ -317,6 +317,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.4.0"
+  get:
+    dependency: "direct main"
+    description:
+      name: get
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.1.0"
+  get_storage:
+    dependency: "direct main"
+    description:
+      name: get_storage
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.1"
   glob:
     dependency: transitive
     description:
@@ -338,27 +352,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.0"
-  hive:
-    dependency: "direct main"
-    description:
-      name: hive
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.4.1+1"
-  hive_flutter:
-    dependency: "direct main"
-    description:
-      name: hive_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.0+2"
-  hive_generator:
-    dependency: "direct dev"
-    description:
-      name: hive_generator
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.7.0+2"
   html:
     dependency: transitive
     description:

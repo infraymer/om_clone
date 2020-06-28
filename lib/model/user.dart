@@ -22,7 +22,7 @@ class User {
   final String aboutMe;
   final List<String> feed;
 
-  int get age => DateTime.now().year - birthDate.year;
+  int get age => DateTime.now().year - (birthDate?.year ?? 0);
 
   User(
       {this.uid,

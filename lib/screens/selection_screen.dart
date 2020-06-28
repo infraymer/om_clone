@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tinder/resources/colors.dart';
 import 'package:tinder/routes.dart';
-import 'package:tinder/view_model/auth_view_model.dart';
 import 'package:tinder/view_model/selection_view_model.dart';
 import 'package:tinder/widgets/no_button.dart';
 import 'package:tinder/widgets/swipeable_tinder_card.dart';
@@ -60,7 +59,6 @@ class _Buttons extends StatelessWidget {
               ),
               SizedBox(width: 20),
               YesButton(
-                count: 70,
                 onTap: () async {
                   model.like().then((matchUser) {
                     if (matchUser == null) return;

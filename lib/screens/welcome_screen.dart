@@ -35,9 +35,7 @@ class WelcomeScreen extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: 60),
             child: AppRoundFilledButton(
               onPressed: () {
-                final model = Provider.of<AuthViewModel>(context, listen: false);
-                model.logIn();
-                // Navigator.pushAndRemoveUntil(context, SelectionRoute(), (_) => false)
+                Navigator.pushAndRemoveUntil(context, SelectionRoute(), (_) => false);
               },
               text: Strings.genderGotIt,
             ),

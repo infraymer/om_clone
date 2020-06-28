@@ -19,7 +19,7 @@ class MatchPhoto extends StatelessWidget {
         child: ClipRRect(
           borderRadius: radius,
           child: Image.network(
-            imageNetwork,
+            imageNetwork ?? '',
             fit: BoxFit.cover,
           ),
         ),

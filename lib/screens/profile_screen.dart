@@ -127,7 +127,8 @@ class _Description extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 30),
+      alignment: Alignment.centerLeft,
+      margin: EdgeInsets.symmetric(horizontal: 5),
       child: Text(
         text ?? '',
         style: TextStyle(fontSize: 12),
@@ -215,19 +216,17 @@ class _Buttons extends StatelessWidget {
       children: [
         NoButton(
           onTap: () {
-            selectionModel.dislike().then((_) {
-              Navigator.pop(context);
-            });
+            selectionModel.dislike();
+            Navigator.pop(context);
           },
         ),
         SizedBox(width: 20),
         YesButton(
           onTap: () {
-            selectionModel.like().then((matchUser) {
-              final matchUser = Provider.of<User>(context, listen: false);
-              if (matchUser == null) return;
-              Navigator.pushReplacement(context, MatchRoute(matchUser));
-            });
+            selectionModel.like();
+            final matchUser = Provider.of<User>(context, listen: false);
+            if (matchUser == null) return;
+            Navigator.pushReplacement(context, MatchRoute(matchUser));
           },
         ),
       ],

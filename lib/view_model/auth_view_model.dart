@@ -6,7 +6,9 @@ import 'package:tinder/remote/user_remote_data_source.dart';
 class AuthViewModel extends ChangeNotifier {
   final _userRemoteDataSource = UserRemoteDataSource();
 
+  bool isLoading = false;
   bool isLoggedIn = false;
+  bool isExist = false;
   User profile;
 
   AuthViewModel() {
@@ -14,9 +16,16 @@ class AuthViewModel extends ChangeNotifier {
   }
 
   Future<void> checkAuth() async {
+    isLoading = true;
     isLoggedIn = await isAuth;
-    if (isLoggedIn)
-      profile = await _userRemoteDataSource.me();
+    try {
+      if (isLoggedIn)
+        profile = await _userRemoteDataSource.me();
+      isExist = true;
+    } catch(e) {
+      print(e);
+    }
+    isLoading = false;
     notifyListeners();
   }
 
