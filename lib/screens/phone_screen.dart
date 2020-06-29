@@ -7,9 +7,10 @@ import 'package:tinder/remote/user_remote_data_source.dart';
 import 'package:tinder/resources/colors.dart';
 import 'package:tinder/resources/strings.dart';
 import 'package:tinder/routes.dart';
+import 'package:tinder/screens/auth_screen.dart';
 import 'package:tinder/screens/base_screen.dart';
 import 'package:tinder/utils/auth_firebase.dart';
-import 'package:tinder/view_model/auth_view_model.dart';
+import 'package:tinder/view_model/auth_controller.dart';
 import 'package:tinder/widgets/app_back_button.dart';
 import 'package:tinder/widgets/app_button.dart';
 import 'package:tinder/widgets/country_code_widget/country_code_picker.dart';
@@ -178,13 +179,8 @@ class _PhoneScreenState extends State<PhoneScreen> {
           String uid = currentUser.uid;
           currentUser.getIdToken().then((token) async {
             //save token and switch to another screen
-            try {
-              final model = Provider.of<AuthViewModel>(context, listen: false);
-              model.checkAuth();
-              Navigator.pop(context);
-            } catch (e) {
-              Navigator.pushReplacement(context, RegistrationRoute());
-            }
+            AuthController.to.checkAuth();
+            Navigator.pop(context);
           });
         });
       },

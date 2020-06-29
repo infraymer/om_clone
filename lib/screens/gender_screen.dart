@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tinder/resources/dimens.dart';
 import 'package:tinder/resources/strings.dart';
-import 'package:tinder/view_model/registration_view_model.dart';
+import 'package:tinder/view_model/registration_controller.dart';
 import 'package:tinder/widgets/app_round_button.dart';
 import 'package:tinder/widgets/app_round_filled_button.dart';
 import 'package:tinder/widgets/checkbox_text.dart';
@@ -49,7 +49,7 @@ class GenderScreen extends StatelessWidget {
 class _ToggleButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final model = context.watch<RegistrationViewModel>();
+    final model = context.watch<RegistrationController>();
     return Column(
       children: <Widget>[
         Container(
@@ -83,7 +83,7 @@ class _ToggleButtons extends StatelessWidget {
 class _ShowGenderCheckBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final model = context.watch<RegistrationViewModel>();
+    final model = context.watch<RegistrationController>();
     return CheckBoxText(
         text: Strings.genderShowMyGender,
         isChecked: model.showMyGender,

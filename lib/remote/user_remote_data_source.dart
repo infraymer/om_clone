@@ -1,4 +1,4 @@
-import 'package:tinder/mapper/me_mapper.dart';
+import 'package:tinder/mapper/user_mapper.dart';
 import 'package:tinder/model/user.dart';
 import 'package:tinder/model/user_create.dart';
 import 'package:tinder/remote/api.dart';
@@ -11,7 +11,7 @@ class UserRemoteDataSource {
   Future<List<User>> getFeeds() async {
     final result = await dio.get('feed');
     final list = result.data as List;
-    final usrs = list.map((e) => User.fromJson(e)).toList();
+    final usrs = list.map((e) => UserMapper.mapToUser(e)).toList();
     return usrs;
   }
 

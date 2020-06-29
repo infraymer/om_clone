@@ -10,7 +10,7 @@ import 'package:tinder/resources/colors.dart';
 import 'package:tinder/resources/dimens.dart';
 import 'package:tinder/resources/strings.dart';
 import 'package:tinder/utils/view_utils.dart';
-import 'package:tinder/view_model/registration_view_model.dart';
+import 'package:tinder/view_model/registration_controller.dart';
 import 'package:tinder/widgets/app_round_filled_button.dart';
 import 'package:tinder/widgets/registration_app_bar.dart';
 import 'package:tinder/widgets/screen_container.dart';
@@ -33,7 +33,7 @@ class _AddPhotosScreenState extends State<AddPhotosScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<RegistrationViewModel>(context);
+    final model = Provider.of<RegistrationController>(context);
     return ScreenContainer(
       keyScaffold: _scaffoldKey,
       child: Column(
@@ -81,7 +81,7 @@ class _AddPhotosScreenState extends State<AddPhotosScreen> {
 class PhotoBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<RegistrationViewModel>(context);
+    final model = Provider.of<RegistrationController>(context);
 //    final model = context.watch<RegistrationViewModel>();
     return Container(
       alignment: Alignment.center,
@@ -102,7 +102,7 @@ class PhotoBlock extends StatelessWidget {
 
   List<Widget> _buildSelectPhotoList(BuildContext context) {
     // final model = context.watch<RegistrationViewModel>();
-    final model = Provider.of<RegistrationViewModel>(context, listen: false);
+    final model = Provider.of<RegistrationController>(context, listen: false);
     final list = <Widget>[];
     model.photos.asMap().forEach(
           (i, e) => list.add(

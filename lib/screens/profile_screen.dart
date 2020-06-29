@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:tinder/model/user.dart';
 import 'package:tinder/routes.dart';
-import 'package:tinder/view_model/selection_view_model.dart';
+import 'package:tinder/view_model/selection_controller.dart';
 import 'package:tinder/widgets/circle_status.dart';
 import 'package:tinder/widgets/no_button.dart';
 import 'package:tinder/widgets/screen_container.dart';
@@ -28,7 +29,7 @@ class ProfileScreen extends StatelessWidget {
                 child: Container(
                   width: double.infinity,
                   child: Hero(
-                    tag: user.uid ?? '',
+                    tag: user.hashCode.toString() ?? '',
                     child: Image.network(
                       user.imgs.firstOrNull ?? '',
                       fit: BoxFit.cover,
@@ -210,20 +211,20 @@ class _Report extends StatelessWidget {
 class _Buttons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final selectionModel = Provider.of<SelectionViewModel>(context, listen: false);
+    final sc = Get.find<SelectionController>();
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         NoButton(
           onTap: () {
-            selectionModel.dislike();
+            sc.dislike();
             Navigator.pop(context);
           },
         ),
         SizedBox(width: 20),
         YesButton(
           onTap: () {
-            selectionModel.like();
+            sc.like();
             final matchUser = Provider.of<User>(context, listen: false);
             if (matchUser == null) return;
             Navigator.pushReplacement(context, MatchRoute(matchUser));

@@ -3,12 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:tinder/model/gender.dart';
 import 'package:tinder/resources/colors.dart';
 import 'package:tinder/resources/images.dart';
-import 'package:tinder/view_model/auth_view_model.dart';
-import 'package:tinder/view_model/settings_view_model.dart';
+import 'package:tinder/view_model/auth_controller.dart';
+import 'package:tinder/view_model/settings_controller.dart';
 import 'package:tinder/widgets/circle_container.dart';
 import 'package:tinder/widgets/dialog/dialogs.dart';
 
@@ -20,17 +21,12 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
-    final model = context.watch<SettingsViewModel>();
-    if (model.saved) Navigator.pop(context);
     return Scaffold(
       body: SafeArea(
         child: Column(
           children: [
             _AppBar(),
-            if (model.isLoading) _Loading(),
-            if (model.error != null) _Error(),
-            if (model.user != null && model.error == null && !model.isLoading)
-              _Content(),
+            _Content(),
           ],
         ),
       ),
@@ -41,7 +37,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 class _Error extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<SettingsViewModel>(context, listen: false);
+    final model = Provider.of<SettingsController>(context, listen: false);
     return Expanded(
       child: Center(
         child: Column(
@@ -70,7 +66,7 @@ class _Loading extends StatelessWidget {
 class _Content extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final model = context.watch<SettingsViewModel>();
+    final model = SettingsController.to;
     return Expanded(
       child: ListView(
         physics: BouncingScrollPhysics(),
@@ -96,14 +92,16 @@ class _Content extends StatelessWidget {
           _MaximumDistance(),
           _AgeRange(),
           SizedBox(height: 10),
-          _SelectorButton(
-            title: 'Show Me',
-            value: model.gender.name,
-            onTap: () async {
-              final gender = await Dialogs.showGenderDialog(context);
-              if (gender == null) return;
-              model.setGender(gender);
-            },
+          Obx(
+            () => _SelectorButton(
+              title: 'Show Me',
+              value: model.gender.value.name,
+              onTap: () async {
+                final gender = await Dialogs.showGenderDialog(context);
+                if (gender == null) return;
+                model.setGender(gender);
+              },
+            ),
           ),
           _SelectorButton(title: 'Privacy Policy'),
           _SelectorButton(title: 'Terms of Service'),
@@ -119,6 +117,7 @@ class _Content extends StatelessWidget {
 class _AppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final model = SettingsController.to;
     return Container(
       height: 54,
       child: Column(
@@ -139,13 +138,17 @@ class _AppBar extends StatelessWidget {
                   AppImages.logoDark,
                   height: 26,
                 ),
-                Opacity(
-                  opacity: 0,
-                  child: Container(
-                    alignment: Alignment.centerRight,
-                    child: IconButton(
-                      icon: Icon(Icons.settings, color: Colors.black12),
-                      onPressed: () {},
+                Obx(
+                  () => Opacity(
+                    opacity: model.isLoading.value ? 1 : 0,
+                    child: Container(
+                      margin: EdgeInsets.only(right: 16),
+                      alignment: Alignment.centerRight,
+                      width: 24,
+                      height: 24,
+                      child: FittedBox(
+                        child: CircularProgressIndicator(),
+                      ),
                     ),
                   ),
                 ),
@@ -165,7 +168,7 @@ class _AppBar extends StatelessWidget {
 class _Avatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<SettingsViewModel>(context, listen: false);
+    final model = SettingsController.to;
     final user = model.user;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -222,7 +225,7 @@ class _Switch extends StatelessWidget {
 class _Bio extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final data = Provider.of<SettingsViewModel>(context, listen: false).user;
+    final data = Provider.of<SettingsController>(context, listen: false).user;
     return GestureDetector(
       onTap: () {
         Dialogs.showBioDialog(context);
@@ -255,7 +258,7 @@ class _Description extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<SettingsViewModel>(context, listen: false);
+    final model = SettingsController.to;
     return Column(
       children: <Widget>[
         GestureDetector(
@@ -285,17 +288,19 @@ class _Description extends StatelessWidget {
         SizedBox(height: 20),
         Container(
           margin: EdgeInsets.symmetric(horizontal: 60),
-          child: TextField(
-            controller: TextEditingController(text: model.about),
-            focusNode: focusNode,
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 12),
-            decoration: InputDecoration(
-              border: InputBorder.none,
+          child: Obx(
+            () => TextField(
+              controller: TextEditingController(text: model.about),
+              focusNode: focusNode,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 12),
+              decoration: InputDecoration(
+                border: InputBorder.none,
+              ),
+              onChanged: (value) {
+                model.about = value;
+              },
             ),
-            onChanged: (value) {
-              model.about = value;
-            },
           ),
         ),
       ],
@@ -332,7 +337,7 @@ class _SliderTitle extends StatelessWidget {
 class _MaximumDistance extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final model = context.watch<SettingsViewModel>();
+    final model = SettingsController.to;
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20),
       child: Column(
@@ -343,7 +348,7 @@ class _MaximumDistance extends StatelessWidget {
             children: [
               Expanded(child: _Slider()),
               SizedBox(width: 8),
-              Text('${model.distance} km')
+              Obx(() => Text('${model.distance.value} km')),
             ],
           )
         ],
@@ -355,7 +360,7 @@ class _MaximumDistance extends StatelessWidget {
 class _AgeRange extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final model = context.watch<SettingsViewModel>();
+    final model = SettingsController.to;
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20),
       child: Column(
@@ -366,7 +371,7 @@ class _AgeRange extends StatelessWidget {
             children: [
               Expanded(child: _SliderDouble()),
               SizedBox(width: 8),
-              Text('${model.minAge}-${model.maxAge}')
+              Obx(() => Text('${model.minAge.value}-${model.maxAge.value}')),
             ],
           )
         ],
@@ -375,80 +380,42 @@ class _AgeRange extends StatelessWidget {
   }
 }
 
-class _Slider extends StatefulWidget {
-  @override
-  _SliderState createState() => _SliderState();
-}
-
-class _SliderState extends State<_Slider> {
-  double _value = 3;
-  SettingsViewModel model;
-
-  @override
-  void initState() {
-    super.initState();
-    model = context.read<SettingsViewModel>();
-    _value = model.distance.toDouble();
-  }
-
+class _Slider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return FlutterSlider(
-      values: [_value],
-      max: 100,
-      min: 2,
-      handler: _handlerSlider,
-      trackBar: _trackBar,
-      onDragging: (handlerIndex, lowerValue, upperValue) {
-        _value = lowerValue;
-        model?.distance = lowerValue.toInt();
-        setState(() {});
-      },
-      onDragCompleted: (handlerIndex, lowerValue, upperValue) {
-        model.update();
-      },
-    );
+    return Obx(() => FlutterSlider(
+          values: [SettingsController.to.distance.value.toDouble()],
+          max: 100,
+          min: 2,
+          handler: _handlerSlider,
+          trackBar: _trackBar,
+          onDragCompleted: (handlerIndex, lowerValue, upperValue) {
+            SettingsController.to.distance.value = lowerValue.toInt();
+          },
+        ));
   }
 }
 
-class _SliderDouble extends StatefulWidget {
-  @override
-  _SliderDoubleState createState() => _SliderDoubleState();
-}
-
-class _SliderDoubleState extends State<_SliderDouble> {
-  double _value = 18;
-  double _valueUpper = 50;
-  SettingsViewModel model;
-
-  @override
-  void initState() {
-    super.initState();
-    model = context.read<SettingsViewModel>();
-    _value = model.minAge.toDouble();
-    _valueUpper = model.maxAge.toDouble();
-  }
-
+class _SliderDouble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return FlutterSlider(
-      values: [_value, _valueUpper],
-      max: 99,
-      min: 18,
-      rangeSlider: true,
-      handler: _handlerSlider,
-      rightHandler: _handlerSlider,
-      trackBar: _trackBar,
-      onDragging: (handlerIndex, lowerValue, upperValue) {
-        _value = lowerValue;
-        _valueUpper = upperValue;
-        model?.minAge = lowerValue.toInt();
-        model?.maxAge = upperValue.toInt();
-        setState(() {});
-      },
-      onDragCompleted: (handlerIndex, lowerValue, upperValue) {
-        model.update();
-      },
+    return Obx(
+          () => FlutterSlider(
+        values: [
+          SettingsController.to.minAge.value.toDouble(),
+          SettingsController.to.maxAge.value.toDouble(),
+        ],
+        max: 99,
+        min: 18,
+        rangeSlider: true,
+        handler: _handlerSlider,
+        rightHandler: _handlerSlider,
+        trackBar: _trackBar,
+        onDragCompleted: (handlerIndex, lowerValue, upperValue) {
+          SettingsController.to.minAge.value = lowerValue.toInt();
+          SettingsController.to.maxAge.value = upperValue.toInt();
+        },
+      ),
     );
   }
 }
@@ -529,7 +496,7 @@ class _LogOutButton extends StatelessWidget {
         color: AppColors.bgSelectorButton,
         child: InkWell(
           onTap: () {
-            Provider.of<AuthViewModel>(context, listen: false)?.logOut();
+            AuthController.to.logOut();
             Navigator.pop(context);
           },
           child: Container(

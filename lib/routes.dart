@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:tinder/model/user.dart';
 import 'package:tinder/screens/auth_screen.dart';
@@ -13,10 +14,10 @@ import 'package:tinder/screens/selection_screen.dart';
 import 'package:tinder/screens/settings_screen.dart';
 import 'package:tinder/screens/welcome_screen.dart';
 import 'package:tinder/utils/auth_firebase.dart';
-import 'package:tinder/view_model/auth_view_model.dart';
-import 'package:tinder/view_model/match_view_model.dart';
-import 'package:tinder/view_model/registration_view_model.dart';
-import 'package:tinder/view_model/settings_view_model.dart';
+import 'package:tinder/view_model/auth_controller.dart';
+import 'package:tinder/view_model/match_controller.dart';
+import 'package:tinder/view_model/registration_controller.dart';
+import 'package:tinder/view_model/settings_controller.dart';
 
 class AuthRoute extends CupertinoPageRoute {
   AuthRoute() : super(builder: (ctx) => AuthScreen());
@@ -47,9 +48,9 @@ class MatchRoute extends CupertinoPageRoute {
   MatchRoute(User matchUser)
       : super(
             builder: (ctx) => ChangeNotifierProvider(
-                  create: (_) => MatchViewModel(
+                  create: (_) => MatchController(
                     matchUser,
-                    Provider.of<AuthViewModel>(ctx, listen: false).profile,
+                    AuthController.to.profile,
                   ),
                   child: MatchScreen(),
                 ));
@@ -66,9 +67,9 @@ class ChatRoute extends CupertinoPageRoute {
 class SettingsRoute extends CupertinoPageRoute {
   SettingsRoute()
       : super(
-            builder: (ctx) => ChangeNotifierProvider(
-                  create: (_) => SettingsViewModel(),
-                  child: SettingsScreen(),
+            builder: (ctx) => GetBuilder<SettingsController>(
+                  init: SettingsController(),
+                  builder: (_) => SettingsScreen(),
                 ));
 }
 

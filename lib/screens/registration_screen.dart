@@ -8,7 +8,7 @@ import 'package:tinder/screens/add_photos_screen.dart';
 import 'package:tinder/screens/birthday_screen.dart';
 import 'package:tinder/screens/gender_screen.dart';
 import 'package:tinder/screens/name_screen.dart';
-import 'package:tinder/view_model/registration_view_model.dart';
+import 'package:tinder/view_model/registration_controller.dart';
 import 'package:tinder/widgets/screen_container.dart';
 
 class RegistrationScreen extends StatelessWidget {
@@ -19,8 +19,8 @@ class RegistrationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<RegistrationViewModel>(
-      create: (_) => RegistrationViewModel(),
+    return ChangeNotifierProvider<RegistrationController>(
+      create: (_) => RegistrationController(),
       child: ScreenContainer(
         child: Column(
           children: <Widget>[

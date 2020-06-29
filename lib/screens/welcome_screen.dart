@@ -5,7 +5,7 @@ import 'package:tinder/resources/images.dart';
 import 'package:tinder/resources/strings.dart';
 import 'package:tinder/resources/text_styles.dart';
 import 'package:tinder/routes.dart';
-import 'package:tinder/view_model/auth_view_model.dart';
+import 'package:tinder/view_model/auth_controller.dart';
 import 'package:tinder/widgets/app_round_filled_button.dart';
 import 'package:tinder/widgets/screen_container.dart';
 

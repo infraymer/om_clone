@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:get/get.dart';
 import 'package:tinder/resources/colors.dart';
 import 'package:tinder/routes.dart';
-import 'package:tinder/view_model/selection_view_model.dart';
+import 'package:tinder/view_model/selection_controller.dart';
 import 'package:tinder/widgets/no_button.dart';
 import 'package:tinder/widgets/swipeable_tinder_card.dart';
 import 'package:tinder/widgets/tinder_card_content.dart';
@@ -24,6 +25,7 @@ class _SelectionScreenState extends State<SelectionScreen>
       backgroundColor: AppColors.main,
       body: Stack(
         children: <Widget>[
+          _Loading(),
           _OmCards(),
           _Buttons(),
         ],
@@ -32,10 +34,22 @@ class _SelectionScreenState extends State<SelectionScreen>
   }
 }
 
+class _Loading extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: SpinKitPumpingHeart(
+        color: Colors.white,
+        duration: Duration(milliseconds: 1000),
+      ),
+    );
+  }
+}
+
 class _Buttons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<SelectionViewModel>(context, listen: false);
+    final model = Get.find<SelectionController>();
     return Positioned(
       bottom: 20,
       left: 10,
@@ -82,38 +96,40 @@ class _Buttons extends StatelessWidget {
   }
 }
 
-
 class _OmCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final model = context.watch<SelectionViewModel>();
-    return Stack(
-      children: <Widget>[
-        if (model.users.length > 1)
-          SwipeableCard(
-            key: UniqueKey(),
-            child: TinderCardContent(
-              data: model.users[1],
-            ),
-          ),
-        if (model.users.length > 0)
-          SwipeableCard(
-            key: UniqueKey(),
-            child: TinderCardContent(
-              data: model.users[0],
-            ),
-            callback: (SwipeDirection swipe, child) {
-              if (swipe == SwipeDirection.LEFT) {
-                model.dislike();
-              } else {
-                model.like().then((matchUser) {
-                  if (matchUser == null) return;
-                  Navigator.push(context, MatchRoute(matchUser));
-                });
-              }
-            },
-          ),
-      ],
+    return GetX<SelectionController>(
+      builder: (model) {
+        return Stack(
+          children: <Widget>[
+            if (model.users.length > 1)
+              SwipeableCard(
+                key: UniqueKey(),
+                child: TinderCardContent(
+                  data: model.users[1],
+                ),
+              ),
+            if (model.users.length > 0)
+              SwipeableCard(
+                key: UniqueKey(),
+                child: TinderCardContent(
+                  data: model.users[0],
+                ),
+                callback: (SwipeDirection swipe, child) {
+                  if (swipe == SwipeDirection.LEFT) {
+                    model.dislike();
+                  } else {
+                    model.like().then((matchUser) {
+                      if (matchUser == null) return;
+                      Navigator.push(context, MatchRoute(matchUser));
+                    });
+                  }
+                },
+              ),
+          ],
+        );
+      },
     );
   }
 }

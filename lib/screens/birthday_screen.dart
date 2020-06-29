@@ -8,7 +8,7 @@ import 'package:tinder/resources/dimens.dart';
 import 'package:tinder/resources/strings.dart';
 import 'package:tinder/resources/text_styles.dart';
 import 'package:tinder/utils/view_utils.dart';
-import 'package:tinder/view_model/registration_view_model.dart';
+import 'package:tinder/view_model/registration_controller.dart';
 import 'package:tinder/widgets/app_round_filled_button.dart';
 import 'package:tinder/widgets/pincode/models/pin_theme.dart';
 import 'package:tinder/widgets/pincode/pin_code_fields_custom.dart';
@@ -32,7 +32,7 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<RegistrationViewModel>(context, listen: false);
+    final model = Provider.of<RegistrationController>(context, listen: false);
     return ScreenContainer(
       keyScaffold: _scaffoldKey,
       child: Column(

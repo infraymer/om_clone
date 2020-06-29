@@ -4,7 +4,7 @@ import 'package:tinder/resources/dimens.dart';
 import 'package:tinder/resources/strings.dart';
 import 'package:tinder/resources/text_styles.dart';
 import 'package:tinder/utils/view_utils.dart';
-import 'package:tinder/view_model/registration_view_model.dart';
+import 'package:tinder/view_model/registration_controller.dart';
 import 'package:tinder/widgets/app_round_filled_button.dart';
 import 'package:tinder/widgets/registration_app_bar.dart';
 import 'package:tinder/widgets/registration_text_field.dart';
@@ -26,7 +26,7 @@ class _NameScreenState extends State<NameScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<RegistrationViewModel>(context, listen: false);
+    final model = Provider.of<RegistrationController>(context, listen: false);
     return ScreenContainer(
       child: Column(
         children: <Widget>[
