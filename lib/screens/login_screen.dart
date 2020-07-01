@@ -5,6 +5,7 @@ import 'package:tinder/resources/images.dart';
 import 'package:tinder/resources/strings.dart';
 import 'package:tinder/resources/text_styles.dart';
 import 'package:tinder/routes.dart';
+import 'package:tinder/view_model/selection_controller.dart';
 import 'package:tinder/widgets/app_round_button_dark.dart';
 
 class LoginScreen extends StatelessWidget {

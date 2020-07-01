@@ -9,27 +9,32 @@ import 'package:tinder/widgets/swipeable_tinder_card.dart';
 import 'package:tinder/widgets/tinder_card_content.dart';
 import 'package:tinder/widgets/yes_button.dart';
 
-class SelectionScreen extends StatefulWidget {
-  @override
-  _SelectionScreenState createState() => _SelectionScreenState();
-}
-
-class _SelectionScreenState extends State<SelectionScreen>
-    with TickerProviderStateMixin {
-  var size = 0;
-  var sizeTwo = 4;
+class SelectionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.main,
-      body: Stack(
-        children: <Widget>[
-          _Loading(),
-          _OmCards(),
-          _Buttons(),
-        ],
-      ),
+
+    return GetBuilder(
+      init: SelectionController(),
+      builder: (_) {
+        return Scaffold(
+          backgroundColor: AppColors.main,
+          body: Stack(
+            children: <Widget>[
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  _Loading(),
+                  _Error(),
+                ],
+              ),
+              _OmCards(),
+              _Buttons(),
+            ],
+          ),
+        );
+      },
     );
   }
 }
@@ -43,6 +48,20 @@ class _Loading extends StatelessWidget {
         duration: Duration(milliseconds: 1000),
       ),
     );
+  }
+}
+
+class _Error extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() => Container(
+          margin: EdgeInsets.fromLTRB(60, 16, 60, 0),
+          child: Text(
+            SelectionController.to.errorMessage.value,
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.white),
+          ),
+        ));
   }
 }
 

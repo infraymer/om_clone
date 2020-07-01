@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tinder/resources/colors.dart';
 import 'package:tinder/screens/auth_screen.dart';
 import 'package:tinder/view_model/auth_controller.dart';
-import 'package:tinder/view_model/selection_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   Get.put(AuthController());
-  Get.put(SelectionController());
 
   runApp(MyApp());
 }
@@ -18,6 +17,9 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     return GetMaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(

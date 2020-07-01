@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:tinder/model/user.dart';
 import 'package:tinder/remote/user_remote_data_source.dart';
@@ -7,9 +9,11 @@ class SelectionController extends GetxController {
   final _userRemoteDataSource = UserRemoteDataSource();
 
   RxList<User> users = <User>[].obs;
+  final errorMessage = ''.obs;
 
-  @override
-  void onInit() {
+  bool _disposed = false;
+
+  SelectionController() {
     getFeeds();
     users.listen((_) {
       if (users.length < 2) getFeeds();
@@ -20,7 +24,13 @@ class SelectionController extends GetxController {
     try {
       final list = await _userRemoteDataSource.getFeeds();
       users.addAll(list);
-    } catch (e) {}
+      errorMessage.value = '';
+    } catch (e) {
+      if (_disposed) return;
+      errorMessage.value = 'Fetch feeds error. We sent the request again.';
+      await Future.delayed(Duration(seconds: 10));
+      getFeeds();
+    }
   }
 
   Future<void> dislike() async {
@@ -36,5 +46,11 @@ class SelectionController extends GetxController {
     users.removeAt(0);
     await _userRemoteDataSource.like(user.uid, true);
     return user;
+  }
+
+  @override
+  void onClose() {
+    _disposed = true;
+    super.onClose();
   }
 }

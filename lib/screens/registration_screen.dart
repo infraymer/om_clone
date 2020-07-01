@@ -8,6 +8,7 @@ import 'package:tinder/screens/add_photos_screen.dart';
 import 'package:tinder/screens/birthday_screen.dart';
 import 'package:tinder/screens/gender_screen.dart';
 import 'package:tinder/screens/name_screen.dart';
+import 'package:tinder/view_model/auth_controller.dart';
 import 'package:tinder/view_model/registration_controller.dart';
 import 'package:tinder/widgets/screen_container.dart';
 
@@ -34,7 +35,9 @@ class RegistrationScreen extends StatelessWidget {
                 controller: controller,
                 children: <Widget>[
                   NameScreen(
-                    onBackClicked: () => Navigator.pop(context),
+                    onBackClicked: () {
+                      AuthController.to.logOut();
+                    },
                     onActionClicked: _nextPage,
                   ),
                   BirthdayScreen(
