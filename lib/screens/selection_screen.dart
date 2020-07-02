@@ -139,9 +139,9 @@ class _OmCards extends StatelessWidget {
                   if (swipe == SwipeDirection.LEFT) {
                     model.dislike();
                   } else {
-                    model.like().then((matchUser) {
-                      if (matchUser == null) return;
-                      Navigator.push(context, MatchRoute(matchUser));
+                    model.like();
+                    Future.delayed(Duration(seconds: 1), () {
+                      Navigator.push(context, MatchRoute(model.users[0]));
                     });
                   }
                 },

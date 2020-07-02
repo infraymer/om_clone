@@ -10,9 +10,11 @@ class User {
   final String name;
   final String lastName;
   final String displayName;
+  @JsonKey(toJson: dateToUtc)
   final DateTime lastSeen;
   final double lat;
   final double lan;
+  @JsonKey(toJson: dateToUtc)
   final DateTime birthDate;
   final int imgsLength;
   final String match;
@@ -83,4 +85,7 @@ class User {
     );
   }
 
+  static String dateToUtc(DateTime date) {
+    return date?.toUtc()?.toIso8601String();
+  }
 }

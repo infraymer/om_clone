@@ -11,7 +11,7 @@ class UserRemoteDataSource {
   Future<List<User>> getFeeds() async {
     final result = await dio.get('feed');
     final list = result.data as List;
-    final usrs = list.map((e) => UserMapper.mapToUser(e)).toList();
+    final usrs = list.map((e) => User.fromJson(e)).toList();
     return usrs;
   }
 
