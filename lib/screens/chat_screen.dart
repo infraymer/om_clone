@@ -1,35 +1,75 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:tinder/constants.dart';
+import 'package:tinder/model/chat_message.dart';
+import 'package:tinder/model/user.dart';
 import 'package:tinder/resources/colors.dart';
+import 'package:tinder/view_model/chat_controller.dart';
+import 'package:tinder/widgets/om_loading.dart';
 
 class ChatScreen extends StatelessWidget {
+  final User user;
+
+  const ChatScreen({Key key, this.user}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            _AppBar(),
-            Expanded(
-              child: ListView(
-                physics: BouncingScrollPhysics(),
-                children: <Widget>[
-                  _MatchDate(),
-//                  MessageItem(isDelivery: true),
-//                  OwnerMessageItem(),
-//                  DateItem(),
-//                  MessageItem(),
-                ],
-              ),
+    return GetBuilder<ChatController>(
+      init: ChatController()..user.value = user,
+      initState: (_) => ChatController.to.getMessages(),
+      builder: (_) {
+        return Scaffold(
+          body: SafeArea(
+            child: Column(
+              children: <Widget>[
+                _AppBar(),
+                Expanded(
+                  child: Obx(
+                    () => ChatController.to.isLoading.value ? _Loading() : ListView.builder(
+                      physics: BouncingScrollPhysics(),
+                      itemCount: ChatController.to.messages.length,
+                      itemBuilder: (context, index) {
+                        return _MessageWidget(
+                          data: ChatController.to.messages[index],
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                ChatInputMessage(),
+                SizedBox(height: 10),
+                ChatActionPanel(),
+                SizedBox(height: 20),
+              ],
             ),
-            ChatInputMessage(),
-            SizedBox(height: 10),
-            ChatActionPanel(),
-            SizedBox(height: 20),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
+  }
+}
+
+class _Loading extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: OmLoading(),
+    );
+  }
+}
+
+
+class _MessageWidget extends StatelessWidget {
+  final ChatMessage data;
+
+  const _MessageWidget({Key key, this.data}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final user = ChatController.to.profile;
+    final isOwner = data.toUid != user.uid;
+    return isOwner ? OwnerMessageItem(data: data) : MessageItem(data: data);
   }
 }
 
@@ -95,9 +135,11 @@ class DateItem extends StatelessWidget {
 }
 
 class MessageItem extends StatelessWidget {
+  final ChatMessage data;
   final bool isDelivery;
 
-  const MessageItem({Key key, this.isDelivery = false}) : super(key: key);
+  const MessageItem({Key key, this.isDelivery = false, this.data})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +153,7 @@ class MessageItem extends StatelessWidget {
           Expanded(
               child: Padding(
             padding: const EdgeInsets.only(top: 2),
-            child: _TextBody(isDelivery: isDelivery),
+            child: _TextBody(data: data, isDelivery: isDelivery),
           )),
           SizedBox(width: 30),
           Padding(
@@ -125,6 +167,10 @@ class MessageItem extends StatelessWidget {
 }
 
 class OwnerMessageItem extends StatelessWidget {
+  final ChatMessage data;
+
+  const OwnerMessageItem({Key key, this.data}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -133,7 +179,7 @@ class OwnerMessageItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           Expanded(
-            child: _OwnerTextBody(),
+            child: _OwnerTextBody(data: data),
           ),
         ],
       ),
@@ -160,10 +206,11 @@ class _MatchDate extends StatelessWidget {
 }
 
 class _Sent extends StatelessWidget {
+  final String value;
   final EdgeInsetsGeometry margin;
   final bool isDelivery;
 
-  const _Sent({Key key, this.margin, this.isDelivery = false})
+  const _Sent({Key key, this.margin, this.isDelivery = false, this.value})
       : super(key: key);
 
   @override
@@ -176,7 +223,7 @@ class _Sent extends StatelessWidget {
           if (isDelivery) _SentIcon(),
           SizedBox(width: 8),
           Text(
-            'Sent, 2:43 PM',
+            value ?? '',
             style: TextStyle(
               fontSize: 12,
               color: Colors.black26,
@@ -244,6 +291,10 @@ class _Avatar extends StatelessWidget {
 }
 
 class _OwnerTextBody extends StatelessWidget {
+  final ChatMessage data;
+
+  const _OwnerTextBody({Key key, this.data}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -264,21 +315,25 @@ class _OwnerTextBody extends StatelessWidget {
               color: Colors.blue[300],
             ),
             child: Text(
-              'Text messageText ',
+              data.text ?? '',
               style: TextStyle(fontSize: 14, color: Colors.white),
             ),
           ),
         ),
-        _Sent(margin: EdgeInsets.only(top: 8)),
+        _Sent(
+          value: DateFormat('HH:mm').format(data.date),
+          margin: EdgeInsets.only(top: 8),
+        ),
       ],
     );
   }
 }
 
 class _TextBody extends StatelessWidget {
+  final ChatMessage data;
   final bool isDelivery;
 
-  const _TextBody({Key key, this.isDelivery}) : super(key: key);
+  const _TextBody({Key key, this.isDelivery, this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -298,12 +353,14 @@ class _TextBody extends StatelessWidget {
             color: AppColors.textField,
           ),
           child: Text(
-            'Text messageText ',
+            data.text,
             style: TextStyle(fontSize: 14, color: Colors.black54),
           ),
         ),
         _Sent(
-            margin: EdgeInsets.only(top: 8, right: 16), isDelivery: isDelivery),
+            value: DateFormat('HH:mm').format(data.date),
+            margin: EdgeInsets.only(top: 8, right: 16),
+            isDelivery: isDelivery),
       ],
     );
   }
@@ -323,19 +380,33 @@ class ChatInputMessage extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Expanded(
-            child: TextField(
-              style: TextStyle(color: Colors.black38, fontSize: 12),
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: 'Type a message here...',
+            child: Obx(
+              () => TextField(
+                controller: TextEditingController.fromValue(
+                  TextEditingValue(text: ChatController.to.inputMessage.value, selection: TextSelection.fromPosition(TextPosition(offset: ChatController.to.inputMessage.value.length)))
+                ),
+                style: TextStyle(color: Colors.black38, fontSize: 12),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: 'Type a message here...',
+                ),
+                onChanged: (value) {
+                  ChatController.to.inputMessage.value = value;
+                },
+                onSubmitted: (_) {
+                  ChatController.to.sendMessage();
+                },
               ),
             ),
           ),
-          Text(
-            'Send',
-            style: TextStyle(
-              color: Colors.black38,
-              fontWeight: FontWeight.bold,
+          GestureDetector(
+            onTap: () => ChatController.to.sendMessage(),
+            child: Text(
+              'Send',
+              style: TextStyle(
+                color: Colors.black38,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           )
         ],
@@ -375,7 +446,6 @@ class ChatActionPanel extends StatelessWidget {
     );
   }
 }
-
 
 class ChatActionContainer extends StatelessWidget {
   final Widget child;

@@ -46,7 +46,7 @@ class MatchScreen extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: 50),
             text: Strings.matchSendMessage,
             icon: Icons.chat_bubble,
-            onPressed: () => Navigator.push(context, ChatRoute()),
+            onPressed: () => Navigator.push(context, ChatRoute(model.matchUser)),
           ),
           SizedBox(height: 30),
           AppIconRoundButtonDark(

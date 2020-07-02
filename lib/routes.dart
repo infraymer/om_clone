@@ -61,7 +61,7 @@ class SelectionRoute extends CupertinoPageRoute {
 }
 
 class ChatRoute extends CupertinoPageRoute {
-  ChatRoute() : super(builder: (ctx) => ChatScreen());
+  ChatRoute(User user) : super(builder: (ctx) => ChatScreen(user: user));
 }
 
 class SettingsRoute extends CupertinoPageRoute {
