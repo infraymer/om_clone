@@ -1,13 +1,17 @@
+import 'dart:io';
+
 import 'package:get/get.dart';
 import 'package:tinder/model/gender.dart';
 import 'package:tinder/model/setting_filter.dart';
 import 'package:tinder/model/user.dart';
+import 'package:tinder/remote/file_remote_data_source.dart';
 import 'package:tinder/remote/user_remote_data_source.dart';
 import 'package:tinder/view_model/auth_controller.dart';
 
 class SettingsController extends GetxController {
   static SettingsController get to => Get.find();
   final _userRemoteDataSource = UserRemoteDataSource();
+  final _fileRemoteDataSource = FileRemoteDataSource();
 
   User user;
   final isLoading = false.obs;
@@ -18,6 +22,8 @@ class SettingsController extends GetxController {
   final distance = 2.obs;
   final gender = Gender.all.obs;
   String about = '';
+
+  final Rx<File> photo = Rx<File>(null);
 
   @override
   void onInit() {
@@ -57,7 +63,7 @@ class SettingsController extends GetxController {
   Future<void> onDoneClicked() async {
     try {
       isLoading.value = true;
-      final data = user.copyWith(
+      var data = user.copyWith(
         aboutMe: about,
         settingFilter: SettingFilter(
           minAge.value,
@@ -66,6 +72,12 @@ class SettingsController extends GetxController {
           distance.value,
         ),
       );
+
+      if (photo.value != null) {
+        final url = await uploadImage();
+        data = data.copyWith(imgs: [url]);
+      }
+
       await _userRemoteDataSource.updateUser(data);
       AuthController.to.profile = data;
       Get.snackbar('Settings', 'Saved!',);
@@ -74,5 +86,10 @@ class SettingsController extends GetxController {
     } finally {
       isLoading.value = false;
     }
+  }
+
+  Future<String> uploadImage() async {
+    final url = await _fileRemoteDataSource.uploadImage(photo.value);
+    return url;
   }
 }

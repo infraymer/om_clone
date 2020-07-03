@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:dartx/dartx.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:tinder/model/gender.dart';
 import 'package:tinder/resources/colors.dart';
@@ -170,41 +173,58 @@ class _Avatar extends StatelessWidget {
   Widget build(BuildContext context) {
     final model = SettingsController.to;
     final user = model.user;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        IntrinsicHeight(
-          child: IntrinsicWidth(
-            child: Stack(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(500),
-                  child: Image.network(
-                    user.imgs.firstOrNull ?? '',
-                    fit: BoxFit.cover,
-                    width: 100,
-                    height: 100,
+    return GestureDetector(
+      onTap: _onChangePhoto,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          IntrinsicHeight(
+            child: IntrinsicWidth(
+              child: Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(500),
+                    child: Obx(() => SettingsController.to.photo.value == null
+                        ? Image.network(
+                            user.imgs.firstOrNull ?? '',
+                            fit: BoxFit.cover,
+                            width: 100,
+                            height: 100,
+                          )
+                        : Image.file(
+                            SettingsController.to.photo.value,
+                            fit: BoxFit.cover,
+                            width: 100,
+                            height: 100,
+                          )),
                   ),
-                ),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: CircleContainer(
-                    transform: Matrix4.translationValues(10.0, 10.0, 0.0),
-                    size: 40,
-                    color: AppColors.main,
-                    padding: EdgeInsets.all(12),
-                    child: Icon(
-                      Icons.edit,
-                      color: Colors.white,
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: CircleContainer(
+                      transform: Matrix4.translationValues(10.0, 10.0, 0.0),
+                      size: 40,
+                      color: AppColors.main,
+                      padding: EdgeInsets.all(12),
+                      child: Icon(
+                        Icons.edit,
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
+  }
+
+  _onChangePhoto() async {
+    final pickedFile =
+        await ImagePicker().getImage(source: ImageSource.gallery);
+    final file = File(pickedFile.path);
+    SettingsController.to.photo.value = file;
   }
 }
 
@@ -400,7 +420,7 @@ class _SliderDouble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-          () => FlutterSlider(
+      () => FlutterSlider(
         values: [
           SettingsController.to.minAge.value.toDouble(),
           SettingsController.to.maxAge.value.toDouble(),

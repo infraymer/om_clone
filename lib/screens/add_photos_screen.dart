@@ -108,8 +108,7 @@ class PhotoBlock extends StatelessWidget {
           (i, e) => list.add(
             GestureDetector(
               onTap: () async {
-                final pickedFile =
-                    await ImagePicker().getImage(source: ImageSource.gallery);
+                final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
                 final file = File(pickedFile.path);
                 model.setImage(i, file);
               },
