@@ -1,9 +1,13 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:tinder/model/chat_message.dart';
 import 'package:tinder/remote/api.dart';
 
 class ChatRemoteDataSource {
-  Future<List<ChatMessage>> getMessages() async {
-    final result = await dio.get('messages');
+  Future<List<ChatMessage>> getMessages(String userId, {DateTime date}) async {
+    final result = await dio.get('messages', queryParameters: {
+      'uid': userId,
+      'from': date?.toUtc()?.toIso8601String() ?? '',
+    });
     final list = result.data as List;
     final msgs = list.map((e) => ChatMessage.fromJson(e)).toList();
     return msgs;
@@ -16,4 +20,12 @@ class ChatRemoteDataSource {
     });
     return ChatMessage.fromJson(result.data);
   }
+
+  Stream<DateTime> newMessageListener(String matchUserId) =>
+      FirebaseDatabase.instance
+          .reference()
+          .child(matchUserId)
+          .onValue
+          .skip(1)
+          .map((event) => DateTime.parse(event.snapshot.value['message']));
 }

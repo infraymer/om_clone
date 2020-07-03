@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:dartx/dartx.dart';
 import 'package:get/get.dart';
 import 'package:tinder/resources/colors.dart';
 import 'package:tinder/routes.dart';
@@ -93,10 +94,9 @@ class _Buttons extends StatelessWidget {
               SizedBox(width: 20),
               YesButton(
                 onTap: () async {
-                  model.like().then((matchUser) {
-                    if (matchUser == null) return;
-                    Navigator.push(context, MatchRoute(matchUser));
-                  });
+                  model.like();
+                  if (model.users.firstOrNull == null) return;
+                  Navigator.push(context, MatchRoute(model.users.firstOrNull));
                 },
               ),
             ],

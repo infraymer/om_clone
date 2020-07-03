@@ -45,15 +45,7 @@ class RegistrationRoute extends CupertinoPageRoute {
 }
 
 class MatchRoute extends CupertinoPageRoute {
-  MatchRoute(User matchUser)
-      : super(
-            builder: (ctx) => ChangeNotifierProvider(
-                  create: (_) => MatchController(
-                    matchUser,
-                    AuthController.to.profile,
-                  ),
-                  child: MatchScreen(),
-                ));
+  MatchRoute(User matchUser) : super(builder: (ctx) => MatchScreen(matchUser: matchUser));
 }
 
 class SelectionRoute extends CupertinoPageRoute {

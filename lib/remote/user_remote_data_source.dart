@@ -22,6 +22,13 @@ class UserRemoteDataSource {
     });
   }
 
+  Future<void> cancelMatch(String userId) async {
+    final result = await dio.post('cancelMatch', data: {
+      'uid': userId,
+    });
+    print('');
+  }
+
   Future<User> me() async {
     final result = await dio.get('me');
     final data = User.fromJson(result.data);

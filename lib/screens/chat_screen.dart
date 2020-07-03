@@ -1,7 +1,7 @@
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:tinder/constants.dart';
 import 'package:tinder/model/chat_message.dart';
 import 'package:tinder/model/user.dart';
 import 'package:tinder/resources/colors.dart';
@@ -26,15 +26,19 @@ class ChatScreen extends StatelessWidget {
                 _AppBar(),
                 Expanded(
                   child: Obx(
-                    () => ChatController.to.isLoading.value ? _Loading() : ListView.builder(
-                      physics: BouncingScrollPhysics(),
-                      itemCount: ChatController.to.messages.length,
-                      itemBuilder: (context, index) {
-                        return _MessageWidget(
-                          data: ChatController.to.messages[index],
-                        );
-                      },
-                    ),
+                    () => ChatController.to.isLoading.value
+                        ? _Loading()
+                        : ListView.builder(
+                            reverse: true,
+                            controller: ChatController.to.scrollController,
+                            physics: BouncingScrollPhysics(),
+                            itemCount: ChatController.to.messages.length,
+                            itemBuilder: (context, index) {
+                              return _MessageWidget(
+                                data: ChatController.to.messages[index],
+                              );
+                            },
+                          ),
                   ),
                 ),
                 ChatInputMessage(),
@@ -59,7 +63,6 @@ class _Loading extends StatelessWidget {
   }
 }
 
-
 class _MessageWidget extends StatelessWidget {
   final ChatMessage data;
 
@@ -76,6 +79,7 @@ class _MessageWidget extends StatelessWidget {
 class _AppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final data = ChatController.to.user.value;
     return Stack(
       alignment: Alignment.center,
       children: <Widget>[
@@ -102,8 +106,10 @@ class _AppBar extends StatelessWidget {
                 children: <Widget>[
                   _Avatar(size: 40),
                   SizedBox(height: 2),
-                  Text('Lola',
-                      style: TextStyle(fontSize: 10, color: Colors.black38))
+                  Text(
+                    data.name,
+                    style: TextStyle(fontSize: 10, color: Colors.black38),
+                  )
                 ],
               ),
             ),
@@ -156,10 +162,10 @@ class MessageItem extends StatelessWidget {
             child: _TextBody(data: data, isDelivery: isDelivery),
           )),
           SizedBox(width: 30),
-          Padding(
-            padding: const EdgeInsets.only(top: 12),
-            child: _LikeButton(),
-          ),
+//          Padding(
+//            padding: const EdgeInsets.only(top: 12),
+//            child: _LikeButton(),
+//          ),
         ],
       ),
     );
@@ -273,6 +279,7 @@ class _Avatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final data = ChatController.to.user.value;
     return ClipRRect(
       borderRadius: BorderRadius.circular(100),
       child: Container(
@@ -282,7 +289,7 @@ class _Avatar extends StatelessWidget {
             borderRadius: BorderRadius.circular(100),
             border: Border.all(color: Colors.black12)),
         child: Image.network(
-          Constants.womanImage,
+          data.imgs.firstOrNull ?? '',
           fit: BoxFit.cover,
         ),
       ),
@@ -382,9 +389,10 @@ class ChatInputMessage extends StatelessWidget {
           Expanded(
             child: Obx(
               () => TextField(
-                controller: TextEditingController.fromValue(
-                  TextEditingValue(text: ChatController.to.inputMessage.value, selection: TextSelection.fromPosition(TextPosition(offset: ChatController.to.inputMessage.value.length)))
-                ),
+                controller: TextEditingController.fromValue(TextEditingValue(
+                    text: ChatController.to.inputMessage.value,
+                    selection: TextSelection.fromPosition(TextPosition(
+                        offset: ChatController.to.inputMessage.value.length)))),
                 style: TextStyle(color: Colors.black38, fontSize: 12),
                 decoration: InputDecoration(
                   border: InputBorder.none,
@@ -399,16 +407,24 @@ class ChatInputMessage extends StatelessWidget {
               ),
             ),
           ),
-          GestureDetector(
-            onTap: () => ChatController.to.sendMessage(),
-            child: Text(
-              'Send',
-              style: TextStyle(
-                color: Colors.black38,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          )
+          Obx(
+            () => !ChatController.to.isSendLoading.value
+                ? GestureDetector(
+                    onTap: () => ChatController.to.sendMessage(),
+                    child: Text(
+                      'Send',
+                      style: TextStyle(
+                        color: Colors.black38,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  )
+                : SizedBox(
+                    height: 18,
+                    width: 18,
+                    child: CircularProgressIndicator(),
+                  ),
+          ),
         ],
       ),
     );

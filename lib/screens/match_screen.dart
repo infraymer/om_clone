@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
+import 'package:tinder/model/user.dart';
 import 'package:tinder/resources/colors.dart';
 import 'package:tinder/resources/strings.dart';
 import 'package:tinder/resources/text_styles.dart';
@@ -13,72 +14,69 @@ import 'package:tinder/widgets/match_photo.dart';
 import 'package:tinder/widgets/screen_container.dart';
 
 class MatchScreen extends StatelessWidget {
+  final User matchUser;
+
+  const MatchScreen({Key key, @required this.matchUser}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<MatchController>(context);
-    return ScreenContainer(
-      backgroundColor: AppColors.main,
-      child: Column(
-        children: <Widget>[
-          SizedBox(height: 20),
-          Text(Strings.matchTitle, style: TextStyles.matchTitle),
-          SizedBox(height: 20),
-          Text('You and ${model.matchUser.name} have liked each other',
-              style: TextStyles.matchSubtitle),
-          SizedBox(height: 50),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 60),
-            child: FittedBox(
-              child: Row(
-                children: <Widget>[
-                  MatchPhoto(model.me.imgs?.firstOrNull),
-                  SizedBox(width: 100),
-                  Hero(
-                    tag: model.matchUser.uid,
-                    child: MatchPhoto(model.matchUser.imgs?.firstOrNull),
+    return GetBuilder<MatchController>(
+      init: MatchController(matchUser),
+      builder: (_) {
+        return ScreenContainer(
+          backgroundColor: AppColors.main,
+          child: Column(
+            children: <Widget>[
+              SizedBox(height: 20),
+              Text(Strings.matchTitle, style: TextStyles.matchTitle),
+              SizedBox(height: 20),
+              Text('You and ${_.matchUser.name} have liked each other',
+                  style: TextStyles.matchSubtitle),
+              SizedBox(height: 50),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 60),
+                child: FittedBox(
+                  child: Row(
+                    children: <Widget>[
+                      MatchPhoto(_.me.imgs?.firstOrNull),
+                      SizedBox(width: 100),
+                      Hero(
+                        tag: _.matchUser.uid,
+                        child: MatchPhoto(_.matchUser.imgs?.firstOrNull),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
-          ),
-          Expanded(child: SizedBox()),
-          AppIconRoundButtonDark(
-            margin: EdgeInsets.symmetric(horizontal: 50),
-            text: Strings.matchSendMessage,
-            icon: Icons.chat_bubble,
-            onPressed: () => Navigator.push(context, ChatRoute(model.matchUser)),
-          ),
-          SizedBox(height: 30),
-          AppIconRoundButtonDark(
-            margin: EdgeInsets.symmetric(horizontal: 50),
-            text: Strings.matchKeepPlaying,
-            icon: Icons.perm_contact_calendar,
-            onPressed: () {
-              Get.defaultDialog(
-                title: 'Keep playing?',
-                content: SizedBox(),
-                buttonColor: Colors.white,
-                onConfirm: () {
-                  Navigator.pop(context);
-                  Navigator.pop(context);
+              Expanded(child: SizedBox()),
+              AppIconRoundButtonDark(
+                margin: EdgeInsets.symmetric(horizontal: 50),
+                text: Strings.matchSendMessage,
+                icon: Icons.chat_bubble,
+                onPressed: () => Navigator.push(context, ChatRoute(_.matchUser)),
+              ),
+              SizedBox(height: 30),
+              AppIconRoundButtonDark(
+                margin: EdgeInsets.symmetric(horizontal: 50),
+                text: Strings.matchKeepPlaying,
+                icon: Icons.perm_contact_calendar,
+                onPressed: () => _.onContinueMatch(),
+              ),
+              SizedBox(height: 30),
+              AppIconRoundButtonDark(
+                margin: EdgeInsets.symmetric(horizontal: 50),
+                text: Strings.matchTellYourFriends,
+                icon: Icons.share,
+                withBorder: false,
+                onPressed: () {
+                  Share.share('Share OneMatch');
                 },
-                onCancel: () {},
-              );
-            },
+              ),
+              SizedBox(height: 30),
+            ],
           ),
-          SizedBox(height: 30),
-          AppIconRoundButtonDark(
-            margin: EdgeInsets.symmetric(horizontal: 50),
-            text: Strings.matchTellYourFriends,
-            icon: Icons.share,
-            withBorder: false,
-            onPressed: () {
-              Share.share('Share OneMatch');
-            },
-          ),
-          SizedBox(height: 30),
-        ],
-      ),
+        );
+      },
     );
   }
 }
