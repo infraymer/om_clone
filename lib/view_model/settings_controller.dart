@@ -19,7 +19,7 @@ class SettingsController extends GetxController {
 
   final minAge = 18.obs;
   final maxAge = 99.obs;
-  final distance = 2.obs;
+  final distance = 20.obs;
   final gender = Gender.all.obs;
   String about = '';
 
@@ -39,7 +39,7 @@ class SettingsController extends GetxController {
     final sf = value.settingFilter;
     minAge.value = sf?.ageMin ?? 18;
     maxAge.value = sf?.ageMax ?? 99;
-    distance.value = sf?.maxDistance ?? 2;
+    distance.value = sf?.maxDistance ?? 20;
     gender.value = sf?.gender?.toGender() ?? Gender.all;
 
     about = value.aboutMe ?? '';

@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'package:tinder/model/setting_filter.dart';
 
 class UserCreate {
   final String name;
@@ -7,8 +8,9 @@ class UserCreate {
   final bool showMyGender;
   final String aboutMe;
   final DateTime birthday; // 2020-06-01
+  final SettingFilter settingFilter;
 
-  UserCreate(this.name, this.gender, this.images, this.showMyGender, this.aboutMe, this.birthday);
+  UserCreate(this.name, this.gender, this.images, this.showMyGender, this.aboutMe, this.birthday, this.settingFilter);
 
   Map<String, dynamic> toMap() {
     return {
@@ -18,6 +20,7 @@ class UserCreate {
       'showMyGender': this.showMyGender,
       'aboutMe': this.aboutMe,
       'birthday': DateFormat('yyyy-MM-dd').format(birthday ?? DateTime.now()),
+      'settingFiters': settingFilter.toJson(),
     };
   }
 }
