@@ -232,7 +232,7 @@ class _Report extends StatelessWidget {
 class _Buttons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final sc = Get.find<SelectionController>();
+    final sc = SelectionController.to;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

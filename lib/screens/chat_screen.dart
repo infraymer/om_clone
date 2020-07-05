@@ -87,7 +87,10 @@ class _AppBar extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: IconButton(
             icon: Icon(Icons.arrow_back_ios, color: Colors.black12),
-            onPressed: () => Navigator.pop(context),
+            onPressed: () {
+              ChatController.to.onBackClicked();
+              Navigator.pop(context);
+            },
           ),
         ),
         Container(

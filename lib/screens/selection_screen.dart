@@ -14,9 +14,9 @@ class SelectionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    return GetBuilder(
+    return GetBuilder<SelectionController>(
       init: SelectionController(),
+      initState: (_) => Get.put(SelectionController()),
       builder: (_) {
         return Scaffold(
           backgroundColor: AppColors.main,
@@ -55,10 +55,10 @@ class _Loading extends StatelessWidget {
 class _Error extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Obx(() => Container(
+    return GetX<SelectionController>(builder: (_) => Container(
           margin: EdgeInsets.fromLTRB(60, 16, 60, 0),
           child: Text(
-            SelectionController.to.errorMessage.value,
+            _?.errorMessage?.value ?? '',
             textAlign: TextAlign.center,
             style: TextStyle(color: Colors.white),
           ),

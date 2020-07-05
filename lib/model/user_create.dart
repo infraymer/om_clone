@@ -19,7 +19,7 @@ class UserCreate {
       'imgs': this.images,
       'showMyGender': this.showMyGender,
       'aboutMe': this.aboutMe,
-      'birthday': DateFormat('yyyy-MM-dd').format(birthday ?? DateTime.now()),
+      'birthDate': birthday.toUtc().toIso8601String(),
       'settingFiters': settingFilter.toJson(),
     };
   }

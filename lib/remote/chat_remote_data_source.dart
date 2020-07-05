@@ -6,7 +6,7 @@ class ChatRemoteDataSource {
   Future<List<ChatMessage>> getMessages(String userId, {DateTime date}) async {
     final result = await dio.get('messages', queryParameters: {
       'uid': userId,
-      'from': date?.toUtc()?.toIso8601String() ?? '',
+      'from': date?.toUtc()?.toIso8601String() ?? DateTime(2020).toIso8601String(),
     });
     final list = result.data as List;
     final msgs = list.map((e) => ChatMessage.fromJson(e)).toList();

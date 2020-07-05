@@ -5,12 +5,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:tinder/model/chat_message.dart';
 import 'package:tinder/model/user.dart';
+import 'package:tinder/remote/user_remote_data_source.dart';
 import 'package:tinder/repository/chat_repository.dart';
 import 'package:tinder/view_model/auth_controller.dart';
 
 class ChatController extends GetxController {
   static ChatController get to => Get.find();
   final _chatRepository = ChatRepository();
+  final _userRemoteDataSource = UserRemoteDataSource();
 
   final RxList<ChatMessage> messages = <ChatMessage>[].obs;
   final isLoading = false.obs;
@@ -25,6 +27,7 @@ class ChatController extends GetxController {
   StreamSubscription _updateMessagesSub;
 
   Future<void> getMessages() async {
+    _chatRepository.setActiveChat(user.value);
     try {
       isLoading.value = true;
       final msgs = await _chatRepository.getMessages(user.value, profile);
@@ -74,6 +77,11 @@ class ChatController extends GetxController {
       curve: Curves.linear,
       duration: const Duration(milliseconds: 1),
     );
+  }
+
+  onBackClicked() {
+    _userRemoteDataSource.cancelMatch(user.value.uid);
+    _chatRepository.setActiveChat(null);
   }
 
   @override

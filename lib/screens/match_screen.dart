@@ -30,8 +30,12 @@ class MatchScreen extends StatelessWidget {
               SizedBox(height: 20),
               Text(Strings.matchTitle, style: TextStyles.matchTitle),
               SizedBox(height: 20),
-              Text('You and ${_.matchUser.name} have liked each other',
-                  style: TextStyles.matchSubtitle),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Text('You and ${_.matchUser.name} have liked each other',
+                    textAlign: TextAlign.center,
+                    style: TextStyles.matchSubtitle),
+              ),
               SizedBox(height: 50),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 60),

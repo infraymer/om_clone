@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tinder/resources/colors.dart';
 import 'package:tinder/screens/auth_screen.dart';
 import 'package:tinder/view_model/auth_controller.dart';
 
+GetStorage storage;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await GetStorage.init();
+  storage = GetStorage();
 
   Get.put(AuthController());
 
