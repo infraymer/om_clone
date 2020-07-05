@@ -8,7 +8,7 @@ class ChatRemoteDataSource {
       'uid': userId,
       'from': date?.toUtc()?.toIso8601String() ?? DateTime(2020).toIso8601String(),
     });
-    final list = result.data as List;
+    final list = result.data['messages'] as List;
     final msgs = list.map((e) => ChatMessage.fromJson(e)).toList();
     return msgs;
   }
