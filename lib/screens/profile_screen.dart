@@ -1,7 +1,9 @@
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:tinder/model/user.dart';
 import 'package:tinder/routes.dart';
 import 'package:tinder/view_model/selection_controller.dart';
@@ -9,12 +11,13 @@ import 'package:tinder/widgets/circle_status.dart';
 import 'package:tinder/widgets/no_button.dart';
 import 'package:tinder/widgets/screen_container.dart';
 import 'package:tinder/widgets/yes_button.dart';
-import 'package:dartx/dartx.dart';
 
 class ProfileScreen extends StatelessWidget {
   final User user;
 
-  const ProfileScreen({Key key, this.user}) : super(key: key);
+  ProfileScreen({Key key, this.user}) : super(key: key);
+
+  final PageController controller = PageController(initialPage: 0);
 
   @override
   Widget build(BuildContext context) {
@@ -23,20 +26,35 @@ class ProfileScreen extends StatelessWidget {
       child: ScreenContainer(
         child: Container(
           width: double.infinity,
-          child: Column(
+          child: ListView(
             children: [
-              Expanded(
-                child: Container(
+              Container(
                   width: double.infinity,
-                  child: Hero(
-                    tag: user.hashCode.toString() ?? '',
-                    child: Image.network(
-                      user.imgs.firstOrNull ?? '',
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ),
+                  height: 500,
+                  child: Stack(
+                    children: <Widget>[
+                      PageView.builder(
+                        controller: controller,
+                        itemCount: user.imgs.length,
+                        itemBuilder: (context, index) {
+                          return Hero(
+                            tag: user.hashCode.toString() ?? '',
+                            child: Image.network(
+                              user.imgs.elementAtOrNull(index) ?? '',
+                              fit: BoxFit.cover,
+                            ),
+                          );
+                        },
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: PageIndicators(
+                          controller: controller,
+                          count: user.imgs.length,
+                        ),
+                      ),
+                    ],
+                  )),
               _Content(data: user),
             ],
           ),
@@ -50,6 +68,7 @@ class _Content extends StatelessWidget {
   final User data;
 
   const _Content({Key key, this.data}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -101,6 +120,7 @@ class _Name extends StatelessWidget {
   final bool isActive;
 
   const _Name({Key key, this.text, this.isActive = false}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -125,6 +145,7 @@ class _Description extends StatelessWidget {
   final String text;
 
   const _Description(this.text, {Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -231,6 +252,63 @@ class _Buttons extends StatelessWidget {
           },
         ),
       ],
+    );
+  }
+}
+
+class PageIndicators extends StatefulWidget {
+  final PageController controller;
+  final int count;
+
+  PageIndicators({this.controller, this.count});
+
+  @override
+  _PageIndicatorsState createState() => _PageIndicatorsState();
+}
+
+class _PageIndicatorsState extends State<PageIndicators> {
+  int _current = 0;
+  double _lastPage = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.addListener(() {
+      final page = widget.controller.page;
+      _current = page > _lastPage ? page.ceil() : page.toInt();
+      setState((){});
+      _lastPage = page;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: List.generate(
+          widget.count,
+          (index) => Expanded(
+            child: Indicator(
+                  isSelected: index == _current,
+                ),
+          )),
+    );
+  }
+}
+
+class Indicator extends StatelessWidget {
+  final bool isSelected;
+
+  const Indicator({Key key, this.isSelected}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 4,
+      margin: EdgeInsets.symmetric(horizontal: 4),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        color: isSelected ? Colors.white : Colors.white24,
+      ),
     );
   }
 }

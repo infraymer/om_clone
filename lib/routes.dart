@@ -57,12 +57,7 @@ class ChatRoute extends CupertinoPageRoute {
 }
 
 class SettingsRoute extends CupertinoPageRoute {
-  SettingsRoute()
-      : super(
-            builder: (ctx) => GetBuilder<SettingsController>(
-                  init: SettingsController(),
-                  builder: (_) => SettingsScreen(),
-                ));
+  SettingsRoute() : super(builder: (ctx) => SettingsScreen());
 }
 
 class ProfileRoute extends CupertinoPageRoute {

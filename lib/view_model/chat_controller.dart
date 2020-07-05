@@ -43,6 +43,7 @@ class ChatController extends GetxController {
   }
 
   Future<void> sendMessage() async {
+    if (inputMessage.value.trim().isEmpty) return;
     try {
       isSendLoading.value = true;
       final msg = await _chatRepository.sendMessage(

@@ -16,23 +16,23 @@ import 'package:tinder/view_model/settings_controller.dart';
 import 'package:tinder/widgets/circle_container.dart';
 import 'package:tinder/widgets/dialog/dialogs.dart';
 
-class SettingsScreen extends StatefulWidget {
-  @override
-  _SettingsScreenState createState() => _SettingsScreenState();
-}
-
-class _SettingsScreenState extends State<SettingsScreen> {
+class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            _AppBar(),
-            _Content(),
-          ],
-        ),
-      ),
+    return GetBuilder<SettingsController>(
+      init: SettingsController(),
+      builder: (_) {
+        return Scaffold(
+          body: SafeArea(
+            child: Column(
+              children: [
+                _AppBar(),
+                _Content(),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
@@ -184,7 +184,8 @@ class _Avatar extends StatelessWidget {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(500),
-                    child: Obx(() => SettingsController.to.photo.value == null
+                    child: GetX<SettingsController>(
+                            builder: (_) => SettingsController.to.photo.value == null
                         ? Image.network(
                             user.imgs.firstOrNull ?? '',
                             fit: BoxFit.cover,
