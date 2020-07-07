@@ -6,6 +6,7 @@ import 'package:tinder/model/setting_filter.dart';
 import 'package:tinder/model/user_create.dart';
 import 'package:tinder/remote/file_remote_data_source.dart';
 import 'package:tinder/remote/user_remote_data_source.dart';
+import 'package:tinder/view_model/auth_controller.dart';
 
 class RegistrationController extends ChangeNotifier {
   final _fileRemoteDataSource = FileRemoteDataSource();
@@ -54,9 +55,10 @@ class RegistrationController extends ChangeNotifier {
       showMyGender,
       schoolName,
       birthday,
-      SettingFilter(18, 99, 'all', 20),
+      SettingFilter(18, 99, 'man', 20),
     );
     await _userRemoteDataSource.createUser(data);
+    AuthController.to.checkAuth();
   }
 
   Future<List<String>> uploadImages() async {

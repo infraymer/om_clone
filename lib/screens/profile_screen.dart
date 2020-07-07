@@ -38,7 +38,7 @@ class ProfileScreen extends StatelessWidget {
                         itemCount: user.imgs.length,
                         itemBuilder: (context, index) {
                           return Hero(
-                            tag: user.hashCode.toString() ?? '',
+                            tag: user.heroTag,
                             child: Image.network(
                               user.imgs.elementAtOrNull(index) ?? '',
                               fit: BoxFit.cover,

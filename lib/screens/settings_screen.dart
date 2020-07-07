@@ -309,19 +309,17 @@ class _Description extends StatelessWidget {
         SizedBox(height: 20),
         Container(
           margin: EdgeInsets.symmetric(horizontal: 60),
-          child: Obx(
-            () => TextField(
-              controller: TextEditingController(text: model.about),
-              focusNode: focusNode,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 12),
-              decoration: InputDecoration(
-                border: InputBorder.none,
-              ),
-              onChanged: (value) {
-                model.about = value;
-              },
+          child: TextField(
+            controller: TextEditingController(text: model.about),
+            focusNode: focusNode,
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 12),
+            decoration: InputDecoration(
+              border: InputBorder.none,
             ),
+            onChanged: (value) {
+              model.about = value;
+            },
           ),
         ),
       ],

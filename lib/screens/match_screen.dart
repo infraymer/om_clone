@@ -45,7 +45,7 @@ class MatchScreen extends StatelessWidget {
                       MatchPhoto(_.me.imgs?.firstOrNull),
                       SizedBox(width: 100),
                       Hero(
-                        tag: _.matchUser.uid,
+                        tag: _.matchUser.heroTag,
                         child: MatchPhoto(_.matchUser.imgs?.firstOrNull),
                       ),
                     ],

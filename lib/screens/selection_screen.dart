@@ -94,9 +94,9 @@ class _Buttons extends StatelessWidget {
               SizedBox(width: 20),
               YesButton(
                 onTap: () async {
-                  model.like();
                   if (model.users.firstOrNull == null) return;
                   Navigator.push(context, MatchRoute(model.users.firstOrNull));
+                  model.like();
                 },
               ),
             ],
@@ -139,10 +139,8 @@ class _OmCards extends StatelessWidget {
                   if (swipe == SwipeDirection.LEFT) {
                     model.dislike();
                   } else {
+                    Navigator.push(context, MatchRoute(model.users[0]));
                     model.like();
-                    Future.delayed(Duration(seconds: 1), () {
-                      Navigator.push(context, MatchRoute(model.users[0]));
-                    });
                   }
                 },
               ),

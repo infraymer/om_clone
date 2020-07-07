@@ -19,7 +19,7 @@ class TinderCardContent extends StatelessWidget {
         children: <Widget>[
           ClipRRect(
             child: Hero(
-              tag: data.hashCode.toString(),
+              tag: data.heroTag,
               child: Image.network(
                 data.imgs.firstOrNull ?? '',
                 fit: BoxFit.cover,

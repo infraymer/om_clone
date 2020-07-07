@@ -64,7 +64,7 @@ class _AddPhotosScreenState extends State<AddPhotosScreen> {
                       model
                           .onDoneClicked()
                           .then((value) => widget.onActionClicked())
-                          .catchError((e) => showMessage(_scaffoldKey, 'Upload error'))
+                          .catchError((e) => showMessage(_scaffoldKey, e.toString()))
                           .whenComplete(() => _isLoading.value = false);
                     },
                     text: Strings.done,

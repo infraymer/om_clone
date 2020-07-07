@@ -1,5 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:tinder/model/setting_filter.dart';
+import 'package:uuid/uuid.dart';
+import 'package:dartx/dartx.dart';
 
 part 'user.g.dart';
 
@@ -24,6 +26,8 @@ class User {
   final String aboutMe;
   final List<String> feed;
 
+  String heroId = Uuid().v4();
+
   int get age => DateTime.now().year - (birthDate?.year ?? 0);
 
   User(
@@ -43,6 +47,8 @@ class User {
       this.gender,
       this.aboutMe,
       this.feed});
+
+  String get heroTag => heroId + (imgs.firstOrNull ?? '');
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
   Map<String, dynamic> toJson() => _$UserToJson(this);
