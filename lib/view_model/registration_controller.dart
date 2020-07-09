@@ -47,7 +47,7 @@ class RegistrationController extends ChangeNotifier {
 
   Future<void> onDoneClicked() async {
     final images = await uploadImages();
-    final gender = genderMale ? 'man' : 'woman';
+    final gender = genderMale ? 'man' : 'women';
     final data = UserCreate(
       name,
       gender,
@@ -55,7 +55,7 @@ class RegistrationController extends ChangeNotifier {
       showMyGender,
       schoolName,
       birthday,
-      SettingFilter(18, 99, 'man', 20),
+      SettingFilter(18, 99, 'all', 20),
     );
     await _userRemoteDataSource.createUser(data);
     AuthController.to.checkAuth();

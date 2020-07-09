@@ -232,23 +232,20 @@ class _Report extends StatelessWidget {
 class _Buttons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final sc = SelectionController.to;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         NoButton(
           onTap: () {
-            sc.dislike();
-            Navigator.pop(context);
+            SelectionController.to.dislike();
+            Get.back();
           },
         ),
         SizedBox(width: 20),
         YesButton(
           onTap: () {
-            sc.like();
-            final matchUser = Provider.of<User>(context, listen: false);
-            if (matchUser == null) return;
-            Navigator.pushReplacement(context, MatchRoute(matchUser));
+            SelectionController.to.like();
+            Get.back();
           },
         ),
       ],

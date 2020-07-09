@@ -27,5 +27,6 @@ class ChatRemoteDataSource {
           .child(matchUserId)
           .onValue
           .skip(1)
-          .map((event) => DateTime.parse(event.snapshot.value['message']));
+          .map((event) =>
+          DateTime.parse(event.snapshot.value['message']));
 }

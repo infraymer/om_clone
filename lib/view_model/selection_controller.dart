@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:tinder/model/user.dart';
 import 'package:tinder/remote/user_remote_data_source.dart';
+import 'package:tinder/screens/match_screen.dart';
+import 'package:tinder/view_model/auth_controller.dart';
 
 class SelectionController extends GetxController {
   static SelectionController get to => Get.find();
@@ -13,17 +15,29 @@ class SelectionController extends GetxController {
 
   bool _disposed = false;
 
+  StreamSubscription _matchSub;
+
+  final Rx<User> matchUser = Rx<User>(null);
+
   SelectionController() {
     getFeeds();
     users.listen((_) {
       if (users.length < 2) getFeeds();
     });
+    _matchSub = _userRemoteDataSource.matchListener(AuthController.to.profile.uid).listen((event) {
+      matchUser.value = event;
+    }, onError: (e) {
+      matchUser.value = null;
+    });
   }
 
-  Future<void> getFeeds() async {
+  Future<void> getFeeds([bool refresh = false]) async {
     try {
       final list = await _userRemoteDataSource.getFeeds();
-      users.addAll(list);
+      if (refresh)
+        users.value = list;
+      else
+        users.addAll(list);
       errorMessage.value = '';
     } catch (e) {
       if (_disposed) return;
@@ -37,19 +51,21 @@ class SelectionController extends GetxController {
     if (users.isEmpty) return;
     final user = users.first;
     users.removeAt(0);
-    await _userRemoteDataSource.like(user.uid, false);
+    final nextUser = await _userRemoteDataSource.like(user.uid, false);
+    users.add(nextUser);
   }
 
-  Future<User> like() async {
+  Future<void> like() async {
     if (users.isEmpty) return null;
     final user = users.first;
     users.removeAt(0);
-    await _userRemoteDataSource.like(user.uid, true);
-    return user;
+    final nextUser = await _userRemoteDataSource.like(user.uid, true);
+    users.add(nextUser);
   }
 
   @override
   void onClose() {
+    _matchSub?.cancel();
     _disposed = true;
     super.onClose();
   }

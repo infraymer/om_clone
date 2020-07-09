@@ -20,7 +20,7 @@ class UserCreate {
       'showMyGender': this.showMyGender,
       'aboutMe': this.aboutMe,
       'birthDate': birthday.toUtc().toIso8601String(),
-      'settingFiters': settingFilter.toJson(),
+      'settingFilter': settingFilter.toJson(),
     };
   }
 }

@@ -40,8 +40,8 @@ class ChatController extends GetxController {
     }
 
     _updateMessagesSub?.cancel();
-    _updateMessagesSub = _chatRepository.newMessageListener(user.value.uid).listen((date) {
-      addNewMessages(date);
+    _updateMessagesSub = _chatRepository.newMessageListener(profile.uid).listen((date) {
+      addNewMessages(date.add(Duration(seconds: -10)));
     });
   }
 
@@ -66,8 +66,9 @@ class ChatController extends GetxController {
   Future<void> addNewMessages(DateTime date) async {
     try {
       final msgs = await _chatRepository.getMessages(user.value, profile, date);
+      print(msgs);
       final sort = msgs.sortedBy((element) => element.date).reversed.toList();
-      messages.addAll(sort);
+      messages.insertAll(0, sort);
     } catch (e) {}
   }
 
@@ -80,7 +81,6 @@ class ChatController extends GetxController {
   }
 
   onBackClicked() {
-    _userRemoteDataSource.cancelMatch(user.value.uid);
     _chatRepository.setActiveChat(null);
   }
 

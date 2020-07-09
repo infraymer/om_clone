@@ -7,7 +7,7 @@ extension GenderExt on Gender {
     if (this == Gender.man)
       return 'man';
     else if (this == Gender.woman)
-      return 'woman';
+      return 'women';
     else
       return 'all';
   }
@@ -26,7 +26,7 @@ extension StringExt on String {
   Gender toGender() {
     if (this == 'man')
       return Gender.man;
-    else if (this == 'woman')
+    else if (this == 'women')
       return Gender.woman;
     else
       return Gender.all;
