@@ -1,10 +1,10 @@
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tinder/model/user.dart';
 import 'package:tinder/routes.dart';
 import 'package:tinder/screens/profile_screen.dart';
 import 'package:tinder/widgets/circle_status.dart';
-import 'package:dartx/dartx.dart';
 
 class TinderCardContent extends StatelessWidget {
   final User data;
@@ -14,7 +14,8 @@ class TinderCardContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.push(context, FadePageRoue(ProfileScreen(user: data))),
+      onTap: () =>
+          Navigator.push(context, FadePageRoue(ProfileScreen(user: data))),
       child: Stack(
         children: <Widget>[
           ClipRRect(
@@ -46,6 +47,14 @@ class TinderCardContent extends StatelessWidget {
                       Text(
                         '${data.name} ${data.age}',
                         style: TextStyle(
+                            shadows: [
+                              BoxShadow(
+                                color: Colors.black54,
+                                blurRadius: 4,
+                                spreadRadius: 4,
+                                offset: Offset(0, 2),
+                              )
+                            ],
                             color: Colors.white,
                             fontSize: 24,
                             fontWeight: FontWeight.w700),
@@ -54,12 +63,25 @@ class TinderCardContent extends StatelessWidget {
                       CircleStatus(isActive: true),
                     ],
                   ),
-                  Text(
-                    data.aboutMe ?? '',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    padding: const EdgeInsets.only(right: 100),
+                    child: Text(
+                      data.aboutMe ?? '',
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          shadows: [
+                            BoxShadow(
+                              color: Colors.black54,
+                              blurRadius: 4,
+                              spreadRadius: 4,
+                              offset: Offset(0, 2),
+                            )
+                          ],
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700),
+                    ),
                   )
                 ],
               ),
@@ -84,7 +106,7 @@ class InfoButton extends StatelessWidget {
           child: Text(
             'i',
             style:
-            GoogleFonts.nunito(fontWeight: FontWeight.w800, fontSize: 16),
+                GoogleFonts.nunito(fontWeight: FontWeight.w800, fontSize: 16),
           ),
         ),
       ),

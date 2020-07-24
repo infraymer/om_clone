@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:tinder/model/chat_message.dart';
 import 'package:tinder/model/user.dart';
 import 'package:tinder/resources/colors.dart';
+import 'package:tinder/routes.dart';
+import 'package:tinder/screens/profile_screen.dart';
 import 'package:tinder/view_model/chat_controller.dart';
 import 'package:tinder/widgets/om_loading.dart';
 
@@ -88,7 +90,6 @@ class _AppBar extends StatelessWidget {
           child: IconButton(
             icon: Icon(Icons.arrow_back_ios, color: Colors.black12),
             onPressed: () {
-              ChatController.to.onBackClicked();
               Navigator.pop(context);
             },
           ),
@@ -107,7 +108,7 @@ class _AppBar extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  _Avatar(size: 40),
+                  _Avatar(size: 40, heroTag: ChatController.to.user.value.heroTag),
                   SizedBox(height: 2),
                   Text(
                     data.name,
@@ -146,8 +147,9 @@ class DateItem extends StatelessWidget {
 class MessageItem extends StatelessWidget {
   final ChatMessage data;
   final bool isDelivery;
+  final User user;
 
-  const MessageItem({Key key, this.isDelivery = false, this.data})
+  const MessageItem({Key key, this.isDelivery = false, this.data, this.user})
       : super(key: key);
 
   @override
@@ -177,8 +179,9 @@ class MessageItem extends StatelessWidget {
 
 class OwnerMessageItem extends StatelessWidget {
   final ChatMessage data;
+  final User user;
 
-  const OwnerMessageItem({Key key, this.data}) : super(key: key);
+  const OwnerMessageItem({Key key, this.data, this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -277,23 +280,32 @@ class _LikeButton extends StatelessWidget {
 
 class _Avatar extends StatelessWidget {
   final double size;
+  final String heroTag;
 
-  const _Avatar({Key key, this.size = 50}) : super(key: key);
+  const _Avatar({Key key, this.size = 50, this.heroTag}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final data = ChatController.to.user.value;
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(100),
-      child: Container(
-        width: size,
-        height: size,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(100),
-            border: Border.all(color: Colors.black12)),
-        child: Image.network(
-          data.imgs.firstOrNull ?? '',
-          fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context, FadePageRoue(ProfileScreen(user: data)));
+      },
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(100),
+        child: Container(
+          width: size,
+          height: size,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(100),
+              border: Border.all(color: Colors.black12)),
+          child: Hero(
+            tag: heroTag ?? '',
+            child: Image.network(
+              data.imgs.firstOrNull ?? '',
+              fit: BoxFit.cover,
+            ),
+          ),
         ),
       ),
     );

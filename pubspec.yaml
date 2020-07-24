@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.20+20
 # flutter pub run flutter_launcher_name:main
 flutter_launcher_name:
-  name: "OneMatch (b.0.0.20)"
+  name: "OneMatch"
 
 environment:
   sdk: ">=2.7.0 <3.0.0"

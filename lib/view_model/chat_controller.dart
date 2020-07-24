@@ -86,6 +86,7 @@ class ChatController extends GetxController {
 
   @override
   void onClose() {
+    _chatRepository.setActiveChat(null);
     _updateMessagesSub?.cancel();
     super.onClose();
   }
