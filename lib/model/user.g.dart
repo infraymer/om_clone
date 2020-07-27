@@ -30,7 +30,8 @@ User _$UserFromJson(Map<String, dynamic> json) {
     gender: json['gender'] as String,
     aboutMe: json['aboutMe'] as String,
     feed: (json['feed'] as List)?.map((e) => e as String)?.toList(),
-  );
+    token: json['token'] as String,
+  )..heroId = json['heroId'] as String;
 }
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
@@ -50,4 +51,6 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'gender': instance.gender,
       'aboutMe': instance.aboutMe,
       'feed': instance.feed,
+      'token': instance.token,
+      'heroId': instance.heroId,
     };

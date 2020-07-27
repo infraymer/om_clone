@@ -45,4 +45,10 @@ class AuthController extends GetxController {
     await FirebaseAuth.instance.signOut();
     authState.value = AuthState.login;
   }
+
+  Future<void> removeUser() async {
+    await _userRemoteDataSource.removeUser();
+    await FirebaseAuth.instance.signOut();
+    authState.value = AuthState.login;
+  }
 }

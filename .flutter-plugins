@@ -4,6 +4,7 @@ firebase_auth_web=/Users/daniilgrusak/.pub-cache/hosted/pub.dartlang.org/firebas
 firebase_core=/Users/daniilgrusak/.pub-cache/hosted/pub.dartlang.org/firebase_core-0.4.5/
 firebase_core_web=/Users/daniilgrusak/.pub-cache/hosted/pub.dartlang.org/firebase_core_web-0.1.1+2/
 firebase_database=/Users/daniilgrusak/.pub-cache/hosted/pub.dartlang.org/firebase_database-3.1.6/
+firebase_messaging=/Users/daniilgrusak/.pub-cache/hosted/pub.dartlang.org/firebase_messaging-6.0.16/
 firebase_storage=/Users/daniilgrusak/.pub-cache/hosted/pub.dartlang.org/firebase_storage-3.1.6/
 flutter_plugin_android_lifecycle=/Users/daniilgrusak/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-1.0.8/
 flutter_sim_country_code=/Users/daniilgrusak/.pub-cache/hosted/pub.dartlang.org/flutter_sim_country_code-0.0.3/

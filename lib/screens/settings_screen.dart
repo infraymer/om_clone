@@ -111,6 +111,8 @@ class _Content extends StatelessWidget {
           SizedBox(height: 20),
           _LogOutButton(),
           SizedBox(height: 20),
+          _LogOutButton(),
+          SizedBox(height: 20),
         ],
       ),
     );
@@ -498,6 +500,37 @@ class _SelectorButton extends StatelessWidget {
                 ),
               ],
             ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _RemoveUserButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final style = TextStyle(fontWeight: FontWeight.bold);
+    return Padding(
+      padding: const EdgeInsets.only(top: 4),
+      child: Material(
+        color: AppColors.bgSelectorButton,
+        child: InkWell(
+          onTap: () {
+            Get.defaultDialog(
+              title: 'Do you want delete account?',
+              content: SizedBox(),
+              buttonColor: Colors.white,
+              onConfirm: () async {
+                AuthController.to.removeUser();
+                Get..back()..back();
+              },
+              onCancel: () {},
+            );
+          },
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            child: Center(child: Text('Delete account', style: style)),
           ),
         ),
       ),

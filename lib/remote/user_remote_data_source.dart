@@ -1,6 +1,8 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:tinder/model/user.dart';
 import 'package:tinder/model/user_create.dart';
+import 'package:tinder/push.dart';
 import 'package:tinder/remote/api.dart';
 
 class UserRemoteDataSource {
@@ -36,6 +38,10 @@ class UserRemoteDataSource {
     return data;
   }
 
+  Future<void> removeUser() async {
+    final result = await dio.post('removeUser');
+  }
+
   Future<User> getUser(String userId) async {
     final result = await dio.get('user', queryParameters: {'uid': userId});
     final data = User.fromJson(result.data);
@@ -43,7 +49,9 @@ class UserRemoteDataSource {
   }
 
   Future<void> updateUser(User user) async {
-    final result = await dio.post('updateUser', data: user.toJson());
+    final token = await firebaseMessaging.getToken();
+    final data = user.copyWith(token: token);
+    final result = await dio.post('updateUser', data: data.toJson());
   }
 
   Stream<User> matchListener(String userId) =>

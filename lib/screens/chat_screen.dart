@@ -299,12 +299,9 @@ class _Avatar extends StatelessWidget {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(100),
               border: Border.all(color: Colors.black12)),
-          child: Hero(
-            tag: heroTag ?? '',
-            child: Image.network(
-              data.imgs.firstOrNull ?? '',
-              fit: BoxFit.cover,
-            ),
+          child: Image.network(
+            data.imgs.firstOrNull ?? '',
+            fit: BoxFit.cover,
           ),
         ),
       ),

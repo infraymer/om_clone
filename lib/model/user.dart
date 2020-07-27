@@ -25,6 +25,7 @@ class User {
   final String gender;
   final String aboutMe;
   final List<String> feed;
+  final String token;
 
   String heroId = Uuid().v4();
 
@@ -46,9 +47,16 @@ class User {
       this.name,
       this.gender,
       this.aboutMe,
-      this.feed});
+      this.feed,
+      this.token});
 
-  String get heroTag => heroId + (imgs.firstOrNull ?? '');
+  String get heroTag => (heroId ?? _genHeroId()) + (imgs?.firstOrNull ?? '');
+//  String get heroTag => imgs?.firstOrNull;
+
+  String _genHeroId() {
+    heroId = Uuid().v4();
+    return heroId;
+  }
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
   Map<String, dynamic> toJson() => _$UserToJson(this);
@@ -70,6 +78,7 @@ class User {
     String gender,
     String aboutMe,
     List<String> feed,
+    String token,
   }) {
     return new User(
       uid: uid ?? this.uid,
@@ -88,6 +97,7 @@ class User {
       gender: gender ?? this.gender,
       aboutMe: aboutMe ?? this.aboutMe,
       feed: feed ?? this.feed,
+      token: token ?? this.token,
     );
   }
 
