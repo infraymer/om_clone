@@ -22,7 +22,7 @@ class WelcomeScreen extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40),
-            child: Text(Strings.welcomeTitle, style: TextStyles.welcomeTitle),
+            child: Text(Strings.welcomeTitle, style: UiTextStyles.welcomeTitle),
           ),
           SizedBox(height: 30),
           _DescriptionItem(title: Strings.welcomeTitle1, subtitle: Strings.welcomeSubtitle1),

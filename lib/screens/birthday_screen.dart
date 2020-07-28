@@ -47,7 +47,7 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 50),
             child: _buildCode(context),
           ),
-          Text(Strings.birthdayDescription, style: TextStyles.fieldDescription),
+          Text(Strings.birthdayDescription, style: UiTextStyles.fieldDescription),
           // Expanded(child: SizedBox()),
           SizedBox(height: 16),
           Container(

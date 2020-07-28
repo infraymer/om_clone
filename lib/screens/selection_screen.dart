@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:tinder/constants.dart';
 import 'package:tinder/resources/colors.dart';
-import 'package:tinder/routes.dart';
+import 'package:tinder/resources/images.dart';
+import 'package:tinder/resources/text_styles.dart';
 import 'package:tinder/screens/match_screen.dart';
+import 'package:tinder/screens/settings_screen.dart';
 import 'package:tinder/view_model/selection_controller.dart';
+import 'package:tinder/widgets/app_round_filled_button.dart';
 import 'package:tinder/widgets/no_button.dart';
+import 'package:tinder/widgets/rewind_button.dart';
 import 'package:tinder/widgets/swipeable_tinder_card.dart';
 import 'package:tinder/widgets/tinder_card_content.dart';
 import 'package:tinder/widgets/yes_button.dart';
@@ -32,18 +38,59 @@ class _ThisScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.main,
-      body: Stack(
+      body: SafeArea(
+        child: Stack(
+          children: <Widget>[
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                _Loading(),
+                _Error(),
+              ],
+            ),
+            _TopBar(),
+            Obx(
+              () => SelectionController.to.users.isNotEmpty
+                  ? _OmCards()
+                  : _NoMoreSwipes(),
+            ),
+            _Buttons(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _TopBar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              _Loading(),
-              _Error(),
-            ],
+          IconButton(
+            icon: Icon(
+              Icons.share,
+              color: Colors.white,
+            ),
+            onPressed: () {},
           ),
-          _OmCards(),
-          _Buttons(),
+          SvgPicture.asset(
+            AppImages.logoDark,
+            height: 32,
+            color: Colors.white,
+          ),
+          IconButton(
+            icon: Icon(
+              Icons.settings,
+              color: Colors.white,
+            ),
+            onPressed: () => Get.to(SettingsScreen()),
+          ),
         ],
       ),
     );
@@ -88,35 +135,26 @@ class _Buttons extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
-          Opacity(
-            opacity: 0,
-            child: IconButton(
-              icon: Icon(Icons.settings, color: Colors.transparent),
+          Obx(
+            () => Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                NoButton(
+                  onTap: () {
+                    model.dislike();
+                  },
+                ),
+                if (model.tempUser.value != null) SizedBox(width: 20),
+                if (model.tempUser.value != null)
+                  RewindButton(onTap: () => model.rewind()),
+                SizedBox(width: 20),
+                YesButton(
+                  onTap: () async {
+                    model.like();
+                  },
+                ),
+              ],
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              NoButton(
-                onTap: () {
-                  model.dislike();
-                },
-              ),
-              SizedBox(width: 20),
-              YesButton(
-                onTap: () async {
-                  model.like();
-                },
-              ),
-            ],
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.settings,
-              color: Colors.white,
-              size: 32,
-            ),
-            onPressed: () => Navigator.push(context, SettingsRoute()),
           ),
         ],
       ),
@@ -156,6 +194,58 @@ class _OmCards extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+}
+
+class _NoMoreSwipes extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            height: 200,
+            width: 200,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(1000),
+              color: Colors.grey,
+            ),
+            child: Container(
+              padding: EdgeInsets.all(20),
+              margin: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(1000),
+                  color: Colors.grey[300]),
+              child: ClipRRect(
+                child: Image.network(
+                  Constants.womanImage,
+                  fit: BoxFit.cover,
+                  height: MediaQuery.of(context).size.width,
+                ),
+                borderRadius: BorderRadius.circular(500),
+              ),
+            ),
+          ),
+          SizedBox(height: 16),
+          Text(
+            'Spread the word!',
+            style: UiTextStyles.title.copyWith(color: Colors.white),
+          ),
+          SizedBox(height: 50),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 20),
+            width: double.infinity,
+            child: AppRoundFilledButton(
+              light: true,
+              onPressed: () {},
+              text: 'Share',
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

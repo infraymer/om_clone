@@ -46,7 +46,7 @@ class _AboutScreenState extends State<AboutScreen> {
             ),
           ),
           SizedBox(height: 16),
-          Text(Strings.aboutDescription, style: TextStyles.fieldDescription),
+          Text(Strings.aboutDescription, style: UiTextStyles.fieldDescription),
           SizedBox(height: 16),
           // Expanded(child: SizedBox()),
           Container(

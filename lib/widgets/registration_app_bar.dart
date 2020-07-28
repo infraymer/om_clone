@@ -27,7 +27,7 @@ class RegistrationAppBar extends StatelessWidget {
             transform: Matrix4.translationValues(0.0, -10.0, 0.0),
             child: Padding(
               padding: titlePadding ?? const EdgeInsets.symmetric(horizontal: 60),
-              child: Text(title, style: TextStyles.registrationTitle),
+              child: Text(title, style: UiTextStyles.registrationTitle),
             ),
           ),
         ),

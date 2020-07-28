@@ -27,7 +27,7 @@ class LoginScreen extends StatelessWidget {
               child: Text(
                 Strings.loginDescription,
                 textAlign: TextAlign.center,
-                style: TextStyles.loginDescription,
+                style: UiTextStyles.loginDescription,
               ),
             ),
             SizedBox(height: 20),
@@ -50,7 +50,7 @@ class LoginScreen extends StatelessWidget {
             GestureDetector(
               // onTap: () => Navigator.pushReplacement(context, SelectionRoute()),
               child: Text(Strings.loginTrouble,
-                  style: TextStyles.loginDescription),
+                  style: UiTextStyles.loginDescription),
             ),
             SizedBox(height: 40),
           ],

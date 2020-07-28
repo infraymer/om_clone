@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tinder/resources/colors.dart';
 
-class TextStyles {
+class UiTextStyles {
   static final registrationTitle = TextStyle(
     fontSize: 30,
     fontWeight: FontWeight.w600,
@@ -36,5 +36,10 @@ class TextStyles {
   static const matchSubtitle = TextStyle(
     fontSize: 16,
     color: Colors.white,
+  );
+
+  static const title = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.bold,
   );
 }

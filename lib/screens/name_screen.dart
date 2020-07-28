@@ -49,7 +49,7 @@ class _NameScreenState extends State<NameScreen> {
             ),
           ),
           SizedBox(height: 16),
-          Text(Strings.nameDescription, style: TextStyles.fieldDescription),
+          Text(Strings.nameDescription, style: UiTextStyles.fieldDescription),
           // Expanded(child: SizedBox()),
           SizedBox(height: 16),
           Align(

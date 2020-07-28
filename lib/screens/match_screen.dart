@@ -28,13 +28,13 @@ class MatchScreen extends StatelessWidget {
           child: Column(
             children: <Widget>[
               SizedBox(height: 20),
-              Text(Strings.matchTitle, style: TextStyles.matchTitle),
+              Text(Strings.matchTitle, style: UiTextStyles.matchTitle),
               SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text('You and ${_.matchUser.name} have liked each other',
                     textAlign: TextAlign.center,
-                    style: TextStyles.matchSubtitle),
+                    style: UiTextStyles.matchSubtitle),
               ),
               SizedBox(height: 50),
               Padding(

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:tinder/model/gender.dart';
 import 'package:tinder/model/setting_filter.dart';
 import 'package:tinder/model/user.dart';
+import 'package:tinder/photo/model/app_photo.dart';
 import 'package:tinder/remote/file_remote_data_source.dart';
 import 'package:tinder/remote/user_remote_data_source.dart';
 import 'package:tinder/view_model/auth_controller.dart';
@@ -24,6 +25,7 @@ class SettingsController extends GetxController {
   String about = '';
 
   final Rx<File> photo = Rx<File>(null);
+  final RxList<AppPhoto> photos = RxList<AppPhoto>([]);
 
   @override
   void onInit() {
@@ -73,9 +75,12 @@ class SettingsController extends GetxController {
         ),
       );
 
-      if (photo.value != null) {
-        final url = await uploadImage();
-        data = data.copyWith(imgs: [url]);
+      if (photos.value.isNotEmpty) {
+        final imgs = photos.value
+            .where((e) => e.url != null)
+            .map((e) => e.url)
+            .toList();
+        data = data.copyWith(imgs: imgs);
       }
 
       await _userRemoteDataSource.updateUser(data);

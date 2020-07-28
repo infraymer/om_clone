@@ -18,6 +18,7 @@ class SelectionController extends GetxController {
   StreamSubscription _matchSub;
 
   final Rx<User> matchUser = Rx<User>(null);
+  final Rx<User> tempUser = Rx<User>(null);
 
   SelectionController() {
     getFeeds();
@@ -50,6 +51,7 @@ class SelectionController extends GetxController {
   Future<void> dislike() async {
     if (users.isEmpty) return;
     final user = users.first;
+    tempUser.value = user;
     users.removeAt(0);
     final nextUser = await _userRemoteDataSource.like(user.uid, false);
     users.add(nextUser);
@@ -58,9 +60,16 @@ class SelectionController extends GetxController {
   Future<void> like() async {
     if (users.isEmpty) return null;
     final user = users.first;
+    tempUser.value = user;
     users.removeAt(0);
     final nextUser = await _userRemoteDataSource.like(user.uid, true);
     users.add(nextUser);
+  }
+
+  Future<void> rewind() async {
+    if (tempUser.value == null) return;
+    users.insert(0, tempUser.value);
+    tempUser.value = null;
   }
 
   @override

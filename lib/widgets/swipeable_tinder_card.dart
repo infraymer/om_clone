@@ -29,7 +29,7 @@ class _SwipeableState extends State<SwipeableCard> {
 
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height * 0.92;
+    double height = MediaQuery.of(context).size.height * 0.80;
     double widgetWidth = width * (1 - cardPaddingX);
     double widgetHeight = height * (1 - cardPaddingY);
 
@@ -67,7 +67,7 @@ class _SwipeableState extends State<SwipeableCard> {
 
     w = AnimatedPositioned(
       left: posX,
-      top: posY,
+      top: posY + 40,
       child: w,
       duration: Duration(milliseconds: 100),
       onEnd: () {

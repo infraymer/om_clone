@@ -168,28 +168,3 @@ class SelectPhoto extends StatelessWidget {
     });
   }
 }
-
-Widget _buildOldPhotosList() {
-  return Expanded(
-    child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
-      child: LayoutGrid(
-        templateColumnSizes: List.generate(3, (index) => FlexibleTrackSize(1)),
-        templateRowSizes: List.generate(3, (index) => FlexibleTrackSize(1)),
-        rowGap: 20,
-        columnGap: 20,
-        children: <Widget>[
-          SelectPhoto(),
-          SelectPhoto(),
-          SelectPhoto(),
-          SelectPhoto(),
-          SelectPhoto(),
-          SelectPhoto(),
-          SelectPhoto(),
-          SelectPhoto(),
-          SelectPhoto(),
-        ],
-      ),
-    ),
-  );
-}

@@ -1,18 +1,18 @@
-import 'dart:io';
-
 import 'package:dartx/dartx.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:tinder/model/gender.dart';
+import 'package:tinder/photo/model/app_photo.dart';
+import 'package:tinder/photo/view/ui/screen/photo_screen.dart';
 import 'package:tinder/resources/colors.dart';
 import 'package:tinder/resources/images.dart';
 import 'package:tinder/view_model/auth_controller.dart';
 import 'package:tinder/view_model/settings_controller.dart';
+import 'package:tinder/widgets/app_photo.dart';
 import 'package:tinder/widgets/circle_container.dart';
 import 'package:tinder/widgets/dialog/dialogs.dart';
 
@@ -109,7 +109,7 @@ class _Content extends StatelessWidget {
           _SelectorButton(title: 'Privacy Policy'),
           _SelectorButton(title: 'Terms of Service'),
           SizedBox(height: 20),
-          _LogOutButton(),
+          _RemoveUserButton(),
           SizedBox(height: 20),
           _LogOutButton(),
           SizedBox(height: 20),
@@ -187,19 +187,21 @@ class _Avatar extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(500),
                     child: GetX<SettingsController>(
-                            builder: (_) => SettingsController.to.photo.value == null
-                        ? Image.network(
-                            user.imgs.firstOrNull ?? '',
-                            fit: BoxFit.cover,
-                            width: 100,
-                            height: 100,
-                          )
-                        : Image.file(
-                            SettingsController.to.photo.value,
-                            fit: BoxFit.cover,
-                            width: 100,
-                            height: 100,
-                          )),
+                      builder: (_) => SettingsController.to.photos.value.isEmpty
+                          ? Image.network(
+                              user.imgs.firstOrNull ?? '',
+                              fit: BoxFit.cover,
+                              width: 100,
+                              height: 100,
+                            )
+                          : Container(
+                              width: 100,
+                              height: 100,
+                              child: AppImageWidget(
+                                image: SettingsController.to.photos.firstOrNull,
+                              ),
+                            ),
+                    ),
                   ),
                   Align(
                     alignment: Alignment.bottomRight,
@@ -224,10 +226,11 @@ class _Avatar extends StatelessWidget {
   }
 
   _onChangePhoto() async {
-    final pickedFile =
-        await ImagePicker().getImage(source: ImageSource.gallery);
-    final file = File(pickedFile.path);
-    SettingsController.to.photo.value = file;
+    List<AppPhoto> currentImages = SettingsController.to.user.imgs.map((e) => AppPhoto(url: e)).toList();
+    currentImages = SettingsController.to.photos.isNotEmpty ? SettingsController.to.photos.value : currentImages;
+    final List<AppPhoto> images = await Get.to(PhotoScreen(initPhotos: currentImages));
+    if (images == null) return;
+    SettingsController.to.photos.value = images;
   }
 }
 
