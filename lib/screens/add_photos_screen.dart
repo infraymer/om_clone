@@ -1,8 +1,7 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_layout_grid/flutter_layout_grid.dart';
+import 'package:dartx/dartx.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
@@ -58,16 +57,19 @@ class _AddPhotosScreenState extends State<AddPhotosScreen> {
                     return Center(child: CircularProgressIndicator());
                   }
 
-                  return AppRoundFilledButton(
-                    onPressed: () {
-                      _isLoading.value = true;
-                      model
-                          .onDoneClicked()
-                          .then((value) => widget.onActionClicked())
-                          .catchError((e) => showMessage(_scaffoldKey, e.toString()))
-                          .whenComplete(() => _isLoading.value = false);
-                    },
-                    text: Strings.done,
+                  return Visibility(
+                    visible: model.photos.filterNotNull().isNotEmpty,
+                    child: AppRoundFilledButton(
+                      onPressed: () {
+                        _isLoading.value = true;
+                        model
+                            .onDoneClicked()
+                            .then((value) => widget.onActionClicked())
+                            .catchError((e) => showMessage(_scaffoldKey, e.toString()))
+                            .whenComplete(() => _isLoading.value = false);
+                      },
+                      text: Strings.done,
+                    ),
                   );
                 },
               )),

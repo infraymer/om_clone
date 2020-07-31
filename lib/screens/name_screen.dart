@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:tinder/resources/dimens.dart';
 import 'package:tinder/resources/strings.dart';
@@ -43,6 +44,10 @@ class _NameScreenState extends State<NameScreen> {
               controller: _nameController,
               hint: Strings.nameFieldPlaceholder,
               onSubmitted: (_) {
+                if (_nameController.text.isEmpty) {
+                  Get.snackbar('Validation', Strings.fieldMustNotBeEmpty);
+                  return;
+                }
                 model.name = _nameController.text;
                 widget.onActionClicked();
               },
@@ -59,6 +64,10 @@ class _NameScreenState extends State<NameScreen> {
               margin: EdgeInsets.symmetric(horizontal: Dimens.horizontalMarginButtonRegScreen),
               child: AppRoundFilledButton(
                 onPressed: () {
+                  if (_nameController.text.isEmpty) {
+                    Get.snackbar('Validation', Strings.fieldMustNotBeEmpty);
+                    return;
+                  }
                   model.name = _nameController.text;
                   widget.onActionClicked();
                 },

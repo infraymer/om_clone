@@ -63,4 +63,5 @@ class   Strings {
   static const matchKeepPlaying = 'Keep Playing';
   static const matchTellYourFriends = 'Tell your friends';
 
+  static const fieldMustNotBeEmpty = 'Field must not be empty';
 }
