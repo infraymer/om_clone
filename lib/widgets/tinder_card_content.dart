@@ -60,7 +60,7 @@ class TinderCardContent extends StatelessWidget {
                             fontWeight: FontWeight.w700),
                       ),
                       SizedBox(width: 8),
-                      CircleStatus(isActive: true),
+                      CircleStatus(isActive: data.isOnline),
                     ],
                   ),
                   Container(

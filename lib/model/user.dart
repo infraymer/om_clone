@@ -30,6 +30,9 @@ class User {
   String heroId = Uuid().v4();
 
   int get age => DateTime.now().year - (birthDate?.year ?? 0);
+  bool get isOnline {
+    return DateTime.now().toUtc().difference(lastSeen).inSeconds < 300;
+  }
 
   User(
       {this.uid,

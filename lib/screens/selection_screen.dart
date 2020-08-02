@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:share/share.dart';
 import 'package:tinder/constants.dart';
 import 'package:tinder/resources/colors.dart';
 import 'package:tinder/resources/images.dart';
@@ -77,7 +78,9 @@ class _TopBar extends StatelessWidget {
               Icons.share,
               color: Colors.white,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Share.share('Install OneMatch app!');
+            },
           ),
           SvgPicture.asset(
             AppImages.logoDark,
@@ -144,9 +147,11 @@ class _Buttons extends StatelessWidget {
                     model.dislike();
                   },
                 ),
-                if (model.tempUser.value != null) SizedBox(width: 20),
-                if (model.tempUser.value != null)
-                  RewindButton(onTap: () => model.rewind()),
+                SizedBox(width: 20),
+                RewindButton(
+                  onTap: () => model.rewind(),
+                  active: model.tempListUser.isNotEmpty,
+                ),
                 SizedBox(width: 20),
                 YesButton(
                   onTap: () async {
