@@ -50,7 +50,7 @@ dependencies:
   get_storage: ^1.2.1
   flutter_spinkit: "^4.1.2"
 
-  flutter_tindercard: ^0.1.8
+  flutter_tindercard: ^0.1.9
 
   dartx: ^0.5.0
   uuid: 2.2.0

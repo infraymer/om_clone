@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_tindercard/flutter_tindercard.dart';
 import 'package:get/get.dart';
 import 'package:share/share.dart';
 import 'package:tinder/constants.dart';
@@ -170,8 +171,52 @@ class _Buttons extends StatelessWidget {
 class _OmCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    CardController controller;
     return GetX<SelectionController>(
       builder: (model) {
+        return Center(
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.6,
+            child: new TinderSwapCard(
+              swipeUp: true,
+              swipeDown: true,
+              orientation: AmassOrientation.BOTTOM,
+              totalNum: model.users.length,
+              stackNum: 3,
+              swipeEdge: 4.0,
+              maxWidth: MediaQuery.of(context).size.width * 0.9,
+              maxHeight: MediaQuery.of(context).size.width * 0.9,
+              minWidth: MediaQuery.of(context).size.width * 0.8,
+              minHeight: MediaQuery.of(context).size.width * 0.8,
+              cardBuilder: (context, index) => Card(
+                child: TinderCardContent(
+                  data: model.users[index],
+                ),
+              ),
+              cardController: controller = CardController(),
+              swipeUpdateCallback:
+                  (DragUpdateDetails details, Alignment align) {
+                /// Get swiping card's alignment
+                if (align.x < 0) {
+                  //Card is LEFT swiping
+                } else if (align.x > 0) {
+                  //Card is RIGHT swiping
+                }
+              },
+              swipeCompleteCallback:
+                  (CardSwipeOrientation orientation, int index) {
+                if (orientation == CardSwipeOrientation.LEFT) {
+                  model.dislike();
+                } else {
+                  model.like();
+                }
+
+                /// Get orientation & index of swiped card!
+              },
+            ),
+          ),
+        );
+        /*
         return Stack(
           children: <Widget>[
             if (model.users.length > 1)
@@ -198,6 +243,8 @@ class _OmCards extends StatelessWidget {
               ),
           ],
         );
+
+         */
       },
     );
   }
