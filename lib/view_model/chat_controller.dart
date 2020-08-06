@@ -40,12 +40,35 @@ class ChatController extends GetxController {
     }
 
     _updateMessagesSub?.cancel();
-    _updateMessagesSub = _chatRepository.newMessageListener(profile.uid).listen((date) {
+    _updateMessagesSub =
+        _chatRepository.newMessageListener(profile.uid).listen((date) {
       addNewMessages(date.add(Duration(seconds: -10)));
     });
   }
 
   Future<void> sendMessage() async {
+    if (inputMessage.value.trim().isEmpty) return;
+    try {
+      var newMsg = ChatMessage(
+          profile.uid, user.value.uid, DateTime.now(), inputMessage.value);
+      inputMessage.value = '';
+      messages.insert(0, newMsg);
+      scrollToBottom();
+      _chatRepository
+          .sendMessage(
+        user.value.uid,
+        newMsg.text,
+      )
+          .then((value) {
+        /// Сообщение успешно посланно
+        /// можно ставить индикатор "отправленно"
+      });
+    } catch (e) {
+      /// Ошибка отправки сообщения
+      /// нужно пометить сообщение "ошибка отправки"
+      Get.snackbar('', 'Message not send');
+    }
+    /*
     if (inputMessage.value.trim().isEmpty) return;
     try {
       isSendLoading.value = true;
@@ -61,6 +84,7 @@ class ChatController extends GetxController {
     } finally {
       isSendLoading.value = false;
     }
+     */
   }
 
   Future<void> addNewMessages(DateTime date) async {
