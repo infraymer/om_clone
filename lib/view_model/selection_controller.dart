@@ -11,6 +11,7 @@ class SelectionController extends GetxController {
   final _userRemoteDataSource = UserRemoteDataSource();
 
   RxList<User> users = <User>[].obs;
+  final bufferUsers = <User>[];
   final errorMessage = ''.obs;
 
   bool _disposed = false;
@@ -30,6 +31,11 @@ class SelectionController extends GetxController {
       matchUser.value = event;
     }, onError: (e) {
       matchUser.value = null;
+    });
+
+    ever(users, (_){
+      if (users.length < 3)
+        users.addAll(bufferUsers);
     });
   }
 
@@ -55,7 +61,8 @@ class SelectionController extends GetxController {
     tempListUser.add(user);
     users.removeAt(0);
     final nextUser = await _userRemoteDataSource.like(user.uid, false);
-    users.add(nextUser);
+    // users.add(nextUser)
+    bufferUsers.add(nextUser);
   }
 
   Future<void> like() async {
@@ -64,7 +71,8 @@ class SelectionController extends GetxController {
     tempListUser.add(user);
     users.removeAt(0);
     final nextUser = await _userRemoteDataSource.like(user.uid, true);
-    users.add(nextUser);
+    // users.add(nextUser);
+    bufferUsers.add(nextUser);
   }
 
   Future<void> rewind() async {

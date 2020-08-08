@@ -14,9 +14,10 @@ import 'package:tinder/view_model/selection_controller.dart';
 import 'package:tinder/widgets/app_round_filled_button.dart';
 import 'package:tinder/widgets/no_button.dart';
 import 'package:tinder/widgets/rewind_button.dart';
-import 'package:tinder/widgets/swipeable_tinder_card.dart';
 import 'package:tinder/widgets/tinder_card_content.dart';
 import 'package:tinder/widgets/yes_button.dart';
+
+final _cardController = CardController();
 
 class SelectionScreen extends StatelessWidget {
   @override
@@ -145,7 +146,8 @@ class _Buttons extends StatelessWidget {
               children: <Widget>[
                 NoButton(
                   onTap: () {
-                    model.dislike();
+                    // model.dislike();
+                    _cardController.triggerLeft();
                   },
                 ),
                 SizedBox(width: 20),
@@ -156,7 +158,8 @@ class _Buttons extends StatelessWidget {
                 SizedBox(width: 20),
                 YesButton(
                   onTap: () async {
-                    model.like();
+                    _cardController.triggerRight();
+                    // model.like();
                   },
                 ),
               ],
@@ -176,24 +179,27 @@ class _OmCards extends StatelessWidget {
       builder: (model) {
         return Center(
           child: Container(
-            height: MediaQuery.of(context).size.height * 0.6,
+            margin: EdgeInsets.only(bottom: 50),
+            height: MediaQuery.of(context).size.height * 0.7 - 20,
             child: new TinderSwapCard(
-              swipeUp: true,
-              swipeDown: true,
+              swipeUp: false,
+              swipeDown: false,
               orientation: AmassOrientation.BOTTOM,
               totalNum: model.users.length,
-              stackNum: 3,
+              stackNum: 2,
               swipeEdge: 4.0,
               maxWidth: MediaQuery.of(context).size.width * 0.9,
-              maxHeight: MediaQuery.of(context).size.width * 0.9,
               minWidth: MediaQuery.of(context).size.width * 0.8,
-              minHeight: MediaQuery.of(context).size.width * 0.8,
+              maxHeight: MediaQuery.of(context).size.height * 0.7,
+              minHeight: MediaQuery.of(context).size.height * 0.6,
               cardBuilder: (context, index) => Card(
+                shadowColor: Colors.transparent,
+                color: Colors.transparent,
                 child: TinderCardContent(
                   data: model.users[index],
                 ),
               ),
-              cardController: controller = CardController(),
+              cardController: _cardController,
               swipeUpdateCallback:
                   (DragUpdateDetails details, Alignment align) {
                 /// Get swiping card's alignment
@@ -207,7 +213,7 @@ class _OmCards extends StatelessWidget {
                   (CardSwipeOrientation orientation, int index) {
                 if (orientation == CardSwipeOrientation.LEFT) {
                   model.dislike();
-                } else {
+                } else if (orientation == CardSwipeOrientation.RIGHT) {
                   model.like();
                 }
 
