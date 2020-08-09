@@ -179,7 +179,8 @@ class _OmCards extends StatelessWidget {
       builder: (model) {
         return Center(
           child: Container(
-            margin: EdgeInsets.only(bottom: 70),
+            //color: Colors.orange,
+            margin: EdgeInsets.only(bottom: 90, top: 30),
             height: MediaQuery.of(context).size.height * 0.8 - 20,
             child: new TinderSwapCard(
               swipeUp: false,
