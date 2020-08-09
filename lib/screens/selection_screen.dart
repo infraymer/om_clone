@@ -180,8 +180,8 @@ class _OmCards extends StatelessWidget {
         return Center(
           child: Container(
             //color: Colors.orange,
-            margin: EdgeInsets.only(bottom: 90, top: 30),
-            height: MediaQuery.of(context).size.height * 0.8 - 20,
+            margin: EdgeInsets.only(bottom: 80, top: 30),
+            height: MediaQuery.of(context).size.height * 0.8 - 60,
             child: new TinderSwapCard(
               swipeUp: false,
               swipeDown: false,
@@ -191,7 +191,7 @@ class _OmCards extends StatelessWidget {
               swipeEdge: 4.0,
               maxWidth: MediaQuery.of(context).size.width * 1,
               minWidth: MediaQuery.of(context).size.width * 0.9,
-              maxHeight: MediaQuery.of(context).size.height * 0.8,
+              maxHeight: MediaQuery.of(context).size.height * 0.8 - 60,
               minHeight: MediaQuery.of(context).size.height * 0.7,
               cardBuilder: (context, index) => Card(
                 shadowColor: Colors.transparent,
