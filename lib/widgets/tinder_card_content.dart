@@ -99,8 +99,8 @@ class InfoButton extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(100),
       child: Container(
-        width: 30,
-        height: 30,
+        width: 26,
+        height: 26,
         color: Colors.grey[300],
         child: Center(
           child: Text(

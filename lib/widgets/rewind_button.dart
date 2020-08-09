@@ -13,7 +13,7 @@ class RewindButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final radius = BorderRadius.circular(100);
-    final double size = 50;
+    final double size = 40;
     return Container(
       height: size,
       width: size,
@@ -33,7 +33,7 @@ class RewindButton extends StatelessWidget {
           child: Stack(
             alignment: Alignment.center,
             children: <Widget>[
-              Icon(UiIcons.refresh, size: 32, color: active ? Colors.orange : Colors.black38,),
+              Icon(UiIcons.refresh, size: 26, color: active ? Colors.orange : Colors.black38,),
               if (count != null)
                 Padding(
                   padding: const EdgeInsets.only(top: 4),

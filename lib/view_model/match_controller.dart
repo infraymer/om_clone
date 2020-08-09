@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:tinder/model/user.dart';
 import 'package:tinder/remote/user_remote_data_source.dart';
 import 'package:tinder/view_model/auth_controller.dart';
+import 'package:tinder/widgets/dialog/dialogs.dart';
 
 class MatchController extends GetxController {
   final UserRemoteDataSource _userRemoteDataSource = UserRemoteDataSource();
@@ -18,7 +19,9 @@ class MatchController extends GetxController {
       content: SizedBox(),
       buttonColor: Colors.white,
       onConfirm: () async {
-        _userRemoteDataSource.cancelMatch(matchUser.uid);
+        Get..back();
+        Dialogs.showProgressDialog();
+        await _userRemoteDataSource.cancelMatch(matchUser.uid);
         Get..back()..back();
       },
       onCancel: () {},

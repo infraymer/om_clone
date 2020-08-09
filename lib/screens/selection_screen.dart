@@ -71,7 +71,7 @@ class _TopBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(16),
+      padding: EdgeInsets.symmetric(horizontal: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -179,8 +179,8 @@ class _OmCards extends StatelessWidget {
       builder: (model) {
         return Center(
           child: Container(
-            margin: EdgeInsets.only(bottom: 50),
-            height: MediaQuery.of(context).size.height * 0.7 - 20,
+            margin: EdgeInsets.only(bottom: 70),
+            height: MediaQuery.of(context).size.height * 0.8 - 20,
             child: new TinderSwapCard(
               swipeUp: false,
               swipeDown: false,
@@ -188,10 +188,10 @@ class _OmCards extends StatelessWidget {
               totalNum: model.users.length,
               stackNum: 2,
               swipeEdge: 4.0,
-              maxWidth: MediaQuery.of(context).size.width * 0.9,
-              minWidth: MediaQuery.of(context).size.width * 0.8,
-              maxHeight: MediaQuery.of(context).size.height * 0.7,
-              minHeight: MediaQuery.of(context).size.height * 0.6,
+              maxWidth: MediaQuery.of(context).size.width * 1,
+              minWidth: MediaQuery.of(context).size.width * 0.9,
+              maxHeight: MediaQuery.of(context).size.height * 0.8,
+              minHeight: MediaQuery.of(context).size.height * 0.7,
               cardBuilder: (context, index) => Card(
                 shadowColor: Colors.transparent,
                 color: Colors.transparent,
