@@ -174,15 +174,12 @@ class _PhoneScreenState extends State<PhoneScreen> {
       onSendCode: () {
         Navigator.push(context, CodeRoute(_authPhone));
       },
-      onAuthenticationSuccessful: (FirebaseAuth firebaseInstance, user) {
-        firebaseInstance.currentUser().then((currentUser) {
-          String uid = currentUser.uid;
-          currentUser.getIdToken().then((token) async {
-            //save token and switch to another screen
-            AuthController.to.checkAuth();
-            Navigator.pop(context);
-          });
-        });
+      onAuthenticationSuccessful: (FirebaseAuth firebaseInstance, user, auto) {
+        AuthController.to.checkAuth();
+        Navigator.pop(context);
+        if (auto == true) {
+          Navigator.pop(context);
+        }
       },
       context: context,
       keyScaffold: _keyScaffold,

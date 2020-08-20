@@ -5,7 +5,7 @@ enum Gender {
 extension GenderExt on Gender {
   String get key {
     if (this == Gender.man)
-      return 'man';
+      return 'men';
     else if (this == Gender.woman)
       return 'women';
     else
@@ -24,7 +24,7 @@ extension GenderExt on Gender {
 
 extension StringExt on String {
   Gender toGender() {
-    if (this == 'man')
+    if (this == 'men')
       return Gender.man;
     else if (this == 'women')
       return Gender.woman;

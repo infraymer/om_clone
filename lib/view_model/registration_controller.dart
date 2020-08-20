@@ -47,8 +47,8 @@ class RegistrationController extends ChangeNotifier {
 
   Future<void> onDoneClicked() async {
     final images = await uploadImages();
-    final gender = genderMale ? 'man' : 'women';
-    final findGender = !genderMale ? 'man' : 'women';
+    final gender = genderMale ? 'men' : 'women';
+    final findGender = !genderMale ? 'men' : 'women';
     final data = UserCreate(
       name,
       gender,

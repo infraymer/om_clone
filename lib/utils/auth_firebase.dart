@@ -100,7 +100,7 @@ class AuthPhoneFirebase {
 
         keyScaffold.currentState
             .showSnackBar(customSnack('Authentication successful'));
-        onAuthenticationSuccessful(firebaseAuth, value);
+        onAuthenticationSuccessful(firebaseAuth, value, true);
       } else {
         keyScaffold.currentState.showSnackBar(
             customSnack('Something has gone wrong, please try later'));
@@ -144,7 +144,7 @@ class AuthPhoneFirebase {
           print(user.user.uid);
           onSuccess();
 
-          onAuthenticationSuccessful(firebaseAuth, user);
+          onAuthenticationSuccessful(firebaseAuth, user, false);
 
           status = 'Authentication successful';
         }

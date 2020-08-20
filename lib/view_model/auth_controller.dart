@@ -52,7 +52,7 @@ class AuthController extends GetxController {
       await FirebaseAuth.instance.signOut();
       authState.value = AuthState.login;
     } catch(e) {
-      print('');
+      print(e);
     }
   }
 }
