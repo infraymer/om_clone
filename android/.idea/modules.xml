@@ -2,22 +2,22 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/android.iml" filepath="$PROJECT_DIR$/android.iml" group="android" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="android/app" />
-      <module fileurl="file://$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/firebase_auth-0.16.1/android/firebase_auth.iml" filepath="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/firebase_auth-0.16.1/android/firebase_auth.iml" group="android/firebase_auth" />
-      <module fileurl="file://$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/firebase_auth_web-0.1.3+1/android/firebase_auth_web.iml" filepath="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/firebase_auth_web-0.1.3+1/android/firebase_auth_web.iml" group="android/firebase_auth_web" />
-      <module fileurl="file://$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/firebase_core-0.4.5/android/firebase_core.iml" filepath="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/firebase_core-0.4.5/android/firebase_core.iml" group="android/firebase_core" />
-      <module fileurl="file://$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/firebase_core_web-0.1.1+2/android/firebase_core_web.iml" filepath="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/firebase_core_web-0.1.1+2/android/firebase_core_web.iml" group="android/firebase_core_web" />
-      <module fileurl="file://$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/firebase_database-3.1.6/android/firebase_database.iml" filepath="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/firebase_database-3.1.6/android/firebase_database.iml" group="android/firebase_database" />
-      <module fileurl="file://$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/firebase_messaging-6.0.16/android/firebase_messaging.iml" filepath="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/firebase_messaging-6.0.16/android/firebase_messaging.iml" group="android/firebase_messaging" />
-      <module fileurl="file://$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/firebase_storage-3.1.6/android/firebase_storage.iml" filepath="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/firebase_storage-3.1.6/android/firebase_storage.iml" group="android/firebase_storage" />
-      <module fileurl="file://$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-1.0.8/android/flutter_plugin_android_lifecycle.iml" filepath="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-1.0.8/android/flutter_plugin_android_lifecycle.iml" group="android/flutter_plugin_android_lifecycle" />
-      <module fileurl="file://$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/flutter_sim_country_code-0.0.3/android/flutter_sim_country_code.iml" filepath="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/flutter_sim_country_code-0.0.3/android/flutter_sim_country_code.iml" group="android/flutter_sim_country_code" />
-      <module fileurl="file://$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/image_picker-0.6.7+4/android/image_picker.iml" filepath="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/image_picker-0.6.7+4/android/image_picker.iml" group="android/image_picker" />
-      <module fileurl="file://$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/path_provider-1.6.11/android/path_provider.iml" filepath="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/path_provider-1.6.11/android/path_provider.iml" group="android/path_provider" />
-      <module fileurl="file://$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/path_provider_linux-0.0.1+2/android/path_provider_linux.iml" filepath="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/path_provider_linux-0.0.1+2/android/path_provider_linux.iml" group="android/path_provider_linux" />
-      <module fileurl="file://$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/path_provider_macos-0.0.4+3/android/path_provider_macos.iml" filepath="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/path_provider_macos-0.0.4+3/android/path_provider_macos.iml" group="android/path_provider_macos" />
-      <module fileurl="file://$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/share-0.6.4+3/android/share.iml" filepath="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/share-0.6.4+3/android/share.iml" group="android/share" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android.iml" filepath="$PROJECT_DIR$/.idea/modules/android.iml" group="android" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="android/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/953911146/firebase_auth.iml" filepath="$PROJECT_DIR$/.idea/modules/953911146/firebase_auth.iml" group="android/firebase_auth" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1336680465/firebase_auth_web.iml" filepath="$PROJECT_DIR$/.idea/modules/-1336680465/firebase_auth_web.iml" group="android/firebase_auth_web" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/390483312/firebase_core.iml" filepath="$PROJECT_DIR$/.idea/modules/390483312/firebase_core.iml" group="android/firebase_core" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/584194533/firebase_core_web.iml" filepath="$PROJECT_DIR$/.idea/modules/584194533/firebase_core_web.iml" group="android/firebase_core_web" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1684307981/firebase_database.iml" filepath="$PROJECT_DIR$/.idea/modules/1684307981/firebase_database.iml" group="android/firebase_database" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-955306139/firebase_messaging.iml" filepath="$PROJECT_DIR$/.idea/modules/-955306139/firebase_messaging.iml" group="android/firebase_messaging" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-700309269/firebase_storage.iml" filepath="$PROJECT_DIR$/.idea/modules/-700309269/firebase_storage.iml" group="android/firebase_storage" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1818966712/flutter_plugin_android_lifecycle.iml" filepath="$PROJECT_DIR$/.idea/modules/1818966712/flutter_plugin_android_lifecycle.iml" group="android/flutter_plugin_android_lifecycle" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1939999490/flutter_sim_country_code.iml" filepath="$PROJECT_DIR$/.idea/modules/1939999490/flutter_sim_country_code.iml" group="android/flutter_sim_country_code" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1278747578/image_picker.iml" filepath="$PROJECT_DIR$/.idea/modules/-1278747578/image_picker.iml" group="android/image_picker" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1175501294/path_provider.iml" filepath="$PROJECT_DIR$/.idea/modules/1175501294/path_provider.iml" group="android/path_provider" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1255477320/path_provider_linux.iml" filepath="$PROJECT_DIR$/.idea/modules/-1255477320/path_provider_linux.iml" group="android/path_provider_linux" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-761732229/path_provider_macos.iml" filepath="$PROJECT_DIR$/.idea/modules/-761732229/path_provider_macos.iml" group="android/path_provider_macos" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-137021663/share.iml" filepath="$PROJECT_DIR$/.idea/modules/-137021663/share.iml" group="android/share" />
     </modules>
   </component>
 </project>

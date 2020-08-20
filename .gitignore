@@ -15,6 +15,11 @@
 *.ipr
 *.iws
 .idea/
+android/.idea/
+android/.idea/caches/
+android/.idea/codeStyles/
+android/.idea/libraries/
+android/.idea/modules/
 
 # Visual Studio Code related
 .classpath
@@ -60,6 +65,7 @@ unlinked_spec.ds
 # Android related
 **/android/**/gradle-wrapper.jar
 **/android/.gradle
+**/android/.idea/
 **/android/captures/
 **/android/gradlew
 **/android/gradlew.bat
