@@ -97,7 +97,11 @@ class _TopBar extends StatelessWidget {
               Icons.settings,
               color: Colors.white,
             ),
-            onPressed: () => Get.to(SettingsScreen()),
+            onPressed: () async {
+              final result = await Get.to(SettingsScreen());
+              if (result == true)
+                SelectionController.to.getFeeds(true);
+            },
           ),
         ],
       ),

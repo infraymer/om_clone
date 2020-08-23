@@ -34,7 +34,7 @@ class SelectionController extends GetxController {
     users.listen((_) {
       if (users.length < 2) getFeeds();
 
-      if (users.length < 3 && bufferUsers.isNotEmpty)  {
+      if (users.length < 3 && bufferUsers.isNotEmpty) {
         users.addAll(bufferUsers);
         bufferUsers.clear();
       }
@@ -50,11 +50,13 @@ class SelectionController extends GetxController {
 
   Future<void> getFeeds([bool refresh = false]) async {
     try {
+      if (refresh) users.value = [];
       final list = await _userRemoteDataSource.getFeeds();
-      if (refresh)
+      if (refresh) {
         users.value = list;
-      else
+      } else {
         bufferUsers.addAll(list);
+      }
       errorMessage.value = '';
     } catch (e) {
       if (_disposed) return;

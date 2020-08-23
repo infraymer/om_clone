@@ -86,7 +86,6 @@ class SettingsController extends GetxController {
 
       await _userRemoteDataSource.updateUser(data);
       AuthController.to.profile = data;
-      Get.snackbar('Settings', 'Saved!',);
       Get.back(result: true);
     } catch(e) {
       Get.snackbar('', 'Error update user');
