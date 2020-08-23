@@ -7,6 +7,7 @@ import 'package:reorderables/reorderables.dart';
 import 'package:tinder/photo/model/app_photo.dart';
 import 'package:tinder/photo/presentation/photo_controller.dart';
 import 'package:tinder/resources/colors.dart';
+import 'package:tinder/utils/dialogs.dart';
 import 'package:tinder/widgets/app_photo.dart';
 import 'package:tinder/widgets/app_round_filled_button.dart';
 
@@ -59,7 +60,8 @@ class PhotoBlock extends StatelessWidget {
           runSpacing: 20,
           maxMainAxisCount: 3,
           minMainAxisCount: 3,
-          children: _buildSelectPhotoList(context, PhotoController.to.photos.value),
+          children:
+              _buildSelectPhotoList(context, PhotoController.to.photos.value),
           onReorder: (int oldIndex, int newIndex) {
             PhotoController.to.swapImage(oldIndex, newIndex);
           },
@@ -68,17 +70,26 @@ class PhotoBlock extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildSelectPhotoList(BuildContext context, List<AppPhoto> imgs) {
+  List<Widget> _buildSelectPhotoList(
+      BuildContext context, List<AppPhoto> imgs) {
     // final model = context.watch<RegistrationViewModel>();
     final list = <Widget>[];
     imgs.asMap().forEach(
           (i, e) => list.add(
             GestureDetector(
               onTap: () async {
-                final pickedFile =
-                    await ImagePicker().getImage(source: ImageSource.gallery);
-                final file = File(pickedFile.path);
-                PhotoController.to.setImage(i, file);
+                if (e.isEmpty) {
+                  onSelectPhoto(i);
+                  return;
+                }
+                UiDialogs.showMenuDialog({
+                  'Select photo': () {
+                    onSelectPhoto(i);
+                  },
+                  'Remove': () {
+                    onRemovePhoto(i);
+                  },
+                });
               },
               child: SelectPhoto(
                 photo: e,
@@ -88,6 +99,18 @@ class PhotoBlock extends StatelessWidget {
           ),
         );
     return list;
+  }
+
+  void onSelectPhoto(int index) async {
+    final pickedFile =
+        await ImagePicker().getImage(source: ImageSource.gallery);
+    if (pickedFile == null) return;
+    final file = File(pickedFile.path);
+    PhotoController.to.setImage(index, file);
+  }
+
+  void onRemovePhoto(int index) async {
+    PhotoController.to.setImage(index, null);
   }
 }
 
@@ -112,20 +135,20 @@ class SelectPhoto extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(4),
-                color: photo == null ? AppColors.selectPhotoBg : null,
+                color: photo == null ? AppColors.selectPhotoBg : Colors.black12,
               ),
               child: Center(
                 child: AppImageWidget(image: photo),
               ),
             ),
-            if (photo?.url == null && photo?.file == null)
+            if (photo?.isEmpty)
               Align(
                 alignment: Alignment.bottomRight,
                 child: Container(
                   transform: Matrix4.translationValues(12.0, 12.0, 0.0),
                   child: Icon(Icons.add_circle, size: 24),
                 ),
-              )
+              ),
           ],
         ),
       );

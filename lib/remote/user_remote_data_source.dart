@@ -7,6 +7,8 @@ import 'package:tinder/remote/api.dart';
 
 class UserRemoteDataSource {
   Future<void> createUser(UserCreate data) async {
+    final map = data.toMap();
+    map['token'] = await firebaseMessaging.getToken();
     await dio.post('updateUser', data: data.toMap());
   }
 

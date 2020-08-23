@@ -86,8 +86,18 @@ class _Content extends StatelessWidget {
           _Avatar(),
           // _Switch(),
           SizedBox(height: 30),
-//          _Bio(),
-//          SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40),
+            child: Text(
+              '${model.user.name}, ${model.user.age}',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          SizedBox(height: 20),
           _Description(),
           SizedBox(height: 20),
           _Divider(),
@@ -186,21 +196,24 @@ class _Avatar extends StatelessWidget {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(500),
-                    child: GetX<SettingsController>(
-                      builder: (_) => SettingsController.to.photos.value.isEmpty
-                          ? Image.network(
-                              user.imgs.firstOrNull ?? '',
-                              fit: BoxFit.cover,
-                              width: 100,
-                              height: 100,
-                            )
-                          : Container(
-                              width: 100,
-                              height: 100,
-                              child: AppImageWidget(
-                                image: SettingsController.to.photos.firstOrNull,
+                    child: Container(
+                      color: Colors.grey,
+                      child: GetX<SettingsController>(
+                        builder: (_) => SettingsController.to.photos.value.isEmpty
+                            ? Image.network(
+                                user.imgs.firstOrNull ?? '',
+                                fit: BoxFit.cover,
+                                width: 100,
+                                height: 100,
+                              )
+                            : Container(
+                                width: 100,
+                                height: 100,
+                                child: AppImageWidget(
+                                  image: SettingsController.to.photos.firstOrNull,
+                                ),
                               ),
-                            ),
+                      ),
                     ),
                   ),
                   Align(
@@ -525,8 +538,9 @@ class _RemoveUserButton extends StatelessWidget {
               content: SizedBox(),
               buttonColor: Colors.white,
               onConfirm: () async {
-                AuthController.to.removeUser();
-                Get..back()..back();
+                Get..back();
+                await AuthController.to.removeUser();
+                Get..back();
               },
               onCancel: () {},
             );

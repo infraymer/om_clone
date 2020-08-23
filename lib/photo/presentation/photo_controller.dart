@@ -11,7 +11,7 @@ class PhotoController extends GetxController {
   final RxList<AppPhoto> photos = List.generate(9, (index) => AppPhoto()).obs;
   final isLoading = false.obs;
 
-  PhotoController([List<AppPhoto> initPhotos]) {
+  PhotoController([List<AppPhoto> initPhotos = const []]) {
     photos.value = List.generate(
         9, (index) => initPhotos.elementAtOrNull(index) ?? AppPhoto());
     print('object');
@@ -22,7 +22,9 @@ class PhotoController extends GetxController {
   }
 
   void swapImage(int oldIndex, int newIndex) {
-    photos.value.swap(oldIndex, newIndex);
+    final e = photos[oldIndex];
+    photos.removeAt(oldIndex);
+    photos.insert(newIndex, e);
   }
 
   Future<void> upload() async {

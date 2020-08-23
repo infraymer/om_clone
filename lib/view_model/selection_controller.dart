@@ -3,11 +3,17 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:tinder/model/user.dart';
 import 'package:tinder/remote/user_remote_data_source.dart';
-import 'package:tinder/screens/match_screen.dart';
 import 'package:tinder/view_model/auth_controller.dart';
 
 class SelectionController extends GetxController {
-  static SelectionController get to => Get.find();
+  static SelectionController get to {
+    try {
+      return Get.find();
+    } catch (e) {
+      return null;
+    }
+  }
+
   final _userRemoteDataSource = UserRemoteDataSource();
 
   RxList<User> users = <User>[].obs;
@@ -22,20 +28,23 @@ class SelectionController extends GetxController {
   final Rx<User> tempUser = Rx<User>(null);
   final RxList<User> tempListUser = RxList<User>([]);
 
-  SelectionController() {
-    getFeeds();
+  @override
+  void onInit() {
+    getFeeds(true);
     users.listen((_) {
       if (users.length < 2) getFeeds();
+
+      if (users.length < 3 && bufferUsers.isNotEmpty)  {
+        users.addAll(bufferUsers);
+        bufferUsers.clear();
+      }
     });
-    _matchSub = _userRemoteDataSource.matchListener(AuthController.to.profile.uid).listen((event) {
+    _matchSub = _userRemoteDataSource
+        .matchListener(AuthController.to.profile.uid)
+        .listen((event) {
       matchUser.value = event;
     }, onError: (e) {
       matchUser.value = null;
-    });
-
-    ever(users, (_){
-      if (users.length < 3)
-        users.addAll(bufferUsers);
     });
   }
 
@@ -45,7 +54,7 @@ class SelectionController extends GetxController {
       if (refresh)
         users.value = list;
       else
-        users.addAll(list);
+        bufferUsers.addAll(list);
       errorMessage.value = '';
     } catch (e) {
       if (_disposed) return;

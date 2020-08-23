@@ -1,9 +1,12 @@
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:tinder/cache/chat_cache_data_source.dart';
 import 'package:tinder/model/user.dart';
 import 'package:tinder/remote/user_remote_data_source.dart';
 import 'package:tinder/screens/chat_screen.dart';
+import 'package:tinder/utils/dialogs.dart';
+import 'package:tinder/view_model/loading_controller.dart';
 
 enum AuthState { splash, login, registration, home }
 
@@ -26,13 +29,22 @@ class AuthController extends GetxController {
     bool auth = false;
     try {
       auth = await isAuth;
-      if (!auth) throw('no auth');
+      if (!auth) {
+        authState.value = AuthState.login;
+        return;
+      }
       profile = await _userRemoteDataSource.me();
+      await Future.delayed(Duration(seconds: 2));
       authState.value = AuthState.home;
-      final matchUser = await _chatCacheDataSource.getActiveChat();
-      if (matchUser != null) Get.to(ChatScreen(user: matchUser));
+//      final matchUser = await _chatCacheDataSource.getActiveChat();
+//      if (matchUser != null) Get.to(ChatScreen(user: matchUser));
     } catch (e) {
-      authState.value = auth ? AuthState.registration : AuthState.login;
+      final dioError = e is DioError ? e as DioError : null;
+      if (dioError != null && dioError.response.statusCode == 404) {
+        authState.value = AuthState.registration;
+        return;
+      }
+      authState.value = AuthState.login;
     }
   }
 
@@ -48,11 +60,17 @@ class AuthController extends GetxController {
 
   Future<void> removeUser() async {
     try {
-      await _userRemoteDataSource.removeUser();
+      UiDialogs.showProgressDialog();
+      LoadingController.to.isLoading.value = true;
+      // await _userRemoteDataSource.removeUser();
+      await Future.delayed(Duration(seconds: 3));
       await FirebaseAuth.instance.signOut();
       authState.value = AuthState.login;
-    } catch(e) {
+    } catch (e) {
+      Get.snackbar('', 'Error remove account');
       print(e);
+    } finally {
+      Get.back();
     }
   }
 }

@@ -11,11 +11,15 @@ class AppImageWidget extends StatelessWidget {
     return image?.url != null
         ? Image.network(
             image?.url,
+            width: double.infinity,
+            height: double.infinity,
             fit: BoxFit.cover,
           )
         : image?.file != null
             ? Image.file(
                 image?.file,
+                width: double.infinity,
+                height: double.infinity,
                 fit: BoxFit.cover,
               )
             : Container(color: Colors.grey);

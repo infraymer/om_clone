@@ -13,6 +13,25 @@ import 'package:tinder/view_model/selection_controller.dart';
 class AuthScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+//    return StreamBuilder<AuthState>(
+//      stream: AuthController.to.authState.stream,
+//      builder: (context, snap) {
+//        switch (snap.data) {
+//          case AuthState.login:
+//            return LoginScreen();
+//            break;
+//          case AuthState.registration:
+//            return RegistrationScreen();
+//            break;
+//          case AuthState.home:
+//            return SelectionScreen();
+//            break;
+//          default:
+//            return SplashScreen();
+//        }
+//      },
+//    );
+
     return Obx(() {
         switch (AuthController.to.authState.value) {
           case AuthState.login:
@@ -27,7 +46,6 @@ class AuthScreen extends StatelessWidget {
           default:
             return SplashScreen();
         }
-        return SplashScreen();
       },
     );
   }

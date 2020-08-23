@@ -84,6 +84,10 @@ class AuthPhoneFirebase {
       status = 'Something has gone wrong, please try later';
     else if (authException.message.contains('Network'))
       status = 'Please check your internet connection and try again';
+    else if (authException.message.contains('TOO_SHORT'))
+      status = 'Incorrect phone number. Number short';
+    else if (authException.message.contains('TOO_LONG'))
+      status = 'Incorrect phone number. Number long';
     else
       status = 'Something has gone wrong, please try later';
 

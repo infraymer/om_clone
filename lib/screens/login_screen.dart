@@ -7,6 +7,7 @@ import 'package:tinder/resources/text_styles.dart';
 import 'package:tinder/routes.dart';
 import 'package:tinder/view_model/selection_controller.dart';
 import 'package:tinder/widgets/app_round_button_dark.dart';
+import 'package:tinder/widgets/logo_title_widget.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -19,7 +20,7 @@ class LoginScreen extends StatelessWidget {
             Expanded(child: SizedBox()),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 70),
-              child: SvgPicture.asset(AppImages.logoWithTitleWhite),
+              child: LogoTitleWidget(),
             ),
             SizedBox(height: 60),
             Padding(

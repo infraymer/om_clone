@@ -2,10 +2,7 @@ import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:share/share.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:tinder/model/user.dart';
-import 'package:tinder/routes.dart';
 import 'package:tinder/utils/share_util.dart';
 import 'package:tinder/view_model/selection_controller.dart';
 import 'package:tinder/widgets/circle_status.dart';
@@ -88,12 +85,16 @@ class _Content extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(height: 10),
-              _Name(text: '${data.name} ${data.age}'),
-              SizedBox(height: 8),
-              _IconTextItem(
-                icon: Icons.home,
-                text: 'Lives in Orchard',
+              _Name(
+                text: '${data.name}, ${data.age}',
+                isActive: data.isOnline,
               ),
+              if (data.aboutMe?.isNotEmpty == true) SizedBox(height: 8),
+              if (data.aboutMe?.isNotEmpty == true)
+                _IconTextItem(
+                  icon: Icons.home,
+                  text: data.aboutMe,
+                ),
               SizedBox(height: 4),
               _IconTextItem(
                 icon: Icons.place,
@@ -238,14 +239,14 @@ class _Buttons extends StatelessWidget {
       children: [
         NoButton(
           onTap: () {
-            SelectionController.to.dislike();
+            SelectionController.to?.dislike();
             Get.back();
           },
         ),
         SizedBox(width: 20),
         YesButton(
           onTap: () {
-            SelectionController.to.like();
+            SelectionController.to?.like();
             Get.back();
           },
         ),
@@ -274,7 +275,7 @@ class _PageIndicatorsState extends State<PageIndicators> {
     widget.controller.addListener(() {
       final page = widget.controller.page;
       _current = page > _lastPage ? page.ceil() : page.toInt();
-      setState((){});
+      setState(() {});
       _lastPage = page;
     });
   }
@@ -285,10 +286,10 @@ class _PageIndicatorsState extends State<PageIndicators> {
       children: List.generate(
           widget.count,
           (index) => Expanded(
-            child: Indicator(
+                child: Indicator(
                   isSelected: index == _current,
                 ),
-          )),
+              )),
     );
   }
 }

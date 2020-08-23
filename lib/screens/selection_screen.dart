@@ -3,14 +3,17 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_tindercard/flutter_tindercard.dart';
 import 'package:get/get.dart';
+import 'package:dartx/dartx.dart';
 import 'package:share/share.dart';
 import 'package:tinder/constants.dart';
+import 'package:tinder/photo/presentation/photo_controller.dart';
 import 'package:tinder/resources/colors.dart';
 import 'package:tinder/resources/images.dart';
 import 'package:tinder/resources/text_styles.dart';
 import 'package:tinder/screens/match_screen.dart';
 import 'package:tinder/screens/settings_screen.dart';
 import 'package:tinder/utils/share_util.dart';
+import 'package:tinder/view_model/auth_controller.dart';
 import 'package:tinder/view_model/selection_controller.dart';
 import 'package:tinder/widgets/app_round_filled_button.dart';
 import 'package:tinder/widgets/no_button.dart';
@@ -25,12 +28,11 @@ class SelectionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<SelectionController>(
       init: SelectionController(),
-      initState: (_) => Get.put(SelectionController()),
       builder: (_) {
         return Obx(
-          () => SelectionController.to.matchUser.value == null
+          () => SelectionController.to?.matchUser?.value == null
               ? _ThisScreen()
-              : MatchScreen(matchUser: SelectionController.to.matchUser.value),
+              : MatchScreen(matchUser: SelectionController.to?.matchUser?.value),
         );
       },
     );
@@ -55,7 +57,7 @@ class _ThisScreen extends StatelessWidget {
             ),
             _TopBar(),
             Obx(
-              () => SelectionController.to.users.isNotEmpty
+              () => SelectionController.to?.users?.isNotEmpty == true
                   ? _OmCards()
                   : _NoMoreSwipes(),
             ),
@@ -281,7 +283,7 @@ class _NoMoreSwipes extends StatelessWidget {
                   color: Colors.grey[300]),
               child: ClipRRect(
                 child: Image.network(
-                  Constants.womanImage,
+                  AuthController.to.profile.imgs.firstOrNull,
                   fit: BoxFit.cover,
                   height: MediaQuery.of(context).size.width,
                 ),

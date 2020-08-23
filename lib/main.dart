@@ -7,7 +7,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tinder/push.dart';
 import 'package:tinder/resources/colors.dart';
 import 'package:tinder/screens/auth_screen.dart';
+import 'package:tinder/screens/registration_screen.dart';
 import 'package:tinder/view_model/auth_controller.dart';
+import 'package:tinder/view_model/loading_controller.dart';
+import 'package:tinder/widgets/loading_container.dart';
 
 GetStorage storage;
 
@@ -19,6 +22,7 @@ void main() async {
 
   initFirebase();
 
+  Get.put(LoadingController());
   Get.put(AuthController());
 
   runApp(MyApp());

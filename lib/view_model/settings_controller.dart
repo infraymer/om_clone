@@ -7,6 +7,7 @@ import 'package:tinder/model/user.dart';
 import 'package:tinder/photo/model/app_photo.dart';
 import 'package:tinder/remote/file_remote_data_source.dart';
 import 'package:tinder/remote/user_remote_data_source.dart';
+import 'package:tinder/utils/dialogs.dart';
 import 'package:tinder/view_model/auth_controller.dart';
 
 class SettingsController extends GetxController {
@@ -41,7 +42,7 @@ class SettingsController extends GetxController {
     final sf = value.settingFilter;
     minAge.value = sf?.ageMin ?? 18;
     maxAge.value = sf?.ageMax ?? 99;
-    distance.value = sf?.maxDistance ?? 20;
+    distance.value = sf?.distanceMax ?? 20;
     gender.value = sf?.gender?.toGender() ?? Gender.all;
 
     about = value.aboutMe ?? '';
@@ -86,6 +87,7 @@ class SettingsController extends GetxController {
       await _userRemoteDataSource.updateUser(data);
       AuthController.to.profile = data;
       Get.snackbar('Settings', 'Saved!',);
+      Get.back(result: true);
     } catch(e) {
       Get.snackbar('', 'Error update user');
     } finally {

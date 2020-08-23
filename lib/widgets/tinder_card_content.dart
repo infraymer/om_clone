@@ -19,16 +19,33 @@ class TinderCardContent extends StatelessWidget {
       child: Stack(
         children: <Widget>[
           ClipRRect(
-            child: Hero(
-              tag: data.heroTag,
-              child: Image.network(
-                data.imgs.firstOrNull ?? '',
-                fit: BoxFit.cover,
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
+            child: Container(
+              color: Colors.grey,
+              child: Hero(
+                tag: data.heroTag,
+                child: Image.network(
+                  data.imgs.firstOrNull ?? '',
+                  fit: BoxFit.cover,
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  loadingBuilder: (context, w, event) {
+                    return event == null ? w : Container(color: Colors.grey[700]);
+                  },
+                ),
               ),
             ),
             borderRadius: BorderRadius.circular(15),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              height: 120,
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      end: Alignment.topCenter,
+                      begin: Alignment.bottomCenter,
+                      colors: [Colors.black45, Colors.transparent])),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(right: 10, bottom: 20),
@@ -45,7 +62,7 @@ class TinderCardContent extends StatelessWidget {
                   Row(
                     children: <Widget>[
                       Text(
-                        '${data.name} ${data.age}',
+                        '${data.name}, ${data.age}',
                         style: TextStyle(
                             shadows: [
                               BoxShadow(
