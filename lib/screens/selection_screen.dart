@@ -10,6 +10,7 @@ import 'package:tinder/resources/images.dart';
 import 'package:tinder/resources/text_styles.dart';
 import 'package:tinder/screens/match_screen.dart';
 import 'package:tinder/screens/settings_screen.dart';
+import 'package:tinder/utils/share_util.dart';
 import 'package:tinder/view_model/selection_controller.dart';
 import 'package:tinder/widgets/app_round_filled_button.dart';
 import 'package:tinder/widgets/no_button.dart';
@@ -81,7 +82,7 @@ class _TopBar extends StatelessWidget {
               color: Colors.white,
             ),
             onPressed: () {
-              Share.share('Install OneMatch app!');
+              ShareUtil.shareOneMatch();
             },
           ),
           SvgPicture.asset(

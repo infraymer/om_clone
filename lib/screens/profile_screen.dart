@@ -6,6 +6,7 @@ import 'package:share/share.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:tinder/model/user.dart';
 import 'package:tinder/routes.dart';
+import 'package:tinder/utils/share_util.dart';
 import 'package:tinder/view_model/selection_controller.dart';
 import 'package:tinder/widgets/circle_status.dart';
 import 'package:tinder/widgets/no_button.dart';
@@ -193,7 +194,7 @@ class _ShareProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Share.share('Share profile OneMatch');
+        ShareUtil.shareOneMatch();
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
