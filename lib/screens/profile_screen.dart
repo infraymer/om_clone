@@ -94,13 +94,13 @@ class _Content extends StatelessWidget {
             text: '${data.name}, ${data.age}',
             isActive: data.isOnline,
           ),
-          if (data.aboutMe?.isNotEmpty == true) SizedBox(height: 8),
-          if (data.aboutMe?.isNotEmpty == true)
-            _IconTextItem(
-              icon: Icons.home,
-              text: data.aboutMe,
-            ),
-          SizedBox(height: 4),
+//          if (data.aboutMe?.isNotEmpty == true) SizedBox(height: 8),
+//          if (data.aboutMe?.isNotEmpty == true)
+//            _IconTextItem(
+//              icon: Icons.home,
+//              text: data.aboutMe,
+//            ),
+          SizedBox(height: 8),
           _IconTextItem(
             icon: Icons.place,
             text: '1 kilometer away',
