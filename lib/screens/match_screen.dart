@@ -6,6 +6,7 @@ import 'package:tinder/resources/colors.dart';
 import 'package:tinder/resources/strings.dart';
 import 'package:tinder/resources/text_styles.dart';
 import 'package:tinder/routes.dart';
+import 'package:tinder/screens/chat_screen.dart';
 import 'package:tinder/utils/share_util.dart';
 import 'package:tinder/view_model/match_controller.dart';
 import 'package:tinder/widgets/app_icon_round_button_dark.dart';
@@ -53,8 +54,8 @@ class MatchScreen extends StatelessWidget {
                 margin: EdgeInsets.symmetric(horizontal: 50),
                 text: Strings.matchSendMessage,
                 icon: Icons.chat_bubble,
-                onPressed: () =>
-                    Navigator.push(context, ChatRoute(_.matchUser)),
+                onPressed: () => Get.to(ChatScreen(user: _.matchUser)),
+//                    Navigator.push(context, ChatRoute(_.matchUser)),
               ),
               SizedBox(height: 30),
               AppIconRoundButtonDark(

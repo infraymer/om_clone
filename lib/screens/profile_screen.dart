@@ -26,34 +26,50 @@ class ProfileScreen extends StatelessWidget {
           width: double.infinity,
           child: ListView(
             children: [
-              Container(
-                  width: double.infinity,
-                  height: 500,
-                  child: Stack(
-                    children: <Widget>[
-                      PageView.builder(
-                        controller: controller,
-                        itemCount: user.imgs.length,
-                        itemBuilder: (context, index) {
-                          return Hero(
-                            tag: user.heroTag,
-                            child: Image.network(
-                              user.imgs.elementAtOrNull(index) ?? '',
-                              fit: BoxFit.cover,
-                            ),
-                          );
-                        },
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8),
-                        child: PageIndicators(
+              Stack(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    height: 500,
+                    child: Stack(
+                      children: <Widget>[
+                        PageView.builder(
                           controller: controller,
-                          count: user.imgs.length,
+                          itemCount: user.imgs.length,
+                          itemBuilder: (context, index) {
+                            return Hero(
+                              tag: user.heroTag,
+                              child: Image.network(
+                                user.imgs.elementAtOrNull(index) ?? '',
+                                fit: BoxFit.cover,
+                              ),
+                            );
+                          },
                         ),
-                      ),
-                    ],
-                  )),
-              _Content(data: user),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8),
+                          child: PageIndicators(
+                            controller: controller,
+                            count: user.imgs.length,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 500),
+                    child: _Content(data: user),
+                  ),
+                  Container(
+                    alignment: Alignment.topRight,
+                    margin: EdgeInsets.only(right: 20, top: 470),
+                    child: FloatingActionButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Icon(Icons.arrow_downward),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
@@ -69,50 +85,37 @@ class _Content extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          margin: EdgeInsets.only(right: 20),
-          alignment: Alignment.topRight,
-          transform: Matrix4.translationValues(0.0, -30.0, 0.0),
-          child: FloatingActionButton(
-            onPressed: () => Navigator.pop(context),
-            child: Icon(Icons.arrow_downward),
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        children: [
+          SizedBox(height: 10),
+          _Name(
+            text: '${data.name}, ${data.age}',
+            isActive: data.isOnline,
           ),
-        ),
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: [
-              SizedBox(height: 10),
-              _Name(
-                text: '${data.name}, ${data.age}',
-                isActive: data.isOnline,
-              ),
-              if (data.aboutMe?.isNotEmpty == true) SizedBox(height: 8),
-              if (data.aboutMe?.isNotEmpty == true)
-                _IconTextItem(
-                  icon: Icons.home,
-                  text: data.aboutMe,
-                ),
-              SizedBox(height: 4),
-              _IconTextItem(
-                icon: Icons.place,
-                text: '1 kilometer away',
-              ),
-              SizedBox(height: 20),
-              _Description(data.aboutMe),
-              SizedBox(height: 30),
-              _ShareProfile(),
-              SizedBox(height: 20),
-              _Report(),
-              SizedBox(height: 20),
-              _Buttons(),
-              SizedBox(height: 20),
-            ],
+          if (data.aboutMe?.isNotEmpty == true) SizedBox(height: 8),
+          if (data.aboutMe?.isNotEmpty == true)
+            _IconTextItem(
+              icon: Icons.home,
+              text: data.aboutMe,
+            ),
+          SizedBox(height: 4),
+          _IconTextItem(
+            icon: Icons.place,
+            text: '1 kilometer away',
           ),
-        ),
-      ],
+          SizedBox(height: 20),
+          _Description(data.aboutMe),
+          SizedBox(height: 30),
+          _ShareProfile(),
+          SizedBox(height: 20),
+          _Report(),
+          SizedBox(height: 20),
+          _Buttons(),
+          SizedBox(height: 20),
+        ],
+      ),
     );
   }
 }

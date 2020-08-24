@@ -26,6 +26,11 @@ class ChatController extends GetxController {
 
   StreamSubscription _updateMessagesSub;
 
+  ChatController(User user) {
+    this.user.value = user;
+    getMessages();
+  }
+
   Future<void> getMessages() async {
     _chatRepository.setActiveChat(user.value);
     try {

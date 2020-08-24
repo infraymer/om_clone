@@ -82,14 +82,10 @@ class PhotoBlock extends StatelessWidget {
                   onSelectPhoto(i);
                   return;
                 }
-                UiDialogs.showMenuDialog({
-                  'Select photo': () {
-                    onSelectPhoto(i);
-                  },
-                  'Remove': () {
-                    onRemovePhoto(i);
-                  },
-                });
+                UiDialogs.showPhotoActionDialog(
+                  onSelect: () => onSelectPhoto(i),
+                  onRemove: () => onRemovePhoto(i),
+                );
               },
               child: SelectPhoto(
                 photo: e,

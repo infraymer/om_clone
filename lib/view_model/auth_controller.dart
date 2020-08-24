@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:tinder/cache/chat_cache_data_source.dart';
 import 'package:tinder/model/user.dart';
 import 'package:tinder/remote/user_remote_data_source.dart';
-import 'package:tinder/screens/chat_screen.dart';
 import 'package:tinder/utils/dialogs.dart';
 import 'package:tinder/view_model/loading_controller.dart';
 
@@ -62,8 +61,7 @@ class AuthController extends GetxController {
     try {
       UiDialogs.showProgressDialog();
       LoadingController.to.isLoading.value = true;
-      // await _userRemoteDataSource.removeUser();
-      await Future.delayed(Duration(seconds: 3));
+      await _userRemoteDataSource.removeUser();
       await FirebaseAuth.instance.signOut();
       authState.value = AuthState.login;
     } catch (e) {

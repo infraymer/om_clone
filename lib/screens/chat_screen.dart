@@ -18,8 +18,7 @@ class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ChatController>(
-      init: ChatController()..user.value = user,
-      initState: (_) => ChatController.to.getMessages(),
+      init: ChatController(user),
       builder: (_) {
         return Scaffold(
           body: SafeArea(
@@ -389,8 +388,8 @@ class ChatInputMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10),
-      padding: EdgeInsets.only(left: 20, right: 15),
+//      margin: EdgeInsets.symmetric(horizontal: 10),
+//      padding: EdgeInsets.only(left: 20, right: 15),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(50),
         border: Border.all(color: Colors.black12, width: 1),
@@ -398,6 +397,7 @@ class ChatInputMessage extends StatelessWidget {
       ),
       child: Row(
         children: <Widget>[
+          SizedBox(width: 30),
           Expanded(
             child: Obx(
               () => TextField(
@@ -423,11 +423,15 @@ class ChatInputMessage extends StatelessWidget {
             () => !ChatController.to.isSendLoading.value
                 ? GestureDetector(
                     onTap: () => ChatController.to.sendMessage(),
-                    child: Text(
-                      'Send',
-                      style: TextStyle(
-                        color: Colors.black38,
-                        fontWeight: FontWeight.bold,
+                    child: Container(
+                      color: Colors.transparent,
+                      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                      child: Text(
+                        'Send',
+                        style: TextStyle(
+                          color: Colors.black38,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   )

@@ -8,6 +8,7 @@ import 'package:reorderables/reorderables.dart';
 import 'package:tinder/resources/colors.dart';
 import 'package:tinder/resources/dimens.dart';
 import 'package:tinder/resources/strings.dart';
+import 'package:tinder/utils/dialogs.dart';
 import 'package:tinder/utils/view_utils.dart';
 import 'package:tinder/view_model/registration_controller.dart';
 import 'package:tinder/widgets/app_round_filled_button.dart';
@@ -110,9 +111,14 @@ class PhotoBlock extends StatelessWidget {
           (i, e) => list.add(
             GestureDetector(
               onTap: () async {
-                final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
-                final file = File(pickedFile.path);
-                model.setImage(i, file);
+                if (e == null) {
+                  onSelectPhoto(context, i);
+                  return;
+                }
+                UiDialogs.showPhotoActionDialog(
+                  onSelect: () => onSelectPhoto(context, i),
+                  onRemove: () => onRemovePhoto(context, i),
+                );
               },
               child: SelectPhoto(
                 file: e,
@@ -122,6 +128,20 @@ class PhotoBlock extends StatelessWidget {
           ),
         );
     return list;
+  }
+
+  void onSelectPhoto(BuildContext context, int index) async {
+    final pickedFile =
+    await ImagePicker().getImage(source: ImageSource.gallery);
+    if (pickedFile == null) return;
+    final file = File(pickedFile.path);
+    final model = Provider.of<RegistrationController>(context, listen: false);
+    model.setImage(index, file);
+  }
+
+  void onRemovePhoto(BuildContext context, int index) async {
+    final model = Provider.of<RegistrationController>(context, listen: false);
+    model.setImage(index, null);
   }
 }
 
@@ -152,6 +172,8 @@ class SelectPhoto extends StatelessWidget {
                   child: file != null
                       ? Image.file(
                           file,
+                          width: double.infinity,
+                          height: double.infinity,
                           fit: BoxFit.fill,
                         )
                       : null,
