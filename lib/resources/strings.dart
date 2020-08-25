@@ -1,4 +1,4 @@
-class   Strings {
+class Strings {
   static const back = 'Back';
   static const next = 'Next';
   static const skip = 'Skip';
@@ -15,7 +15,7 @@ class   Strings {
 
   // phone screen
   static const phoneTitle = 'Log into OneMatch';
-  static const phoneEnterYourMobile = 'Enter you mobile number';
+  static const phoneEnterYourMobile = 'Enter your mobile number';
   static const phoneDescription = 'We will send a text with a verification code.\nMessage and data rates may apply.';
   static const phoneResendCode = 'Resend code';
 
@@ -33,7 +33,7 @@ class   Strings {
   static const genderMan = 'Man';
   static const genderWoman = 'Woman';
   static const genderGotIt = 'Got it';
-  static const genderShowMyGender = 'Show my gender on my prodile';
+  static const genderShowMyGender = 'Show my gender on my profile';
 
   // about your screen
   static const aboutTitle = 'Tell\nabout your self';
@@ -49,10 +49,10 @@ class   Strings {
   static const welcomeTitle1 = 'Be yourself,';
   static const welcomeSubtitle1 = 'Make sure your photos, age, and bio are true to who you are.';
   static const welcomeTitle2 = 'Play it cool,';
-  static const welcomeSubtitle2 = 'Respect others and treat them as you would like yo be treated.';
+  static const welcomeSubtitle2 = 'Respect others and treat them as you would like you be treated.';
   static const welcomeTitle3 = 'Stay safe,';
   static const welcomeSubtitle3 = 'Don\'t be too quick to give out personal information. Date Safely';
-  static const welcomeTitle4 = 'Be practive,';
+  static const welcomeTitle4 = 'Be proactive,';
   static const welcomeSubtitle4 = 'Always report bad behaviour.';
   static const welcomeDescription = 'As so seeing latter he should thirty whence. To things so denied admire. To things so denied admire. ';
 

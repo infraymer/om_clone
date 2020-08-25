@@ -108,9 +108,9 @@ class _Content extends StatelessWidget {
           SizedBox(height: 20),
           _Description(data.aboutMe),
           SizedBox(height: 30),
-          _ShareProfile(),
+          _ShareProfile(data.name),
           SizedBox(height: 20),
-          _Report(),
+          _Report(data.name),
           SizedBox(height: 20),
           _Buttons(),
           SizedBox(height: 20),
@@ -194,6 +194,10 @@ class _IconTextItem extends StatelessWidget {
 }
 
 class _ShareProfile extends StatelessWidget {
+  final String name;
+
+  const _ShareProfile(this.name, {Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -204,7 +208,7 @@ class _ShareProfile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            'Share Noam\'s profile'.toUpperCase(),
+            'Share $name'.toUpperCase(),
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
           ),
           SizedBox(height: 8),
@@ -219,11 +223,14 @@ class _ShareProfile extends StatelessWidget {
 }
 
 class _Report extends StatelessWidget {
+  final String name;
+  const _Report(this.name, {Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Center(
       child: FlatButton(
-        child: Text('Report Noam'.toUpperCase(),
+        child: Text('Report $name'.toUpperCase(),
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w400,
