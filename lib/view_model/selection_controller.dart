@@ -81,6 +81,10 @@ class SelectionController extends GetxController {
     final user = users.first;
     tempListUser.add(user);
     users.removeAt(0);
+
+    if (user.isLike)
+      matchUser.value = user;
+
     final nextUser = await _userRemoteDataSource.like(user.uid, true);
     // users.add(nextUser);
     bufferUsers.add(nextUser);

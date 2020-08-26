@@ -26,6 +26,7 @@ class User {
   final String aboutMe;
   final List<String> feed;
   final String token;
+  final bool isLike;
 
   String heroId = Uuid().v4();
 
@@ -51,7 +52,8 @@ class User {
       this.gender,
       this.aboutMe,
       this.feed,
-      this.token});
+      this.token,
+      this.isLike});
 
   String get heroTag => (heroId ?? _genHeroId()) + (imgs?.firstOrNull ?? '');
 //  String get heroTag => imgs?.firstOrNull;
