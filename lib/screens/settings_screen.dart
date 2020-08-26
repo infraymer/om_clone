@@ -565,8 +565,17 @@ class _LogOutButton extends StatelessWidget {
         color: AppColors.bgSelectorButton,
         child: InkWell(
           onTap: () {
-            AuthController.to.logOut();
-            Navigator.pop(context);
+            Get.defaultDialog(
+              title: 'Do you want log out?',
+              content: SizedBox(),
+              buttonColor: Colors.white,
+              onConfirm: () async {
+                Get..back();
+                await AuthController.to.logOut();
+                Get..back();
+              },
+              onCancel: () {},
+            );
           },
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),

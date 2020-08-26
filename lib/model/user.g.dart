@@ -15,8 +15,8 @@ User _$UserFromJson(Map<String, dynamic> json) {
     lastSeen: json['lastSeen'] == null
         ? null
         : DateTime.parse(json['lastSeen'] as String),
-    lat: (json['lat'] as num)?.toDouble(),
-    lan: (json['lan'] as num)?.toDouble(),
+    lat: json['lat'] as String,
+    lan: json['lan'] as String,
     birthDate: json['birthDate'] == null
         ? null
         : DateTime.parse(json['birthDate'] as String),

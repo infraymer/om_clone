@@ -113,12 +113,9 @@ class PhotoBlock extends StatelessWidget {
               onTap: () async {
                 if (e == null) {
                   onSelectPhoto(context, i);
-                  return;
+                } else {
+                  onRemovePhoto(context, i);
                 }
-                UiDialogs.showPhotoActionDialog(
-                  onSelect: () => onSelectPhoto(context, i),
-                  onRemove: () => onRemovePhoto(context, i),
-                );
               },
               child: SelectPhoto(
                 file: e,
@@ -174,7 +171,7 @@ class SelectPhoto extends StatelessWidget {
                           file,
                           width: double.infinity,
                           height: double.infinity,
-                          fit: BoxFit.fill,
+                          fit: BoxFit.cover,
                         )
                       : null,
                 )),

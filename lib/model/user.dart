@@ -14,8 +14,8 @@ class User {
   final String displayName;
   @JsonKey(toJson: dateToUtc)
   final DateTime lastSeen;
-  final double lat;
-  final double lan;
+  final String lat;
+  final String lan;
   @JsonKey(toJson: dateToUtc)
   final DateTime birthDate;
   final int imgsLength;

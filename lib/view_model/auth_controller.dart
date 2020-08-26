@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:tinder/cache/chat_cache_data_source.dart';
+import 'package:tinder/location/domain/interactor/location_interactor.dart';
 import 'package:tinder/model/user.dart';
 import 'package:tinder/remote/user_remote_data_source.dart';
 import 'package:tinder/utils/dialogs.dart';
@@ -13,6 +14,7 @@ class AuthController extends GetxController {
   static AuthController get to => Get.find();
   final _userRemoteDataSource = UserRemoteDataSource();
   final _chatCacheDataSource = ChatCacheDataSource();
+  final LocationInteractor _locationInteractor = LocationInteractor();
 
   final authState = AuthState.splash.obs;
 
@@ -35,6 +37,7 @@ class AuthController extends GetxController {
       profile = await _userRemoteDataSource.me();
       await Future.delayed(Duration(seconds: 2));
       authState.value = AuthState.home;
+      _locationInteractor.getCurrentLocation();
 //      final matchUser = await _chatCacheDataSource.getActiveChat();
 //      if (matchUser != null) Get.to(ChatScreen(user: matchUser));
     } catch (e) {
@@ -53,7 +56,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> logOut() async {
-    await FirebaseAuth.instance.signOut();
+    FirebaseAuth.instance.signOut();
     authState.value = AuthState.login;
   }
 

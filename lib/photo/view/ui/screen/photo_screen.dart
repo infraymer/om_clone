@@ -80,12 +80,9 @@ class PhotoBlock extends StatelessWidget {
               onTap: () async {
                 if (e.isEmpty) {
                   onSelectPhoto(i);
-                  return;
+                } else {
+                  onRemovePhoto(i);
                 }
-                UiDialogs.showPhotoActionDialog(
-                  onSelect: () => onSelectPhoto(i),
-                  onRemove: () => onRemovePhoto(i),
-                );
               },
               child: SelectPhoto(
                 photo: e,
@@ -98,8 +95,7 @@ class PhotoBlock extends StatelessWidget {
   }
 
   void onSelectPhoto(int index) async {
-    final pickedFile =
-        await ImagePicker().getImage(source: ImageSource.gallery);
+    final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
     if (pickedFile == null) return;
     final file = File(pickedFile.path);
     PhotoController.to.setImage(index, file);
@@ -137,14 +133,13 @@ class SelectPhoto extends StatelessWidget {
                 child: AppImageWidget(image: photo),
               ),
             ),
-            if (photo?.isEmpty)
-              Align(
-                alignment: Alignment.bottomRight,
-                child: Container(
-                  transform: Matrix4.translationValues(12.0, 12.0, 0.0),
-                  child: Icon(Icons.add_circle, size: 24),
-                ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Container(
+                transform: Matrix4.translationValues(12.0, 12.0, 0.0),
+                child: Icon(photo?.isEmpty == true ? Icons.add_circle : Icons.remove_circle, size: 24),
               ),
+            ),
           ],
         ),
       );

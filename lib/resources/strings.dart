@@ -49,7 +49,7 @@ class Strings {
   static const welcomeTitle1 = 'Be yourself,';
   static const welcomeSubtitle1 = 'Make sure your photos, age, and bio are true to who you are.';
   static const welcomeTitle2 = 'Play it cool,';
-  static const welcomeSubtitle2 = 'Respect others and treat them as you would like you be treated.';
+  static const welcomeSubtitle2 = 'Respect others and treat them as you would like to be treated.';
   static const welcomeTitle3 = 'Stay safe,';
   static const welcomeSubtitle3 = 'Don\'t be too quick to give out personal information. Date Safely';
   static const welcomeTitle4 = 'Be proactive,';
