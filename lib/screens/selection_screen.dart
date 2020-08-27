@@ -306,7 +306,9 @@ class _NoMoreSwipes extends StatelessWidget {
             width: double.infinity,
             child: AppRoundFilledButton(
               light: true,
-              onPressed: () {},
+              onPressed: () {
+                ShareUtil.shareOneMatch();
+              },
               text: 'Share',
             ),
           ),
