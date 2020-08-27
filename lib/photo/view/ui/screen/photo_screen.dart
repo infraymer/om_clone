@@ -7,7 +7,6 @@ import 'package:reorderables/reorderables.dart';
 import 'package:tinder/photo/model/app_photo.dart';
 import 'package:tinder/photo/presentation/photo_controller.dart';
 import 'package:tinder/resources/colors.dart';
-import 'package:tinder/utils/dialogs.dart';
 import 'package:tinder/widgets/app_photo.dart';
 import 'package:tinder/widgets/app_round_filled_button.dart';
 
@@ -78,7 +77,7 @@ class PhotoBlock extends StatelessWidget {
           (i, e) => list.add(
             GestureDetector(
               onTap: () async {
-                if (e.isEmpty) {
+                if (e.isEmpty || i == 0) {
                   onSelectPhoto(i);
                 } else {
                   onRemovePhoto(i);
@@ -95,7 +94,8 @@ class PhotoBlock extends StatelessWidget {
   }
 
   void onSelectPhoto(int index) async {
-    final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
+    final pickedFile =
+        await ImagePicker().getImage(source: ImageSource.gallery);
     if (pickedFile == null) return;
     final file = File(pickedFile.path);
     PhotoController.to.setImage(index, file);
@@ -136,8 +136,19 @@ class SelectPhoto extends StatelessWidget {
             Align(
               alignment: Alignment.bottomRight,
               child: Container(
-                transform: Matrix4.translationValues(12.0, 12.0, 0.0),
-                child: Icon(photo?.isEmpty == true ? Icons.add_circle : Icons.remove_circle, size: 24),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(100),
+                    boxShadow: [
+                      BoxShadow(color: Colors.black26, blurRadius: 5)
+                    ]),
+                transform: Matrix4.translationValues(8.0, 8.0, 0.0),
+                padding: EdgeInsets.all(4),
+                child: Icon(
+                    photo?.isEmpty == true
+                        ? Icons.add
+                        : index > 0 ? Icons.remove : Icons.edit,
+                    size: 24),
               ),
             ),
           ],

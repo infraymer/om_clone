@@ -1,14 +1,13 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:dartx/dartx.dart';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
 import 'package:tinder/resources/colors.dart';
 import 'package:tinder/resources/dimens.dart';
 import 'package:tinder/resources/strings.dart';
-import 'package:tinder/utils/dialogs.dart';
 import 'package:tinder/utils/view_utils.dart';
 import 'package:tinder/view_model/registration_controller.dart';
 import 'package:tinder/widgets/app_round_filled_button.dart';
@@ -29,7 +28,6 @@ class AddPhotosScreen extends StatefulWidget {
 class _AddPhotosScreenState extends State<AddPhotosScreen> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _isLoading = ValueNotifier<bool>(false);
-
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +64,8 @@ class _AddPhotosScreenState extends State<AddPhotosScreen> {
                         model
                             .onDoneClicked()
                             .then((value) => widget.onActionClicked())
-                            .catchError((e) => showMessage(_scaffoldKey, e.toString()))
+                            .catchError(
+                                (e) => showMessage(_scaffoldKey, e.toString()))
                             .whenComplete(() => _isLoading.value = false);
                       },
                       text: Strings.done,
@@ -111,7 +110,7 @@ class PhotoBlock extends StatelessWidget {
           (i, e) => list.add(
             GestureDetector(
               onTap: () async {
-                if (e == null) {
+                if (e == null || i == 0) {
                   onSelectPhoto(context, i);
                 } else {
                   onRemovePhoto(context, i);
@@ -129,7 +128,7 @@ class PhotoBlock extends StatelessWidget {
 
   void onSelectPhoto(BuildContext context, int index) async {
     final pickedFile =
-    await ImagePicker().getImage(source: ImageSource.gallery);
+        await ImagePicker().getImage(source: ImageSource.gallery);
     if (pickedFile == null) return;
     final file = File(pickedFile.path);
     final model = Provider.of<RegistrationController>(context, listen: false);
@@ -175,14 +174,20 @@ class SelectPhoto extends StatelessWidget {
                         )
                       : null,
                 )),
-            if (file == null)
-              Align(
-                alignment: Alignment.bottomRight,
-                child: Container(
-                  transform: Matrix4.translationValues(12.0, 12.0, 0.0),
-                  child: Icon(Icons.add_circle, size: 24),
-                ),
-              )
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(100),
+                    boxShadow: [
+                      BoxShadow(color: Colors.black26, blurRadius: 5)
+                    ]),
+                transform: Matrix4.translationValues(8.0, 8.0, 0.0),
+                padding: EdgeInsets.all(4),
+                child: Icon(file == null ? Icons.add : index > 0 ? Icons.remove : Icons.edit, size: 24),
+              ),
+            )
           ],
         ),
       );
