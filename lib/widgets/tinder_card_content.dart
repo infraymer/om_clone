@@ -1,7 +1,9 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tinder/model/user.dart';
+import 'package:tinder/resources/images.dart';
 import 'package:tinder/routes.dart';
 import 'package:tinder/screens/profile_screen.dart';
 import 'package:tinder/widgets/circle_status.dart';
@@ -29,7 +31,9 @@ class TinderCardContent extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
                   loadingBuilder: (context, w, event) {
-                    return event == null ? w : Container(color: Colors.grey[700]);
+                    return event == null
+                        ? w
+                        : Container(color: Colors.grey[700]);
                   },
                 ),
               ),
@@ -80,6 +84,39 @@ class TinderCardContent extends StatelessWidget {
                       CircleStatus(isActive: data.isOnline),
                     ],
                   ),
+                  if (data.isLike)
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 2.0),
+                          child: SvgPicture.asset(
+                            AppImages.heart,
+                            height: 18.0,
+                            width: 18.0,
+                            allowDrawingOutsideViewBox: true,
+                            color: Colors.red,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 4.0),
+                          child: Text(
+                            'They like you!',
+                            style: TextStyle(
+                                shadows: [
+                                  BoxShadow(
+                                    color: Colors.black54,
+                                    blurRadius: 4,
+                                    spreadRadius: 4,
+                                    offset: Offset(0, 2),
+                                  )
+                                ],
+                                color: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700),
+                          ),
+                        )
+                      ],
+                    ),
                   Container(
                     width: MediaQuery.of(context).size.width * 0.9,
                     padding: const EdgeInsets.only(right: 100),
