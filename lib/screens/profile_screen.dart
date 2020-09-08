@@ -1,8 +1,11 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:tinder/model/user.dart';
+import 'package:tinder/resources/images.dart';
 import 'package:tinder/utils/share_util.dart';
 import 'package:tinder/view_model/selection_controller.dart';
 import 'package:tinder/widgets/circle_status.dart';
@@ -53,6 +56,53 @@ class ProfileScreen extends StatelessWidget {
                             count: user.imgs.length,
                           ),
                         ),
+                        Positioned(
+                          bottom: 10,
+                          left: 0,
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                if (user.isLike)
+                                  Row(
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 2.0),
+                                        child: SvgPicture.asset(
+                                          AppImages.heart,
+                                          height: 18.0,
+                                          width: 18.0,
+                                          allowDrawingOutsideViewBox: true,
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 4.0),
+                                        child: Text(
+                                          'They like you!',
+                                          style: TextStyle(
+                                              shadows: [
+                                                BoxShadow(
+                                                  color: Colors.black54,
+                                                  blurRadius: 4,
+                                                  spreadRadius: 4,
+                                                  offset: Offset(0, 2),
+                                                )
+                                              ],
+                                              color: Colors.white,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                      )
+                                    ],
+                                  )
+                              ],
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   ),
