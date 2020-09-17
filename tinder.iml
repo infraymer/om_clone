@@ -73,6 +73,12 @@
       <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/location/example/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/location/example/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/location/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/package_info/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/package_info/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/package_info/build" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/package_info/example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/package_info/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/package_info/example/build" />
       <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/path_provider/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/path_provider/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/path_provider/build" />

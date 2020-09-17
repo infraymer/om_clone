@@ -1,18 +1,17 @@
-import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:tinder/model/chat_message.dart';
 import 'package:tinder/model/user.dart';
 import 'package:tinder/resources/colors.dart';
-import 'package:tinder/routes.dart';
-import 'package:tinder/screens/profile_screen.dart';
 import 'package:tinder/view_model/chat_controller.dart';
 import 'package:tinder/widgets/om_loading.dart';
 
+import 'no_message.dart';
+import 'user_avatar.dart';
+
 class ChatScreen extends StatelessWidget {
   final User user;
-
   const ChatScreen({Key key, this.user}) : super(key: key);
 
   @override
@@ -29,17 +28,21 @@ class ChatScreen extends StatelessWidget {
                   child: Obx(
                     () => ChatController.to.isLoading.value
                         ? _Loading()
-                        : ListView.builder(
-                            reverse: true,
-                            controller: ChatController.to.scrollController,
-                            physics: BouncingScrollPhysics(),
-                            itemCount: ChatController.to.messages.length,
-                            itemBuilder: (context, index) {
-                              return _MessageWidget(
-                                data: ChatController.to.messages[index],
-                              );
-                            },
-                          ),
+                        : ChatController.to.messages.length != 0
+                            ? ListView.builder(
+                                reverse: true,
+                                controller: ChatController.to.scrollController,
+                                physics: BouncingScrollPhysics(),
+                                itemCount: ChatController.to.messages.length,
+                                itemBuilder: (context, index) {
+                                  return _MessageWidget(
+                                    data: ChatController.to.messages[index],
+                                  );
+                                },
+                              )
+                            : NoMessage(
+                                data: ChatController.to.user.value,
+                              ),
                   ),
                 ),
                 ChatInputMessage(),
@@ -96,8 +99,8 @@ class _AppBar extends StatelessWidget {
         Container(
           alignment: Alignment.centerRight,
           child: IconButton(
-            icon: Icon(Icons.beenhere, color: Colors.black12),
-            onPressed: () {},
+            icon: Icon(Icons.settings, color: Colors.black12),
+            onPressed: null,
           ),
         ),
         Column(
@@ -107,7 +110,8 @@ class _AppBar extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  _Avatar(size: 40, heroTag: ChatController.to.user.value.heroTag),
+                  UserAvatar(
+                      size: 40, heroTag: ChatController.to.user.value.heroTag),
                   SizedBox(height: 2),
                   Text(
                     data.name,
@@ -158,7 +162,7 @@ class MessageItem extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          _Avatar(),
+          UserAvatar(),
           SizedBox(width: 16),
           Expanded(
               child: Padding(
@@ -272,37 +276,6 @@ class _LikeButton extends StatelessWidget {
         Icons.favorite_border,
         color: Colors.grey[200],
         size: 32,
-      ),
-    );
-  }
-}
-
-class _Avatar extends StatelessWidget {
-  final double size;
-  final String heroTag;
-
-  const _Avatar({Key key, this.size = 50, this.heroTag}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final data = ChatController.to.user.value;
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(context, FadePageRoue(ProfileScreen(user: data)));
-      },
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(100),
-        child: Container(
-          width: size,
-          height: size,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100),
-              border: Border.all(color: Colors.black12)),
-          child: Image.network(
-            data.imgs.firstOrNull ?? '',
-            fit: BoxFit.cover,
-          ),
-        ),
       ),
     );
   }
@@ -425,7 +398,8 @@ class ChatInputMessage extends StatelessWidget {
                     onTap: () => ChatController.to.sendMessage(),
                     child: Container(
                       color: Colors.transparent,
-                      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                       child: Text(
                         'Send',
                         style: TextStyle(

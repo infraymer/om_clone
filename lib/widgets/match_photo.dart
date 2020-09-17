@@ -8,7 +8,8 @@ class MatchPhoto extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final radius = BorderRadius.circular(500);
-    final size = 500.0;
+    final size = 300.0;
+
     return ClipRRect(
       borderRadius: radius,
       child: Container(

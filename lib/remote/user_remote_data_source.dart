@@ -1,5 +1,4 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:tinder/model/user.dart';
 import 'package:tinder/model/user_create.dart';
 import 'package:tinder/push.dart';
@@ -15,8 +14,8 @@ class UserRemoteDataSource {
   Future<List<User>> getFeeds() async {
     final result = await dio.get('feed');
     final list = result.data as List;
-    final usrs = list.map((e) => User.fromJson(e)).toList();
-    return usrs;
+    final users = list.map((e) => User.fromJson(e)).toList();
+    return users;
   }
 
   Future<User> like(String userId, bool like) async {
@@ -56,21 +55,17 @@ class UserRemoteDataSource {
     final result = await dio.post('updateUser', data: data.toJson());
   }
 
-  Stream<User> matchListener(String userId) =>
-      FirebaseDatabase.instance
-          .reference()
-          .child(userId)
-          .onValue
-          .map((event) =>
-      event.snapshot.value['match'])
-          .where((event) =>
-      event != null)
-          .asyncMap((event) => getUser(event));
+  Stream<User> matchListener(String userId) => FirebaseDatabase.instance
+      .reference()
+      .child(userId)
+      .onValue
+      .map((event) => event.snapshot.value['match'])
+      .where((event) => event != null)
+      .asyncMap((event) => getUser(event));
 
-  Future<String> getMatchUserId(String userId) =>
-      FirebaseDatabase.instance
-          .reference()
-          .child(userId)
-          .once()
-          .then((ss) => ss.value['match']);
+  Future<String> getMatchUserId(String userId) => FirebaseDatabase.instance
+      .reference()
+      .child(userId)
+      .once()
+      .then((ss) => ss.value['match']);
 }

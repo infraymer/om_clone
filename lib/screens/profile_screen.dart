@@ -1,5 +1,7 @@
 import 'package:dartx/dartx.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -59,10 +61,11 @@ class ProfileScreen extends StatelessWidget {
                         Positioned(
                           bottom: 10,
                           left: 0,
+                          right: 0,
                           child: Container(
                             padding: EdgeInsets.all(10),
+                            alignment: Alignment.center,
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 if (user.isLike)
                                   Row(
@@ -93,11 +96,12 @@ class ProfileScreen extends StatelessWidget {
                                                 )
                                               ],
                                               color: Colors.white,
-                                              fontSize: 14,
+                                              fontSize: 20,
                                               fontWeight: FontWeight.w700),
                                         ),
                                       )
                                     ],
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                   )
                               ],
                             ),

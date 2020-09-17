@@ -25,6 +25,7 @@ public final class GeneratedPluginRegistrant {
       com.example.flutter_sim_country_code.FlutterSimCountryCodePlugin.registerWith(shimPluginRegistry.registrarFor("com.example.flutter_sim_country_code.FlutterSimCountryCodePlugin"));
     flutterEngine.getPlugins().add(new io.flutter.plugins.imagepicker.ImagePickerPlugin());
     flutterEngine.getPlugins().add(new com.lyokone.location.LocationPlugin());
+    flutterEngine.getPlugins().add(new io.flutter.plugins.packageinfo.PackageInfoPlugin());
     flutterEngine.getPlugins().add(new io.flutter.plugins.pathprovider.PathProviderPlugin());
     flutterEngine.getPlugins().add(new io.flutter.plugins.share.SharePlugin());
   }

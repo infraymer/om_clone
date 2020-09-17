@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
 import 'package:get/get.dart';
+import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
 import 'package:tinder/model/gender.dart';
 import 'package:tinder/photo/model/app_photo.dart';
@@ -66,6 +67,51 @@ class _Loading extends StatelessWidget {
   }
 }
 
+class GetVersionAppInfo extends StatefulWidget {
+  @override
+  _GetVersionAppInfoState createState() => _GetVersionAppInfoState();
+}
+
+class _GetVersionAppInfoState extends State<GetVersionAppInfo> {
+  PackageInfo _packageInfo = PackageInfo(
+    appName: 'Unknown',
+    packageName: 'Unknown',
+    version: 'Unknown',
+    buildNumber: 'Unknown',
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    _initPackageInfo();
+  }
+
+  Future<void> _initPackageInfo() async {
+    final PackageInfo info = await PackageInfo.fromPlatform();
+    setState(() {
+      _packageInfo = info;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Column(
+        children: [
+          Image(
+            image: AssetImage('assets/icons/fire-icon-png-25.jpg'),
+            repeat: ImageRepeat.noRepeat,
+            width: 40.0,
+            height: 40.0,
+          ),
+          Text('Version ${_packageInfo.version}'),
+        ],
+      ),
+    );
+  }
+}
+
 class _Content extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -122,6 +168,7 @@ class _Content extends StatelessWidget {
           _RemoveUserButton(),
           SizedBox(height: 20),
           _LogOutButton(),
+          GetVersionAppInfo(),
           SizedBox(height: 20),
         ],
       ),
@@ -199,20 +246,22 @@ class _Avatar extends StatelessWidget {
                     child: Container(
                       color: Colors.grey,
                       child: GetX<SettingsController>(
-                        builder: (_) => SettingsController.to.photos.value.isEmpty
-                            ? Image.network(
-                                user.imgs.firstOrNull ?? '',
-                                fit: BoxFit.cover,
-                                width: 100,
-                                height: 100,
-                              )
-                            : Container(
-                                width: 100,
-                                height: 100,
-                                child: AppImageWidget(
-                                  image: SettingsController.to.photos.firstOrNull,
-                                ),
-                              ),
+                        builder: (_) =>
+                            SettingsController.to.photos.value.isEmpty
+                                ? Image.network(
+                                    user.imgs.firstOrNull ?? '',
+                                    fit: BoxFit.cover,
+                                    width: 100,
+                                    height: 100,
+                                  )
+                                : Container(
+                                    width: 100,
+                                    height: 100,
+                                    child: AppImageWidget(
+                                      image: SettingsController
+                                          .to.photos.firstOrNull,
+                                    ),
+                                  ),
                       ),
                     ),
                   ),
@@ -239,9 +288,13 @@ class _Avatar extends StatelessWidget {
   }
 
   _onChangePhoto() async {
-    List<AppPhoto> currentImages = SettingsController.to.user.imgs.map((e) => AppPhoto(url: e)).toList();
-    currentImages = SettingsController.to.photos.isNotEmpty ? SettingsController.to.photos.value : currentImages;
-    final List<AppPhoto> images = await Get.to(PhotoScreen(initPhotos: currentImages));
+    List<AppPhoto> currentImages =
+        SettingsController.to.user.imgs.map((e) => AppPhoto(url: e)).toList();
+    currentImages = SettingsController.to.photos.isNotEmpty
+        ? SettingsController.to.photos.value
+        : currentImages;
+    final List<AppPhoto> images =
+        await Get.to(PhotoScreen(initPhotos: currentImages));
     if (images == null) return;
     SettingsController.to.photos.value = images;
   }
