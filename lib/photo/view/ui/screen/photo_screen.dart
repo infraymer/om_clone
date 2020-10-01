@@ -115,13 +115,13 @@ class SelectPhoto extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
+      double _width = constraints.maxWidth > 100
+          ? constraints.maxWidth / 3 * 0.7
+          : constraints.maxWidth;
+
       return Container(
-        width: constraints.maxWidth > 100
-            ? constraints.maxWidth / 3 * 0.7
-            : constraints.maxWidth,
-        height: constraints.maxWidth > 100
-            ? constraints.maxWidth / 3 * 0.7
-            : constraints.maxWidth,
+        width: _width,
+        height: _width * 1.5,
         child: Stack(
           children: <Widget>[
             Container(
