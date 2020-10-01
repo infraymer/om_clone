@@ -55,7 +55,6 @@ class SettingsRoute extends CupertinoPageRoute {
   SettingsRoute() : super(builder: (ctx) => SettingsScreen());
 }
 
-
 class ProfileRoute extends CupertinoPageRoute {
   ProfileRoute(user) : super(builder: (ctx) => ProfileScreen(user: user));
 }

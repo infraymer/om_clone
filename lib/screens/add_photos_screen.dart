@@ -84,7 +84,6 @@ class PhotoBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<RegistrationController>(context);
-//    final model = context.watch<RegistrationViewModel>();
     return Container(
       alignment: Alignment.center,
       width: double.infinity,
@@ -185,7 +184,11 @@ class SelectPhoto extends StatelessWidget {
                     ]),
                 transform: Matrix4.translationValues(8.0, 8.0, 0.0),
                 padding: EdgeInsets.all(4),
-                child: Icon(file == null ? Icons.add : index > 0 ? Icons.remove : Icons.edit, size: 24),
+                child: Icon(
+                    file == null
+                        ? Icons.add
+                        : index > 0 ? Icons.remove : Icons.edit,
+                    size: 24),
               ),
             )
           ],

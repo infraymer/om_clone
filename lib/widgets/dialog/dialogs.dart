@@ -40,6 +40,7 @@ class Dialogs {
                     bottom: MediaQuery.of(context).viewInsets.bottom),
                 width: double.infinity,
                 child: TextField(
+                  textCapitalization: TextCapitalization.sentences,
                   autofocus: true,
                   decoration: InputDecoration(
                     border: InputBorder.none,

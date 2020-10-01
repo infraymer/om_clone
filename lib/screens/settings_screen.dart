@@ -392,6 +392,7 @@ class _Description extends StatelessWidget {
           child: TextField(
             controller: TextEditingController(text: model.about),
             focusNode: focusNode,
+            textCapitalization: TextCapitalization.sentences,
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 12),
             decoration: InputDecoration(

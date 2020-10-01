@@ -374,6 +374,8 @@ class ChatInputMessage extends StatelessWidget {
           Expanded(
             child: Obx(
               () => TextField(
+
+                textCapitalization: TextCapitalization.sentences,
                 controller: TextEditingController.fromValue(TextEditingValue(
                     text: ChatController.to.inputMessage.value,
                     selection: TextSelection.fromPosition(TextPosition(

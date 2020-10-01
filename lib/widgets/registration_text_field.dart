@@ -7,13 +7,20 @@ class RegistrationTextField extends StatelessWidget {
   final TextInputAction textInputAction;
   final Function(String) onSubmitted;
 
-  const RegistrationTextField({Key key, this.hint, this.controller, this.textInputAction, this.onSubmitted}) : super(key: key);
+  const RegistrationTextField(
+      {Key key,
+      this.hint,
+      this.controller,
+      this.textInputAction,
+      this.onSubmitted})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         TextField(
+          textCapitalization: TextCapitalization.sentences,
           autofocus: true,
           textInputAction: textInputAction,
           onSubmitted: onSubmitted,
