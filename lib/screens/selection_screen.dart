@@ -32,7 +32,8 @@ class SelectionScreen extends StatelessWidget {
         return Obx(
           () => SelectionController.to?.matchUser?.value == null
               ? _ThisScreen()
-              : MatchScreen(matchUser: SelectionController.to?.matchUser?.value),
+              : MatchScreen(
+                  matchUser: SelectionController.to?.matchUser?.value),
         );
       },
     );
@@ -99,8 +100,7 @@ class _TopBar extends StatelessWidget {
             ),
             onPressed: () async {
               final result = await Get.to(SettingsScreen());
-              if (result == true)
-                SelectionController.to.getFeeds(true);
+              if (result == true) SelectionController.to.getFeeds(true);
             },
           ),
         ],
@@ -181,7 +181,6 @@ class _Buttons extends StatelessWidget {
 class _OmCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    CardController controller;
     return GetX<SelectionController>(
       builder: (model) {
         return Center(
