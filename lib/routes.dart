@@ -10,6 +10,7 @@ import 'package:tinder/screens/profile_screen.dart';
 import 'package:tinder/screens/registration_screen.dart';
 import 'package:tinder/screens/selection_screen.dart';
 import 'package:tinder/screens/settings_screen.dart';
+import 'package:tinder/screens/terms_and_conditions_screen.dart';
 import 'package:tinder/screens/welcome_screen.dart';
 import 'package:tinder/utils/auth_firebase.dart';
 
@@ -53,6 +54,11 @@ class ChatRoute extends CupertinoPageRoute {
 
 class SettingsRoute extends CupertinoPageRoute {
   SettingsRoute() : super(builder: (ctx) => SettingsScreen());
+}
+
+class TermsAndConditionsRoute extends CupertinoPageRoute {
+  TermsAndConditionsRoute()
+      : super(builder: (ctx) => TermsAndConditionsScreen());
 }
 
 class ProfileRoute extends CupertinoPageRoute {
