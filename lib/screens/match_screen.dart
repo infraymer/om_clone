@@ -59,7 +59,7 @@ class MatchScreen extends StatelessWidget {
               SizedBox(height: 30),
               AppIconRoundButtonDark(
                 margin: EdgeInsets.symmetric(horizontal: 50),
-                text: Strings.matchKeepPlaying,
+                text: Strings.unmatch(matchUser.name),
                 icon: Icons.perm_contact_calendar,
                 onPressed: () => _.onContinueMatch(),
               ),
