@@ -12,6 +12,7 @@ import 'user_avatar.dart';
 
 class ChatScreen extends StatelessWidget {
   final User user;
+
   const ChatScreen({Key key, this.user}) : super(key: key);
 
   @override
@@ -76,7 +77,10 @@ class _MessageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = ChatController.to.profile;
     final isOwner = data.toUid != user.uid;
-    return isOwner ? OwnerMessageItem(data: data) : MessageItem(data: data);
+    return Padding(
+        padding: EdgeInsets.only(bottom: 10),
+        child:
+            isOwner ? OwnerMessageItem(data: data) : MessageItem(data: data));
   }
 }
 
@@ -157,25 +161,22 @@ class MessageItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(20),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          UserAvatar(),
-          SizedBox(width: 16),
-          Expanded(
-              child: Padding(
-            padding: const EdgeInsets.only(top: 2),
-            child: _TextBody(data: data, isDelivery: isDelivery),
-          )),
-          SizedBox(width: 30),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        UserAvatar(),
+        SizedBox(width: 16),
+        Expanded(
+            child: Padding(
+          padding: const EdgeInsets.only(top: 2),
+          child: _TextBody(data: data, isDelivery: isDelivery),
+        )),
+        SizedBox(width: 30),
 //          Padding(
 //            padding: const EdgeInsets.only(top: 12),
 //            child: _LikeButton(),
 //          ),
-        ],
-      ),
+      ],
     );
   }
 }
@@ -188,16 +189,13 @@ class OwnerMessageItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          Expanded(
-            child: _OwnerTextBody(data: data),
-          ),
-        ],
-      ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        Expanded(
+          child: _OwnerTextBody(data: data),
+        ),
+      ],
     );
   }
 }
@@ -374,7 +372,6 @@ class ChatInputMessage extends StatelessWidget {
           Expanded(
             child: Obx(
               () => TextField(
-
                 textCapitalization: TextCapitalization.sentences,
                 controller: TextEditingController.fromValue(TextEditingValue(
                     text: ChatController.to.inputMessage.value,
