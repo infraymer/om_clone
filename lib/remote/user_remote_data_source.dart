@@ -30,7 +30,6 @@ class UserRemoteDataSource {
     final result = await dio.post('cancelMatch', data: {
       'uid': userId,
     });
-    print('');
   }
 
   Future<User> me() async {
