@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
-final _baseUrl = 'https://us-central1-sparkle-261a7.cloudfunctions.net/';
+final _baseUrl = 'https://onematch-server.herokuapp.com/api/';
 
 final Dio dio = new Dio(BaseOptions(
   baseUrl: _baseUrl,
