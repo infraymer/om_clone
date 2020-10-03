@@ -1,4 +1,3 @@
-import 'package:intl/intl.dart';
 import 'package:tinder/model/setting_filter.dart';
 
 class UserCreate {
@@ -10,7 +9,15 @@ class UserCreate {
   final DateTime birthday; // 2020-06-01
   final SettingFilter settingFilter;
 
-  UserCreate(this.name, this.gender, this.images, this.showMyGender, this.aboutMe, this.birthday, this.settingFilter);
+  UserCreate(
+    this.name,
+    this.gender,
+    this.images,
+    this.showMyGender,
+    this.aboutMe,
+    this.birthday,
+    this.settingFilter,
+  );
 
   Map<String, dynamic> toMap() {
     return {
