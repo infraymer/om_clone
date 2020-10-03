@@ -147,10 +147,10 @@ class _Content extends StatelessWidget {
     int distance() {
       GeoUtils.distanceBetweenPointsKm(
           LatLng(authController.profile.lat.toDouble(),
-              authController.profile.lan.toDouble()),
+              authController.profile.lon.toDouble()),
           LatLng(
             data.lat.toDouble(),
-            data.lan.toDouble(),
+            data.lon.toDouble(),
           ));
     }
 
@@ -170,10 +170,10 @@ class _Content extends StatelessWidget {
 //              text: data.aboutMe,
 //            ),
           SizedBox(height: 8),
-          if (data.lan != null &&
+          if (data.lon != null &&
               data.lat != null &&
               authController.profile.lat != null &&
-              authController.profile.lan != null)
+              authController.profile.lon != null)
             _IconTextItem(
               icon: Icons.place,
               text: '${distance()} kilometer${distance() != 1 ? 's' : ''} away',

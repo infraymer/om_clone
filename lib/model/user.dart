@@ -1,7 +1,7 @@
+import 'package:dartx/dartx.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:tinder/model/setting_filter.dart';
 import 'package:uuid/uuid.dart';
-import 'package:dartx/dartx.dart';
 
 part 'user.g.dart';
 
@@ -15,7 +15,8 @@ class User {
   @JsonKey(toJson: dateToUtc)
   final DateTime lastSeen;
   final String lat;
-  final String lan;
+  final String lon;
+  final int distance;
   @JsonKey(toJson: dateToUtc)
   final DateTime birthDate;
   final int imgsLength;
@@ -31,6 +32,7 @@ class User {
   String heroId = Uuid().v4();
 
   int get age => DateTime.now().year - (birthDate?.year ?? 0);
+
   bool get isOnline {
     return DateTime.now().toUtc().difference(lastSeen).inSeconds < 300;
   }
@@ -42,7 +44,8 @@ class User {
       this.displayName,
       this.lastSeen,
       this.lat,
-      this.lan,
+      this.lon,
+      this.distance,
       this.birthDate,
       this.imgsLength,
       this.match,
@@ -56,6 +59,7 @@ class User {
       this.isLike});
 
   String get heroTag => (heroId ?? _genHeroId()) + (imgs?.firstOrNull ?? '');
+
 //  String get heroTag => imgs?.firstOrNull;
 
   String _genHeroId() {
@@ -64,6 +68,7 @@ class User {
   }
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+
   Map<String, dynamic> toJson() => _$UserToJson(this);
 
   User copyWith({
@@ -74,7 +79,8 @@ class User {
     String displayName,
     DateTime lastSeen,
     double lat,
-    double lan,
+    double lon,
+    int distance,
     DateTime birthDate,
     int imgsLength,
     String match,
@@ -93,7 +99,8 @@ class User {
       displayName: displayName ?? this.displayName,
       lastSeen: lastSeen ?? this.lastSeen,
       lat: lat ?? this.lat,
-      lan: lan ?? this.lan,
+      lon: lon ?? this.lon,
+      distance: distance ?? this.distance,
       birthDate: birthDate ?? this.birthDate,
       imgsLength: imgsLength ?? this.imgsLength,
       match: match ?? this.match,

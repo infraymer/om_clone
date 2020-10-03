@@ -16,7 +16,8 @@ User _$UserFromJson(Map<String, dynamic> json) {
         ? null
         : DateTime.parse(json['lastSeen'] as String),
     lat: json['lat'] as String,
-    lan: json['lan'] as String,
+    lon: json['lon'] as String,
+    distance: json['distance'] as int,
     birthDate: json['birthDate'] == null
         ? null
         : DateTime.parse(json['birthDate'] as String),
@@ -43,7 +44,8 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'displayName': instance.displayName,
       'lastSeen': User.dateToUtc(instance.lastSeen),
       'lat': instance.lat,
-      'lan': instance.lan,
+      'lon': instance.lon,
+      'distance': instance.distance,
       'birthDate': User.dateToUtc(instance.birthDate),
       'imgsLength': instance.imgsLength,
       'match': instance.match,
