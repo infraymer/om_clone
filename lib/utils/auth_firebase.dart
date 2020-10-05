@@ -28,10 +28,14 @@ class AuthPhoneFirebase {
       this.timer,
       @required this.keyScaffold,
       this.timeOut = const Duration(seconds: 60)}) {
-    initVerifyPhoneNumber(context: context, keyScaffold: keyScaffold, useSentCallback: true);
+    initVerifyPhoneNumber(
+        context: context, keyScaffold: keyScaffold, useSentCallback: true);
   }
 
-  void initVerifyPhoneNumber({@required context, @required keyScaffold, bool useSentCallback = false}) {
+  void initVerifyPhoneNumber(
+      {@required context,
+      @required keyScaffold,
+      bool useSentCallback = false}) {
     this.keyScaffold = keyScaffold;
     this.context = context;
 
@@ -60,10 +64,12 @@ class AuthPhoneFirebase {
     print('Code sent to $phoneNumber');
   }
 
-  void _codeSentWithoutCallback(String verificationId, [int forceResendingToken]) async {
+  void _codeSentWithoutCallback(String verificationId,
+      [int forceResendingToken]) async {
     isLoadingNotifier.value = false;
     this.actualCode = verificationId;
-    keyScaffold.currentState.showSnackBar(customSnack('Code sent to $phoneNumber'));
+    keyScaffold.currentState
+        .showSnackBar(customSnack('Code sent to $phoneNumber'));
     print('Code sent to $phoneNumber');
   }
 
@@ -151,6 +157,7 @@ class AuthPhoneFirebase {
           onAuthenticationSuccessful(firebaseAuth, user, false);
 
           status = 'Authentication successful';
+          print(status);
         }
       });
     } catch (error) {

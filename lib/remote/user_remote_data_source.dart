@@ -9,6 +9,7 @@ class UserRemoteDataSource {
     final map = data.toMap();
     map['token'] = await firebaseMessaging.getToken();
     await dio.post('updateUser', data: data.toMap());
+    print('posted update user');
   }
 
   Future<List<User>> getFeeds() async {
@@ -34,6 +35,7 @@ class UserRemoteDataSource {
 
   Future<User> me() async {
     final result = await dio.get('me');
+
     final data = User.fromJson(result.data);
     return data;
   }
@@ -52,6 +54,7 @@ class UserRemoteDataSource {
     final token = await firebaseMessaging.getToken();
     final data = user.copyWith(token: token);
     final result = await dio.post('updateUser', data: data.toJson());
+    print('updated user');
   }
 
   Stream<User> matchListener(String userId) => FirebaseDatabase.instance
