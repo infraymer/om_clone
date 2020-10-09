@@ -38,7 +38,6 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
     ]);
     return GetMaterialApp(
-      title: 'Flutter Demo',
       theme: ThemeData(
         buttonTheme: ButtonThemeData(
           colorScheme:

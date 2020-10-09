@@ -5,10 +5,13 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:maps_toolkit/maps_toolkit.dart';
 import 'package:provider/provider.dart';
 import 'package:tinder/model/user.dart';
 import 'package:tinder/resources/images.dart';
+import 'package:tinder/utils/geo_utils.dart';
 import 'package:tinder/utils/share_util.dart';
+import 'package:tinder/view_model/auth_controller.dart';
 import 'package:tinder/view_model/selection_controller.dart';
 import 'package:tinder/widgets/circle_status.dart';
 import 'package:tinder/widgets/no_button.dart';
@@ -139,6 +142,18 @@ class _Content extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var authController = Get.find<AuthController>();
+
+    int distance() {
+      GeoUtils.distanceBetweenPointsKm(
+          LatLng(authController.profile.lat.toDouble(),
+              authController.profile.lan.toDouble()),
+          LatLng(
+            data.lat.toDouble(),
+            data.lan.toDouble(),
+          ));
+    }
+
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20),
       child: Column(
@@ -155,10 +170,14 @@ class _Content extends StatelessWidget {
 //              text: data.aboutMe,
 //            ),
           SizedBox(height: 8),
-          _IconTextItem(
-            icon: Icons.place,
-            text: '1 kilometer away',
-          ),
+          if (data.lan != null &&
+              data.lat != null &&
+              authController.profile.lat != null &&
+              authController.profile.lan != null)
+            _IconTextItem(
+              icon: Icons.place,
+              text: '${distance()} kilometer${distance() != 1 ? 's' : ''} away',
+            ),
           SizedBox(height: 20),
           _Description(data.aboutMe),
           SizedBox(height: 30),
@@ -278,6 +297,7 @@ class _ShareProfile extends StatelessWidget {
 
 class _Report extends StatelessWidget {
   final String name;
+
   const _Report(this.name, {Key key}) : super(key: key);
 
   @override

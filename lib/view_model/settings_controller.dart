@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:tinder/model/gender.dart';
 import 'package:tinder/model/setting_filter.dart';
@@ -9,6 +10,7 @@ import 'package:tinder/remote/file_remote_data_source.dart';
 import 'package:tinder/remote/user_remote_data_source.dart';
 import 'package:tinder/utils/dialogs.dart';
 import 'package:tinder/view_model/auth_controller.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsController extends GetxController {
   static SettingsController get to => Get.find();
@@ -52,6 +54,14 @@ class SettingsController extends GetxController {
     gender.value = value;
   }
 
+  Future<void> launchUrl(String url, {VoidCallback onCouldntLaunch}) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      onCouldntLaunch();
+    }
+  }
+
   Future<void> fetchData() async {
     isLoading.value = true;
     try {
@@ -77,17 +87,15 @@ class SettingsController extends GetxController {
       );
 
       if (photos.value.isNotEmpty) {
-        final imgs = photos.value
-            .where((e) => e.url != null)
-            .map((e) => e.url)
-            .toList();
+        final imgs =
+            photos.value.where((e) => e.url != null).map((e) => e.url).toList();
         data = data.copyWith(imgs: imgs);
       }
 
       await _userRemoteDataSource.updateUser(data);
       AuthController.to.profile = data;
       Get.back(result: true);
-    } catch(e) {
+    } catch (e) {
       Get.snackbar('', 'Error update user');
     } finally {
       isLoading.value = false;

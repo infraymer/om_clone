@@ -162,8 +162,17 @@ class _Content extends StatelessWidget {
               },
             ),
           ),
-          _SelectorButton(title: 'Privacy Policy'),
-          _SelectorButton(title: 'Terms of Service'),
+          _SelectorButton(
+            title: 'Privacy Policy',
+            onTap: () {
+              model.launchUrl('https://onematch.app/privacy-policy.html');
+            },
+          ),
+          _SelectorButton(
+              title: 'Terms of Service',
+              onTap: () {
+                model.launchUrl('https://onematch.app/terms-conditions.html');
+              }),
           SizedBox(height: 20),
           _RemoveUserButton(),
           SizedBox(height: 20),
@@ -383,6 +392,7 @@ class _Description extends StatelessWidget {
           child: TextField(
             controller: TextEditingController(text: model.about),
             focusNode: focusNode,
+            textCapitalization: TextCapitalization.sentences,
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 12),
             decoration: InputDecoration(
