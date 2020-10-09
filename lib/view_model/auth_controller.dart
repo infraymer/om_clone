@@ -42,7 +42,16 @@ class AuthController extends GetxController {
 //      if (matchUser != null) Get.to(ChatScreen(user: matchUser));
     } catch (e) {
       final dioError = e is DioError ? e as DioError : null;
+
+      print(e);
+
       if (dioError != null && dioError.response.statusCode == 404) {
+        authState.value = AuthState.registration;
+        return;
+      }
+
+      //throws when there is no user in database
+      if (dioError != null && dioError.response.statusCode == 400) {
         authState.value = AuthState.registration;
         return;
       }

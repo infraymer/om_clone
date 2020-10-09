@@ -15,13 +15,12 @@ User _$UserFromJson(Map<String, dynamic> json) {
     lastSeen: json['lastSeen'] == null
         ? null
         : DateTime.parse(json['lastSeen'] as String),
-    lat: json['lat'] as String,
-    lon: json['lon'] as String,
+    lat: (json['lat'] as num)?.toDouble(),
+    lon: (json['lon'] as num)?.toDouble(),
     distance: json['distance'] as int,
     birthDate: json['birthDate'] == null
         ? null
         : DateTime.parse(json['birthDate'] as String),
-    imgsLength: json['imgsLength'] as int,
     match: json['match'] as String,
     showMyGender: json['showMyGender'] as bool,
     settingFilter: json['settingFilter'] == null
@@ -30,7 +29,6 @@ User _$UserFromJson(Map<String, dynamic> json) {
     name: json['name'] as String,
     gender: json['gender'] as String,
     aboutMe: json['aboutMe'] as String,
-    feed: (json['feed'] as List)?.map((e) => e as String)?.toList(),
     token: json['token'] as String,
     isLike: json['isLike'] as bool,
   )..heroId = json['heroId'] as String;
@@ -47,13 +45,11 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'lon': instance.lon,
       'distance': instance.distance,
       'birthDate': User.dateToUtc(instance.birthDate),
-      'imgsLength': instance.imgsLength,
       'match': instance.match,
       'showMyGender': instance.showMyGender,
       'settingFilter': instance.settingFilter,
       'gender': instance.gender,
       'aboutMe': instance.aboutMe,
-      'feed': instance.feed,
       'token': instance.token,
       'isLike': instance.isLike,
       'heroId': instance.heroId,

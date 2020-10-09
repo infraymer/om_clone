@@ -14,18 +14,18 @@ class User {
   final String displayName;
   @JsonKey(toJson: dateToUtc)
   final DateTime lastSeen;
-  final String lat;
-  final String lon;
+  final double lat;
+  final double lon;
   final int distance;
   @JsonKey(toJson: dateToUtc)
   final DateTime birthDate;
-  final int imgsLength;
+  // final int imgsLength;
   final String match;
   final bool showMyGender;
   final SettingFilter settingFilter;
   final String gender;
   final String aboutMe;
-  final List<String> feed;
+  // final List<String> feed;
   final String token;
   final bool isLike;
 
@@ -47,14 +47,14 @@ class User {
       this.lon,
       this.distance,
       this.birthDate,
-      this.imgsLength,
+      // this.imgsLength,
       this.match,
       this.showMyGender,
       this.settingFilter,
       this.name,
       this.gender,
       this.aboutMe,
-      this.feed,
+      // this.feed,
       this.token,
       this.isLike});
 
@@ -82,13 +82,13 @@ class User {
     double lon,
     int distance,
     DateTime birthDate,
-    int imgsLength,
+    // int imgsLength,
     String match,
     bool showMyGender,
     SettingFilter settingFilter,
     String gender,
     String aboutMe,
-    List<String> feed,
+    // List<String> feed,
     String token,
   }) {
     return new User(
@@ -102,13 +102,13 @@ class User {
       lon: lon ?? this.lon,
       distance: distance ?? this.distance,
       birthDate: birthDate ?? this.birthDate,
-      imgsLength: imgsLength ?? this.imgsLength,
+      // imgsLength: imgsLength ?? this.imgsLength,
       match: match ?? this.match,
       showMyGender: showMyGender ?? this.showMyGender,
       settingFilter: settingFilter ?? this.settingFilter,
       gender: gender ?? this.gender,
       aboutMe: aboutMe ?? this.aboutMe,
-      feed: feed ?? this.feed,
+      // feed: feed ?? this.feed,
       token: token ?? this.token,
     );
   }

@@ -16,7 +16,7 @@ class RegistrationController extends ChangeNotifier {
 
   String name = '';
   DateTime birthday;
-  String schoolName = '';
+  String schoolName = 'about must not be empty';
   bool genderMale = false;
   bool showMyGender = false;
   List<File> photos = List.generate(9, (index) => null);

@@ -266,6 +266,7 @@ class _OmCards extends StatelessWidget {
 class _NoMoreSwipes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    print(AuthController.to.profile.imgs.firstOrNull);
     return Container(
       width: double.infinity,
       child: Column(

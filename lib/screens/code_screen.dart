@@ -174,47 +174,50 @@ class _CodeScreenState extends State<CodeScreen> {
 
   Widget _buildNoCodeButton() {
     return ValueListenableBuilder<bool>(
-      valueListenable: _showTimer,
-      builder: (context, value, child) {
-        return FlatButton(
-          child: Text(Strings.phoneResendCode,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-              )),
-          onPressed: value ? null : _onResend,
-        );
-      }
-    );
+        valueListenable: _showTimer,
+        builder: (context, value, child) {
+          return FlatButton(
+            child: Text(Strings.phoneResendCode,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                )),
+            onPressed: value ? null : _onResend,
+          );
+        });
   }
 
   Widget _buildTimer() {
     return ValueListenableBuilder<int>(
       valueListenable: _timerValue,
       builder: (context, value, child) {
-        if (value > 0)
-          return Text(value.toString());
+        if (value > 0) return Text(value.toString());
         return SizedBox();
       },
     );
   }
 
   void _onNext() {
-    final code = _codeController.text;
-    if (code.length > 5) {
-      widget.authPhone.signInWithPhoneNumber(
-          code: code,
-          keyScaffold: _keyScaffold,
-          onSuccess: () {
-            Navigator.pop(context);
-          },
-          onError: () {
-            _keyScaffold.currentState
-                .showSnackBar(customSnack("Incorrect code"));
-          });
-    } else {
-      _keyScaffold.currentState
-          .showSnackBar(customSnack("Error: Please Enter code"));
+    try {
+      final code = _codeController.text;
+      if (code.length > 5) {
+        widget.authPhone.signInWithPhoneNumber(
+            code: code,
+            keyScaffold: _keyScaffold,
+            onSuccess: () {
+              Navigator.pop(context);
+            },
+            onError: () {
+              _keyScaffold.currentState
+                  .showSnackBar(customSnack("Incorrect code"));
+            });
+      } else {
+        _keyScaffold.currentState
+            .showSnackBar(customSnack("Error: Please Enter code"));
+      }
+    } catch (e) {
+      print(e);
+      print('ERROR in codescreen');
     }
   }
 
