@@ -16,7 +16,7 @@ class MatchController extends GetxController {
 
   onContinueMatch() {
     Get.defaultDialog(
-      title: 'Are your sure you want to unmatch with ' + matchUser.name,
+      title: 'Are you sure you want to unmatch with ${matchUser.name}?',
       content: SizedBox(),
       buttonColor: Colors.white,
       onConfirm: () async {

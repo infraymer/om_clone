@@ -66,8 +66,7 @@ class Strings {
   static const matchTitle = 'It\'s a Match';
   static const matchDescription = 'You and Lola have liked each other';
   static const matchSendMessage = 'Send a Message';
-  static const matchKeepPlaying = 'Keep Playing';
-  static unmatch(String name) => 'Unmatch $name?';
+  static String unmatch(String name) => 'Unmatch ${name}?';
   static const matchTellYourFriends = 'Tell your friends';
 
   static const fieldMustNotBeEmpty = 'Field must not be empty';
